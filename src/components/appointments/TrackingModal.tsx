@@ -1,11 +1,10 @@
-import { MapPin, X } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { useAppointmentStore } from '@/store/useAppointmentStore'
@@ -36,7 +35,7 @@ export function TrackingModal() {
 
   return (
     <Dialog open={isTrackingModalOpen} onOpenChange={closeTrackingModal}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden bg-card border border-border">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">
             Live Tracking - {selectedAppointment.customerName}

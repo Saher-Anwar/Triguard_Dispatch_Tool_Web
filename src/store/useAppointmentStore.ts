@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Appointment, AppointmentStatus } from '../types'
+import type { Appointment, AppointmentStatus } from '../types'
 
 interface AppointmentStore {
   appointments: Appointment[]
