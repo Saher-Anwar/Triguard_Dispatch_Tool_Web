@@ -7,24 +7,19 @@ export async function getUsers(): Promise<User[]> {
       id: '1',
       name: 'Mike Johnson',
       role: 'Field Technician',
-      permissions: ['View Appointments', 'Update Status', 'Access Maps']
+      permissions: []
     },
     {
       id: '2',
       name: 'David Brown',
       role: 'Field Technician',
-      permissions: ['View Appointments', 'Update Status', 'Access Maps']
+      permissions: []
     },
     {
       id: '3',
       name: 'Sarah Martinez',
       role: 'Dispatcher',
-      permissions: [
-        'View All Appointments',
-        'Assign Appointments',
-        'Live Tracking',
-        'View Reports'
-      ]
+      permissions: []
     }
   ]
 

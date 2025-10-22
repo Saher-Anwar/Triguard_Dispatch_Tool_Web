@@ -20,7 +20,7 @@ export interface User {
   name: string;
   role: 'Master' | 'Dispatcher' | 'Field Technician';
   avatar?: string;
-  permissions: string[];
+  permissions: Permission[];
 }
 
 export interface StatData {

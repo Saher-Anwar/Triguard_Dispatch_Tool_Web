@@ -21,12 +21,18 @@ export function UserCard({ user }: UserCardProps) {
       
       <CardContent className="pt-0">
         <div className="space-y-3">
-          {user.permissions.map((permission, index) => (
-            <div key={index} className="flex items-center gap-3">
-              <Check className="h-4 w-4 text-emerald-500 flex-shrink-0" />
-              <span className="text-sm text-muted-foreground">{permission}</span>
+          {user.permissions.length > 0 ? (
+            user.permissions.map((permission, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <Check className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                <span className="text-sm text-muted-foreground">{permission.description}</span>
+              </div>
+            ))
+          ) : (
+            <div className="text-sm text-muted-foreground italic">
+              No permissions assigned
             </div>
-          ))}
+          )}
         </div>
       </CardContent>
     </Card>

@@ -1,4 +1,4 @@
-import { Settings, Plus } from 'lucide-react'
+import { Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UserCard } from '@/components/users/UserCard'
 import { getUsers } from '@/api/user'
@@ -22,10 +22,6 @@ export function UsersPage() {
           <Button variant="outline" className="gap-2">
             <Settings className="h-4 w-4" />
             Manage Roles
-          </Button>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Add User
           </Button>
         </div>
       </div>
