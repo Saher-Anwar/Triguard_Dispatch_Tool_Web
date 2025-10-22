@@ -2,7 +2,8 @@ import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useAppointmentStore } from '@/store/useAppointmentStore'
-import { useUserStore } from '@/store/useUserStore'
+import { useQuery } from '@tanstack/react-query'
+import { getUsers } from '@/api/userApi'
 
 export function AppointmentFilters() {
   const { 
@@ -13,7 +14,12 @@ export function AppointmentFilters() {
     setStatusFilter, 
     setUserFilter 
   } = useAppointmentStore()
-  const { users } = useUserStore()
+
+  // Fetch users from API (or mock data for now)
+  const { data: users = [], isLoading, isError } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsers,
+  })
 
   return (
     <div className="flex flex-col sm:flex-row gap-4 mb-6">
@@ -51,11 +57,24 @@ export function AppointmentFilters() {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Users</SelectItem>
-          {users.map((user) => (
-            <SelectItem key={user.id} value={user.name}>
-              {user.name}
+          {isLoading && (
+            <SelectItem disabled value="loading">
+              Loading users...
             </SelectItem>
-          ))}
+          )}
+
+          {isError && (
+            <SelectItem disabled value="error">
+              Failed to load users
+            </SelectItem>
+          )}
+
+          {!isLoading && !isError &&
+            users.map((user) => (
+              <SelectItem key={user.id} value={user.name}>
+                {user.name}
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
     </div>

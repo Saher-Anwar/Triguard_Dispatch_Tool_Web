@@ -1,10 +1,17 @@
 import { Settings, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UserCard } from '@/components/users/UserCard'
-import { useUserStore } from '@/store/useUserStore'
+import { getUsers } from '@/api/userApi'
+import { useQuery } from '@tanstack/react-query'
 
 export function UsersPage() {
-  const { users } = useUserStore()
+  const { data: users = [], isLoading, isError } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsers,
+  })
+
+  if (isLoading) return <p>Loading users...</p>
+  if (isError) return <p>Failed to load users.</p>
 
   return (
     <div className="space-y-6">
