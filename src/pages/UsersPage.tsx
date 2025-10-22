@@ -1,7 +1,7 @@
 import { Settings, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UserCard } from '@/components/users/UserCard'
-import { getUsers } from '@/api/userApi'
+import { getUsers } from '@/api/user'
 import { useQuery } from '@tanstack/react-query'
 
 export function UsersPage() {

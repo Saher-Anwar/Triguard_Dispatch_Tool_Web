@@ -36,3 +36,13 @@ export interface TrackingData {
   distance: string;
   technician: string;
 }
+
+export interface Permission {
+  code: string;
+  description: string;
+}
+
+export interface Role {
+  name: string;
+  permissions: Permission[];
+}

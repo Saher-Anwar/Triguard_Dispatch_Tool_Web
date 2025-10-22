@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useAppointmentStore } from '@/store/useAppointmentStore'
 import { useQuery } from '@tanstack/react-query'
-import { getUsers } from '@/api/userApi'
+import { getUsers } from '@/api/user'
 
 export function AppointmentFilters() {
   const { 
