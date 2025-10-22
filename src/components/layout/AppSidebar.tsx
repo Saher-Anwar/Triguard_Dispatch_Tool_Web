@@ -92,7 +92,6 @@ export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
             <div className="h-10 w-10 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500" />
             <div className="flex-1 min-w-0">
               <div className="font-semibold text-sm">{currentUser.name}</div>
-              <div className="text-xs text-muted-foreground">{currentUser.role}</div>
             </div>
           </div>
         </div>

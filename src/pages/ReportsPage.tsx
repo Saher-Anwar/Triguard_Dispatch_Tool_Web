@@ -1,7 +1,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { StatCard } from '@/components/reports/StatCard'
 import { ChartPlaceholder } from '@/components/reports/ChartPlaceholder'
-import { StatData } from '@/types'
+import type { StatData } from '@/types'
 
 const mockStats: StatData[] = [
   {

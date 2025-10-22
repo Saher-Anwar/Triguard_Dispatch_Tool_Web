@@ -11,8 +11,7 @@ export async function getAppointments(): Promise<Appointment[]> {
       assignedUser: {
         id: '1',
         name: 'Mike Johnson',
-        role: 'Field Technician',
-        permissions: ['View Appointments', 'Update Status', 'Access Maps'],
+        permissions: [],
       },
     },
     {
@@ -24,8 +23,7 @@ export async function getAppointments(): Promise<Appointment[]> {
       assignedUser: {
         id: '2',
         name: 'David Brown',
-        role: 'Field Technician',
-        permissions: ['View Appointments', 'Update Status', 'Access Maps'],
+        permissions: [],
       },
     },
     {
@@ -37,8 +35,7 @@ export async function getAppointments(): Promise<Appointment[]> {
       assignedUser: {
         id: '1',
         name: 'Mike Johnson',
-        role: 'Field Technician',
-        permissions: ['View Appointments', 'Update Status', 'Access Maps'],
+        permissions: [],
       },
     },
     {
@@ -58,13 +55,7 @@ export async function getAppointments(): Promise<Appointment[]> {
       assignedUser: {
         id: '3',
         name: 'Sarah Martinez',
-        role: 'Dispatcher',
-        permissions: [
-          'View All Appointments',
-          'Assign Appointments',
-          'Live Tracking',
-          'View Reports',
-        ],
+        permissions: [],
       },
     },
   ]

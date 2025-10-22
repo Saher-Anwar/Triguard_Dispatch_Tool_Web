@@ -18,7 +18,6 @@ export interface Appointment {
 export interface User {
   id: string;
   name: string;
-  role: 'Master' | 'Dispatcher' | 'Field Technician';
   avatar?: string;
   permissions: Permission[];
 }
@@ -40,9 +39,4 @@ export interface TrackingData {
 export interface Permission {
   code: string;
   description: string;
-}
-
-export interface Role {
-  name: string;
-  permissions: Permission[];
 }
