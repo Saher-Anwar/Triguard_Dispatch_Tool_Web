@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { User } from '@/types'
+import type { User } from '@/types'
 
 interface UserCardProps {
   user: User
