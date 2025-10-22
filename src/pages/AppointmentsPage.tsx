@@ -3,9 +3,21 @@ import { Button } from '@/components/ui/button'
 import { AppointmentCard } from '@/components/appointments/AppointmentCard'
 import { AppointmentFilters } from '@/components/appointments/AppointmentFilters'
 import { useAppointmentStore } from '@/store/useAppointmentStore'
+import { useQuery } from '@tanstack/react-query'
+import { getAppointments } from '@/api/appointment'
+import { useEffect } from 'react'
 
 export function AppointmentsPage() {
-  const { getFilteredAppointments, openTrackingModal } = useAppointmentStore()
+  const { getFilteredAppointments, setAppointments, openTrackingModal } = useAppointmentStore()
+  const { data: appointments = [], isLoading, isError } = useQuery({
+    queryKey: ['appointments'],
+    queryFn: getAppointments,
+  })
+
+  useEffect(() => {
+    if (appointments.length > 0) setAppointments(appointments)
+  }, [appointments, setAppointments])
+
   const filteredAppointments = getFilteredAppointments()
 
   return (
@@ -30,7 +42,11 @@ export function AppointmentsPage() {
 
       {/* Appointments List */}
       <div className="space-y-3">
-        {filteredAppointments.length > 0 ? (
+        {isLoading ? (
+          <p className="text-muted-foreground text-center py-12">Loading appointments...</p>
+        ) : isError ? (
+          <p className="text-red-500 text-center py-12">Failed to load appointments</p>
+        ) : filteredAppointments.length > 0 ? (
           filteredAppointments.map((appointment) => (
             <AppointmentCard
               key={appointment.id}

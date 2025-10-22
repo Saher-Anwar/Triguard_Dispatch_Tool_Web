@@ -1,4 +1,3 @@
-// src/api/getUsers.ts
 import type { User } from '@/types'
 
 export async function getUsers(): Promise<User[]> {
