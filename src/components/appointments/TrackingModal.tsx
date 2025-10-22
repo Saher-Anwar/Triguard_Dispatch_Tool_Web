@@ -35,7 +35,7 @@ export function TrackingModal() {
 
   return (
     <Dialog open={isTrackingModalOpen} onOpenChange={closeTrackingModal}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden bg-card border border-border">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-border">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">
             Live Tracking - {selectedAppointment.customerName}
@@ -43,57 +43,6 @@ export function TrackingModal() {
         </DialogHeader>
 
         <div className="space-y-6 overflow-y-auto">
-          {/* Map Placeholder */}
-          <Card>
-            <CardContent className="p-8">
-              <div className="flex flex-col items-center justify-center h-96 bg-secondary rounded-lg">
-                <MapPin className="h-20 w-20 text-muted-foreground mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">
-                  Map with Live Route Tracking
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Map integration will be added when mapping libraries are installed
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Tracking Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
-                  ETA
-                </div>
-                <div className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-                  12 mins
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
-                  Distance
-                </div>
-                <div className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-                  3.2 mi
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
-                  Technician
-                </div>
-                <div className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-                  {selectedAppointment.assignedUser?.name || 'Unassigned'}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Appointment Details */}
           <Card>
             <CardContent className="p-6">
@@ -145,6 +94,61 @@ export function TrackingModal() {
               </div>
             </CardContent>
           </Card>
+          
+          {/* Tracking Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="p-6 text-center">
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
+                  ETA
+                </div>
+                <div className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+                  12 mins
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6 text-center">
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
+                  Distance
+                </div>
+                <div className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+                  3.2 mi
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6 text-center">
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
+                  Technician
+                </div>
+                <div className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+                  {selectedAppointment.assignedUser?.name || 'Unassigned'}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Map Placeholder */}
+          <Card>
+            <CardContent className="p-8">
+              <div className="flex flex-col items-center justify-center h-96 bg-secondary rounded-lg">
+                <MapPin className="h-20 w-20 text-muted-foreground mb-4" />
+                <p className="text-lg font-medium text-muted-foreground">
+                  Map with Live Route Tracking
+                </p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Map integration will be added when mapping libraries are installed
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+
+
+
         </div>
       </DialogContent>
     </Dialog>
