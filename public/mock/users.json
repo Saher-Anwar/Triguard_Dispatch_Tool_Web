@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "name": "Mike Johnson",
+    "role": {
+      "name": "Master",
+      "permissions": [
+        "All Permissions"
+      ]
+    },
+    "permissions": []
+  },
+  {
+    "id": "2",
+    "name": "David Brown",
+    "role": {
+      "name": "Admin",
+      "permissions": [
+        "Manage Users",
+        "View All Appointments",
+        "View Reports"
+      ]
+    },
+    "permissions": []
+  },
+  {
+    "id": "3",
+    "name": "Sarah Martinez",
+    "role": {
+      "name": "Dispatcher",
+      "permissions": [
+        "Create Appointments",
+        "View Assigned Appointments"
+      ]
+    },
+    "permissions": []
+  }
+]
