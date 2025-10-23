@@ -10,7 +10,6 @@ const currentUser: User = {
   id: 'admin',
   name: 'Admin User',
   permissions: [],
-  role: null
 }
 
 export const useUserStore = create<UserStore>((set) => ({

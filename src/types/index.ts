@@ -20,7 +20,8 @@ export interface User {
   name: string;
   avatar?: string;
   permissions: Permission[];
-  role: Role | null;
+  role?: Role;
+  status?: string;
 }
 
 export interface StatData {
