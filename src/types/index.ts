@@ -15,6 +15,15 @@ export interface Appointment {
   assignedUser: User | null;
 }
 
+export interface UserProfile {
+  email?: string;
+  age?: number;
+  address?: string;
+  phone?: string;
+  department?: string;
+  [key: string]: any;
+}
+
 export interface User {
   id: string;
   name: string;
@@ -22,14 +31,7 @@ export interface User {
   permissions: Permission[];
   role?: Role;
   status?: string;
-  profile?: {
-    email?: string;
-    age?: number;
-    address?: string;
-    phone?: string;
-    department?: string;
-    [key: string]: any;
-  };
+  profile?: UserProfile;
 }
 
 export interface StatData {

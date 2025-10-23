@@ -88,6 +88,18 @@ export function UserCard({ user }: UserCardProps) {
                     <span className="text-sm">Department: {user.profile.department}</span>
                   </div>
                 )}
+                {/* Display any other profile fields that aren't handled above */}
+                {user.profile && Object.entries(user.profile)
+                  .filter(([key]) => !['email', 'age', 'address', 'phone', 'department'].includes(key))
+                  .map(([key, value]) => (
+                    <div key={key} className="flex items-center gap-3">
+                      <UserIcon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                      <span className="text-sm">
+                        {String(value)}
+                      </span>
+                    </div>
+                  ))
+                }
                 {(!user.profile || Object.keys(user.profile).length === 0) && (
                   <div className="text-sm text-muted-foreground italic">
                     No profile information available
