@@ -1,5 +1,3 @@
-
-// src/api/appointmentApi.ts
 export async function getUsers() {
   // Replace this with `fetch('/api/users').then(res => res.json())` later
   const response = await fetch('/mock/users.json') // served from /public/mock/
