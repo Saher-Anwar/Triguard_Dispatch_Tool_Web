@@ -1,8 +1,8 @@
 import { Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { UserDataTable } from '@/components/users/UserDataTable'
 import { getUsers } from '@/api/user'
 import { useQuery } from '@tanstack/react-query'
+import { UserDataTable } from '@/components/users/UserDataTable'
 
 export function UsersPage() {
   const { data: users = [], isLoading, isError } = useQuery({

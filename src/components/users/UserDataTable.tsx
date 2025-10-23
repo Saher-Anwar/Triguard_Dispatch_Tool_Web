@@ -1,6 +1,5 @@
 import * as React from "react"
 import {
-  type ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -21,6 +20,7 @@ import {
 } from "@/components/ui/dialog"
 import { UserCard } from "./UserCard"
 import type { User } from "@/types"
+import { columns } from "./UserColumns"
 
 interface UserDataTableProps {
   users: User[]
@@ -28,29 +28,6 @@ interface UserDataTableProps {
 
 export function UserDataTable({ users }: UserDataTableProps) {
   const [selectedUser, setSelectedUser] = React.useState<User | null>(null)
-
-  const columns: ColumnDef<User>[] = [
-    {
-      accessorKey: "name",
-      header: "Name",
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => {
-        const status = row.getValue("status") as string
-        return status || "Active"
-      },
-    },
-    {
-      accessorKey: "role",
-      header: "Role",
-      cell: ({ row }) => {
-        const role = row.getValue("role") as User["role"]
-        return role?.name || "No role assigned"
-      },
-    },
-  ]
 
   const table = useReactTable({
     data: users,
