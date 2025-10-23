@@ -6,17 +6,20 @@ export async function getUsers(): Promise<User[]> {
     {
       id: '1',
       name: 'Mike Johnson',
-      permissions: []
+      permissions: [],
+      role: null
     },
     {
       id: '2',
       name: 'David Brown',
-      permissions: []
+      permissions: [],
+      role: null
     },
     {
       id: '3',
       name: 'Sarah Martinez',
-      permissions: []
+      permissions: [],
+      role: null
     }
   ]
 

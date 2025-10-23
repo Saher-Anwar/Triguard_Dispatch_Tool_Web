@@ -20,6 +20,7 @@ export interface User {
   name: string;
   avatar?: string;
   permissions: Permission[];
+  role: Role | null;
 }
 
 export interface StatData {
@@ -39,4 +40,9 @@ export interface TrackingData {
 export interface Permission {
   code: string;
   description: string;
+}
+
+export interface Role {
+  name: string,
+  permissions: Permission[];
 }

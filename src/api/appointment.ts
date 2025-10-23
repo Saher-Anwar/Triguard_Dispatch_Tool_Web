@@ -12,6 +12,7 @@ export async function getAppointments(): Promise<Appointment[]> {
         id: '1',
         name: 'Mike Johnson',
         permissions: [],
+        role: null
       },
     },
     {
@@ -24,6 +25,7 @@ export async function getAppointments(): Promise<Appointment[]> {
         id: '2',
         name: 'David Brown',
         permissions: [],
+        role: null
       },
     },
     {
@@ -36,6 +38,7 @@ export async function getAppointments(): Promise<Appointment[]> {
         id: '1',
         name: 'Mike Johnson',
         permissions: [],
+        role: null
       },
     },
     {
@@ -56,6 +59,7 @@ export async function getAppointments(): Promise<Appointment[]> {
         id: '3',
         name: 'Sarah Martinez',
         permissions: [],
+        role: null
       },
     },
   ]

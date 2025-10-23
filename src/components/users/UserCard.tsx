@@ -14,7 +14,7 @@ export function UserCard({ user }: UserCardProps) {
           <div className="h-14 w-14 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500" />
           <div className="flex-1">
             <h3 className="text-lg font-semibold">{user.name}</h3>
-            <p className="text-sm text-muted-foreground">{user.role}</p>
+            <p className="text-sm text-muted-foreground">{user.role ? "" : user.role}</p>
           </div>
         </div>
       </CardHeader>

@@ -9,8 +9,8 @@ interface UserStore {
 const currentUser: User = {
   id: 'admin',
   name: 'Admin User',
-  role: 'Master',
-  permissions: ['All Permissions']
+  permissions: [],
+  role: null
 }
 
 export const useUserStore = create<UserStore>((set) => ({
