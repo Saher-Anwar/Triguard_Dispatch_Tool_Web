@@ -22,6 +22,14 @@ export interface User {
   permissions: Permission[];
   role?: Role;
   status?: string;
+  profile?: {
+    email?: string;
+    age?: number;
+    address?: string;
+    phone?: string;
+    department?: string;
+    [key: string]: any;
+  };
 }
 
 export interface StatData {
