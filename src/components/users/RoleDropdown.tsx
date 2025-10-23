@@ -7,22 +7,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { getRoles } from "@/api/roles"
+import { getRoles, updateRole } from "@/api/roles"
 import type { User, Role } from "@/types"
 
 interface RoleDropdownProps {
   user: User
-  onRoleChange?: (userId: string, roleId: string) => void
 }
 
-export function RoleDropdown({ user, onRoleChange }: RoleDropdownProps) {
+export function RoleDropdown({ user }: RoleDropdownProps) {
   const { data: roles = [], isLoading } = useQuery({
     queryKey: ['roles'],
     queryFn: getRoles,
   })
 
-  const handleRoleSelect = (role: Role) => {
-    if (onRoleChange) onRoleChange(user.id, role.name)
+  const handleRoleSelect = (role: Role, e: React.MouseEvent) => {
+    e.stopPropagation()
+    updateRole(user.id, role.name)
   }
 
   if (isLoading) {
@@ -38,13 +38,13 @@ export function RoleDropdown({ user, onRoleChange }: RoleDropdownProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuItem onClick={() => handleRoleSelect({ name: "", permissions: [] } as Role)}>
+        <DropdownMenuItem onClick={(e) => handleRoleSelect({ name: "", permissions: [] } as Role, e)}>
           No role assigned
         </DropdownMenuItem>
         {roles.map((role: Role) => (
           <DropdownMenuItem
             key={role.name}
-            onClick={() => handleRoleSelect(role)}
+            onClick={(e) => handleRoleSelect(role, e)}
           >
             {role.name}
           </DropdownMenuItem>
