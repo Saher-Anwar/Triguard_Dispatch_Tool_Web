@@ -5,3 +5,7 @@ export async function getRoles() {
   await new Promise((r) => setTimeout(r, 300))
   return response.json()
 }
+
+export function updateRole(userId: string, roleName: string) {
+  console.log(`Role selection: User ${userId} assigned role "${roleName}"`)
+}
