@@ -1,6 +1,7 @@
 import type { User } from "@/types"
 import type { ColumnDef } from "@tanstack/react-table"
 import { RoleDropdown } from "./RoleDropdown"
+import { ModifyPermissionsDialog } from "./ModifyPermissionsDialog"
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -22,4 +23,10 @@ export const columns: ColumnDef<User>[] = [
       return <RoleDropdown user={row.original} />
     },
   },
+  {
+    id: "permissions",
+    cell: ({ row }) => {
+      return <ModifyPermissionsDialog user={row.original} />
+    }
+  }
 ]
