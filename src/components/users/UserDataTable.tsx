@@ -4,10 +4,12 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  getFilteredRowModel,
   useReactTable,
   type SortingState,
+  type ColumnFiltersState,
 } from "@tanstack/react-table"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, Search } from "lucide-react"
 import {
   Table,
   TableBody,
@@ -23,6 +25,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { UserCard } from "./UserCard"
 import type { User } from "@/types"
 import { columns } from "./UserColumns"
@@ -34,6 +37,7 @@ interface UserDataTableProps {
 export function UserDataTable({ users }: UserDataTableProps) {
   const [selectedUser, setSelectedUser] = React.useState<User | null>(null)
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data: users,
@@ -41,9 +45,12 @@ export function UserDataTable({ users }: UserDataTableProps) {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     state: {
       sorting,
+      columnFilters,
     },
     initialState: {
       pagination: {
@@ -54,6 +61,21 @@ export function UserDataTable({ users }: UserDataTableProps) {
 
   return (
     <>
+      {/* Search Input */}
+      <div className="flex items-center py-4">
+        <div className="relative max-w-sm">
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search users by name..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="pl-8"
+          />
+        </div>
+      </div>
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
