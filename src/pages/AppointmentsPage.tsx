@@ -1,24 +1,22 @@
 import { Download, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { AppointmentCard } from '@/components/appointments/AppointmentCard'
-import { AppointmentFilters } from '@/components/appointments/AppointmentFilters'
+import { AppointmentDataTable } from '@/components/appointments/AppointmentDataTable'
 import { useAppointmentStore } from '@/store/useAppointmentStore'
 import { useQuery } from '@tanstack/react-query'
 import { getAppointments } from '@/api/appointment'
-import { useEffect } from 'react'
 
 export function AppointmentsPage() {
-  const { getFilteredAppointments, setAppointments, openTrackingModal } = useAppointmentStore()
+  const { openTrackingModal } = useAppointmentStore()
   const { data: appointments = [], isLoading, isError } = useQuery({
     queryKey: ['appointments'],
     queryFn: getAppointments,
   })
 
-  useEffect(() => {
-    if (appointments.length > 0) setAppointments(appointments)
-  }, [appointments, setAppointments])
-
-  const filteredAppointments = getFilteredAppointments()
+  const handleAppointmentClick = (appointment: any) => {
+    if (appointment.status === 'in-progress') {
+      openTrackingModal(appointment)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -37,36 +35,21 @@ export function AppointmentsPage() {
         </div>
       </div>
 
-      {/* Filters */}
-      <AppointmentFilters />
-
-      {/* Appointments List */}
-      <div className="space-y-3">
-        {isLoading ? (
-          <p className="text-muted-foreground text-center py-12">Loading appointments...</p>
-        ) : isError ? (
-          <p className="text-red-500 text-center py-12">Failed to load appointments</p>
-        ) : filteredAppointments.length > 0 ? (
-          filteredAppointments.map((appointment) => (
-            <AppointmentCard
-              key={appointment.id}
-              appointment={appointment}
-              onClick={() => {
-                if (appointment.status === 'in-progress') {
-                  openTrackingModal(appointment)
-                }
-              }}
-            />
-          ))
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">No appointments found</p>
-            <p className="text-muted-foreground text-sm mt-2">
-              Try adjusting your filters or create a new appointment
-            </p>
-          </div>
-        )}
-      </div>
+      {/* Appointments Data Table */}
+      {isLoading ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">Loading appointments...</p>
+        </div>
+      ) : isError ? (
+        <div className="text-center py-12">
+          <p className="text-red-500">Failed to load appointments</p>
+        </div>
+      ) : (
+        <AppointmentDataTable 
+          appointments={appointments} 
+          onAppointmentClick={handleAppointmentClick}
+        />
+      )}
     </div>
   )
 }

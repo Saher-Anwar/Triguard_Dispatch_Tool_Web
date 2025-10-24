@@ -1,0 +1,121 @@
+import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
+import type { Appointment } from "@/types"
+import type { ColumnDef } from "@tanstack/react-table"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+
+const getStatusVariant = (status: string) => {
+  switch (status) {
+    case 'unassigned':
+      return 'secondary'
+    case 'scheduled':
+      return 'default'
+    case 'in-progress':
+      return 'destructive'
+    case 'complete':
+      return 'success'
+    case 'cancelled':
+      return 'outline'
+    case 'rescheduled':
+      return 'secondary'
+    default:
+      return 'default'
+  }
+}
+
+export const appointmentColumns: ColumnDef<Appointment>[] = [
+  {
+    accessorKey: "customerName",
+    header: ({ column }) => {
+      const getSortIcon = () => {
+        if (column.getIsSorted() === "asc") {
+          return <ArrowUp className="ml-2 h-4 w-4" />
+        }
+        if (column.getIsSorted() === "desc") {
+          return <ArrowDown className="ml-2 h-4 w-4" />
+        }
+        return <ArrowUpDown className="ml-2 h-4 w-4" />
+      }
+
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-8 px-2 hover:bg-muted"
+        >
+          Customer Name
+          {getSortIcon()}
+        </Button>
+      )
+    },
+  },
+  {
+    accessorKey: "customerAddress",
+    header: "Address",
+    cell: ({ row }) => {
+      const address = row.getValue("customerAddress") as string
+      return (
+        <div className="max-w-[200px] truncate" title={address}>
+          {address}
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: "datetime",
+    header: ({ column }) => {
+      const getSortIcon = () => {
+        if (column.getIsSorted() === "asc") {
+          return <ArrowUp className="ml-2 h-4 w-4" />
+        }
+        if (column.getIsSorted() === "desc") {
+          return <ArrowDown className="ml-2 h-4 w-4" />
+        }
+        return <ArrowUpDown className="ml-2 h-4 w-4" />
+      }
+
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-8 px-2 hover:bg-muted"
+        >
+          Date & Time
+          {getSortIcon()}
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const datetime = row.getValue("datetime") as string
+      return new Date(datetime).toLocaleString()
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const status = row.getValue("status") as string
+      return (
+        <Badge variant={getStatusVariant(status)}>
+          {status.charAt(0).toUpperCase() + status.slice(1).replace('-', ' ')}
+        </Badge>
+      )
+    },
+    filterFn: (row, _id, value) => {
+      return row.getValue("status") === value
+    },
+  },
+  {
+    accessorKey: "assignedUser",
+    header: "Assigned User",
+    cell: ({ row }) => {
+      const assignedUser = row.getValue("assignedUser") as Appointment["assignedUser"]
+      return assignedUser ? assignedUser.name : "Unassigned"
+    },
+    filterFn: (row, _id, value) => {
+      const assignedUser = row.original.assignedUser
+      const userName = assignedUser?.name || "Unassigned"
+      return userName.includes(value)
+    },
+  },
+]
