@@ -45,6 +45,10 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       return <RoleDropdown user={row.original} />
     },
+    filterFn: (row, _id, value) => {
+      const roleName = row.original.role?.name || ""
+      return roleName.includes(value)
+    },
   },
   {
     id: "permissions",

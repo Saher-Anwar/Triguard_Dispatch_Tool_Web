@@ -26,9 +26,19 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { UserCard } from "./UserCard"
 import type { User } from "@/types"
 import { columns } from "./UserColumns"
+import { getRoles } from "@/api/roles"
+import { getUserStatuses } from "@/api/status"
+import { useQuery } from "@tanstack/react-query"
 
 interface UserDataTableProps {
   users: User[]
@@ -38,6 +48,17 @@ export function UserDataTable({ users }: UserDataTableProps) {
   const [selectedUser, setSelectedUser] = React.useState<User | null>(null)
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+
+  // Get roles and statuses from API
+  const { data: roles = [] } = useQuery({
+    queryKey: ['roles'],
+    queryFn: getRoles,
+  })
+
+  const { data: statuses = [] } = useQuery({
+    queryKey: ['statuses'],
+    queryFn: getUserStatuses,
+  })
 
   const table = useReactTable({
     data: users,
@@ -61,8 +82,9 @@ export function UserDataTable({ users }: UserDataTableProps) {
 
   return (
     <>
-      {/* Search Input */}
-      <div className="flex items-center py-4">
+      {/* Search and Filter Controls */}
+      <div className="flex items-center gap-4 py-4">
+        {/* Search Input */}
         <div className="relative max-w-sm">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -74,6 +96,46 @@ export function UserDataTable({ users }: UserDataTableProps) {
             className="pl-8"
           />
         </div>
+
+        {/* Status Filter */}
+        <Select
+          value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+          onValueChange={(value) =>
+            table.getColumn("status")?.setFilterValue(value === "all" ? "" : value)
+          }
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            {statuses.map((status: any) => (
+              <SelectItem key={status.name || status} value={status.name || status}>
+                {status.name || status}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {/* Role Filter */}
+        <Select
+          value={(table.getColumn("role")?.getFilterValue() as string) ?? ""}
+          onValueChange={(value) =>
+            table.getColumn("role")?.setFilterValue(value === "all" ? "" : value)
+          }
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by role" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All roles</SelectItem>
+            {roles.map((role: any) => (
+              <SelectItem key={role.name} value={role.name}>
+                {role.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="rounded-md border">

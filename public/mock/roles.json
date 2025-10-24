@@ -27,5 +27,23 @@
       { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
       { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
     ]
+  },
+  {
+    "name": "Dispatcher",
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+      { "code": "APPOINTMENTS.DELETE", "description": "Delete Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.ASSIGN_AGENT", "description": "Assign or Reassign Agents to Appointment" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+      { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
+      { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
+    ]
+  },
+  {
+    "name": "Master",
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" }
+    ]
   }
 ]
