@@ -65,3 +65,11 @@ export interface Disposition {
   description: string;
   notes?: string;
 }
+
+export interface Timesheet {
+  id: string;
+  user: User;
+  date: string;       // ISO date string: "2025-10-24"
+  start_time: string; // ISO datetime or time: "14:30:00"
+  end_time: string;   // ISO datetime or time: "17:45:00"
+}
