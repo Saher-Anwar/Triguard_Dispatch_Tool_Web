@@ -70,5 +70,206 @@
       "age": 28,
       "department": "Dispatch"
     }
+  },
+  {
+    "id": "4",
+    "name": "James Wilson",
+    "status": "Active",
+    "role": {
+      "name": "Agent",
+      "permissions": []
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+      { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
+    ],
+    "profile": {
+      "email": "james.wilson@company.com",
+      "age": 32,
+      "address": "789 Pine St, Chicago, IL 60601",
+      "phone": "+1 (555) 234-5678",
+      "department": "Field Operations",
+      "gender": "Male"
+    }
+  },
+  {
+    "id": "5",
+    "name": "Emily Chen",
+    "status": "Active",
+    "role": {
+      "name": "Admin",
+      "permissions": []
+    },
+    "permissions": [
+      { "code": "USERS.VIEW", "description": "View All Users" },
+      { "code": "USERS.CREATE", "description": "Create Users" },
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" }
+    ],
+    "profile": {
+      "email": "emily.chen@company.com",
+      "age": 29,
+      "address": "321 Elm St, San Francisco, CA 94102",
+      "department": "Administration",
+      "startDate": "2022-03-15"
+    }
+  },
+  {
+    "id": "6",
+    "name": "Robert Taylor",
+    "status": "Inactive",
+    "role": {
+      "name": "Agent",
+      "permissions": []
+    },
+    "permissions": [],
+    "profile": {
+      "email": "robert.taylor@company.com",
+      "age": 45,
+      "phone": "+1 (555) 345-6789",
+      "department": "Field Operations",
+      "employeeId": "EMP006"
+    }
+  },
+  {
+    "id": "7",
+    "name": "Lisa Anderson",
+    "status": "Active",
+    "role": {
+      "name": "Dispatcher",
+      "permissions": []
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+    ],
+    "profile": {
+      "email": "lisa.anderson@company.com",
+      "age": 26,
+      "address": "654 Broadway, Boston, MA 02101",
+      "phone": "+1 (555) 456-7890",
+      "department": "Dispatch",
+      "gender": "Female",
+      "shift": "Night"
+    }
+  },
+  {
+    "id": "8",
+    "name": "Michael Rodriguez",
+    "status": "Active",
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" }
+    ],
+    "profile": {
+      "email": "michael.rodriguez@company.com",
+      "age": 38,
+      "address": "987 Oak Ave, Miami, FL 33101",
+      "phone": "+1 (555) 567-8901",
+      "department": "Field Operations",
+      "vehicleAssigned": "VAN-003"
+    }
+  },
+  {
+    "id": "9",
+    "name": "Jennifer Kim",
+    "status": "Active",
+    "role": {
+      "name": "Admin",
+      "permissions": []
+    },
+    "permissions": [
+      { "code": "USERS.VIEW", "description": "View All Users" },
+      { "code": "ROLES.CREATE", "description": "Create Roles" },
+      { "code": "ROLES.UPDATE", "description": "Add Permissions to Roles" }
+    ],
+    "profile": {
+      "email": "jennifer.kim@company.com",
+      "age": 31,
+      "address": "147 Main St, Seattle, WA 98101",
+      "department": "Human Resources",
+      "certifications": "HR Certified, Leadership Training"
+    }
+  },
+  {
+    "id": "10",
+    "name": "Daniel Thompson",
+    "status": "On Leave",
+    "role": {
+      "name": "Agent",
+      "permissions": []
+    },
+    "permissions": [],
+    "profile": {
+      "email": "daniel.thompson@company.com",
+      "age": 27,
+      "phone": "+1 (555) 678-9012",
+      "department": "Field Operations",
+      "hireDate": "2023-01-10",
+      "emergencyContact": "Jane Thompson - (555) 123-4567"
+    }
+  },
+  {
+    "id": "11",
+    "name": "Amanda Davis",
+    "status": "Active",
+    "role": {
+      "name": "Dispatcher",
+      "permissions": []
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "USERS.VIEW", "description": "View All Users" }
+    ],
+    "profile": {
+      "email": "amanda.davis@company.com",
+      "age": 33,
+      "address": "258 Cedar St, Portland, OR 97201",
+      "phone": "+1 (555) 789-0123",
+      "department": "Dispatch",
+      "languages": "English, Spanish"
+    }
+  },
+  {
+    "id": "12",
+    "name": "Christopher Lee",
+    "status": "Active",
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+      { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
+      { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
+    ],
+    "profile": {
+      "email": "christopher.lee@company.com",
+      "age": 41,
+      "address": "369 Maple Ave, Denver, CO 80201",
+      "phone": "+1 (555) 890-1234",
+      "department": "Field Operations",
+      "specialization": "Commercial Properties"
+    }
+  },
+  {
+    "id": "13",
+    "name": "Nicole White",
+    "status": "Active",
+    "role": {
+      "name": "Admin",
+      "permissions": []
+    },
+    "permissions": [
+      { "code": "USERS.VIEW", "description": "View All Users" },
+      { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "ROLES.CREATE", "description": "Create Roles" }
+    ],
+    "profile": {
+      "email": "nicole.white@company.com",
+      "age": 36,
+      "address": "741 River Rd, Austin, TX 78701",
+      "phone": "+1 (555) 901-2345",
+      "department": "Administration",
+      "education": "MBA in Business Administration"
+    }
   }
 ]
