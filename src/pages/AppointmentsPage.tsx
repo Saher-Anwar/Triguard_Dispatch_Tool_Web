@@ -4,6 +4,7 @@ import { AppointmentDataTable } from '@/components/appointments/AppointmentDataT
 import { useAppointmentStore } from '@/store/useAppointmentStore'
 import { useQuery } from '@tanstack/react-query'
 import { getAppointments } from '@/api/appointment'
+import type { Appointment } from '@/types'
 
 export function AppointmentsPage() {
   const { openTrackingModal } = useAppointmentStore()
@@ -12,7 +13,7 @@ export function AppointmentsPage() {
     queryFn: getAppointments,
   })
 
-  const handleAppointmentClick = (appointment: any) => {
+  const handleAppointmentClick = (appointment: Appointment) => {
     if (appointment.status === 'in-progress') {
       openTrackingModal(appointment)
     }
