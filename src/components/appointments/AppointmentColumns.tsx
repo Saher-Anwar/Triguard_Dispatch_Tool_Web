@@ -102,7 +102,9 @@ export const appointmentColumns: ColumnDef<Appointment>[] = [
       )
     },
     filterFn: (row, _id, value) => {
-      return row.getValue("status") === value
+      const rowStatus = (row.getValue("status") as string).toLowerCase()
+      const filterValue = value.toLowerCase()
+      return rowStatus === filterValue
     },
   },
   {

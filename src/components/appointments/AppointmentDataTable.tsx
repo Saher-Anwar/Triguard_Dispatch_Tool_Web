@@ -96,9 +96,9 @@ export function AppointmentDataTable({ appointments, onAppointmentClick }: Appoi
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All statuses</SelectItem>
-            {statuses.map((status: any) => (
-              <SelectItem key={status.name || status} value={status.name || status}>
-                {(status.name || status).charAt(0).toUpperCase() + (status.name || status).slice(1).replace('-', ' ')}
+            {statuses.map((status: string) => (
+              <SelectItem key={status} value={status}>
+                {(status).charAt(0).toUpperCase() + (status).slice(1).replace('-', ' ')}
               </SelectItem>
             ))}
           </SelectContent>
