@@ -90,6 +90,11 @@
         "age": 28,
         "department": "Dispatch"
       }
+    },
+    "disposition": {
+      "name": "Job Completed Successfully",
+      "description": "All requested services were completed according to specifications. Customer satisfied with work quality.",
+      "notes": "Customer was very pleased with the installation. No issues encountered. Recommend follow-up in 6 months for maintenance check."
     }
   },
   {
@@ -126,6 +131,57 @@
         "department": "Administration",
         "startDate": "2022-03-15"
       }
+    }
+  },
+  {
+    "id": "6",
+    "customerName": "David Thompson",
+    "customerAddress": "987 Cedar Drive, Medford, MA",
+    "datetime": "Oct 18, 2025 - 2:30 PM",
+    "status": "complete",
+    "assignedUser": {
+      "id": "1",
+      "name": "Mike Johnson",
+      "status": "Active",
+      "role": {
+        "name": "Master",
+        "permissions": []
+      },
+      "permissions": [],
+      "profile": {
+        "email": "mike.johnson@company.com",
+        "department": "Operations"
+      }
+    },
+    "disposition": {
+      "name": "Partial Completion",
+      "description": "Equipment issue prevented full completion. Customer rescheduled for remaining work.",
+      "notes": "Main unit installed successfully but secondary component requires special part. Ordered part #ABC123. Customer satisfied with progress and agreed to reschedule for part installation next week."
+    }
+  },
+  {
+    "id": "7",
+    "customerName": "Lisa Rodriguez",
+    "customerAddress": "555 Walnut Street, Arlington, MA",
+    "datetime": "Oct 17, 2025 - 8:00 AM",
+    "status": "complete",
+    "assignedUser": {
+      "id": "2",
+      "name": "David Brown",
+      "status": "Active",
+      "role": {
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [],
+      "profile": {
+        "email": "david.brown@company.com"
+      }
+    },
+    "disposition": {
+      "name": "No Access - Customer Unavailable",
+      "description": "Customer was not available at scheduled time despite confirmation.",
+      "notes": "Arrived on time but customer did not answer door or phone. Left notice and attempted to contact via phone twice. Will reschedule when customer responds."
     }
   }
 ]

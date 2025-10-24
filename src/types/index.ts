@@ -13,6 +13,7 @@ export interface Appointment {
   datetime: string;
   status: AppointmentStatus;
   assignedUser: User | null;
+  disposition?: Disposition;
 }
 
 export interface UserProfile {
@@ -56,4 +57,10 @@ export interface Permission {
 export interface Role {
   name: string,
   permissions: Permission[];
+}
+
+export interface Disposition {
+  name: string;
+  description: string;
+  notes?: string;
 }

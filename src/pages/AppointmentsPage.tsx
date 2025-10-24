@@ -1,22 +1,24 @@
 import { Download, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AppointmentDataTable } from '@/components/appointments/AppointmentDataTable'
-import { useAppointmentStore } from '@/store/useAppointmentStore'
+import { AppointmentDetailsDialog } from '@/components/appointments/AppointmentDetailsDialog'
 import { useQuery } from '@tanstack/react-query'
 import { getAppointments } from '@/api/appointment'
 import type { Appointment } from '@/types'
+import { useState } from 'react'
 
 export function AppointmentsPage() {
-  const { openTrackingModal } = useAppointmentStore()
+    const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
+
   const { data: appointments = [], isLoading, isError } = useQuery({
     queryKey: ['appointments'],
     queryFn: getAppointments,
   })
 
   const handleAppointmentClick = (appointment: Appointment) => {
-    if (appointment.status === 'in-progress') {
-      openTrackingModal(appointment)
-    }
+    setSelectedAppointment(appointment)
+    setDialogOpen(true)
   }
 
   return (
@@ -51,6 +53,13 @@ export function AppointmentsPage() {
           onAppointmentClick={handleAppointmentClick}
         />
       )}
+
+      <AppointmentDetailsDialog
+        appointment={selectedAppointment}
+        open={dialogOpen}
+        // important: allow the dialog to control its own close state
+        onOpenChange={setDialogOpen}
+      />
     </div>
   )
 }
