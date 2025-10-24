@@ -60,6 +60,7 @@ export interface Role {
 }
 
 export interface Disposition {
+  id: string;
   name: string;
   description: string;
   notes?: string;

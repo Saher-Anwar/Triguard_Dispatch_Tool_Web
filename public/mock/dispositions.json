@@ -1,0 +1,27 @@
+[
+  {
+    "id": "1",
+    "name": "Job Completed Successfully",
+    "description": "All requested services were completed according to specifications. Customer satisfied with work quality."
+  },
+  {
+    "id": "2", 
+    "name": "Partial Completion",
+    "description": "Equipment issue prevented full completion. Customer rescheduled for remaining work."
+  },
+  {
+    "id": "3",
+    "name": "No Access - Customer Unavailable", 
+    "description": "Customer was not available at scheduled time despite confirmation."
+  },
+  {
+    "id": "4",
+    "name": "Equipment Malfunction",
+    "description": "Technical equipment failure prevented service completion."
+  },
+  {
+    "id": "5",
+    "name": "Customer Cancelled",
+    "description": "Customer requested cancellation of scheduled service."
+  }
+]

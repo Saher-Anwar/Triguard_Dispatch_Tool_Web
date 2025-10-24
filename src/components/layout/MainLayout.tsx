@@ -4,6 +4,7 @@ import { AppSidebar } from './AppSidebar'
 import { AppointmentsPage } from '@/pages/AppointmentsPage'
 import { ReportsPage } from '@/pages/ReportsPage'
 import { UsersPage } from '@/pages/UsersPage'
+import { ConfigurationsPage } from '@/pages/ConfigurationsPage'
 import { TrackingModal } from '@/components/appointments/TrackingModal'
 
 export function MainLayout() {
@@ -17,6 +18,8 @@ export function MainLayout() {
         return <ReportsPage />
       case 'users':
         return <UsersPage />
+      case 'configurations':
+        return <ConfigurationsPage />
       default:
         return <AppointmentsPage />
     }
