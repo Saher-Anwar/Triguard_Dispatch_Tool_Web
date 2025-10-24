@@ -3,7 +3,9 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
+  type SortingState,
 } from "@tanstack/react-table"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import {
@@ -31,12 +33,18 @@ interface UserDataTableProps {
 
 export function UserDataTable({ users }: UserDataTableProps) {
   const [selectedUser, setSelectedUser] = React.useState<User | null>(null)
+  const [sorting, setSorting] = React.useState<SortingState>([])
 
   const table = useReactTable({
     data: users,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
     initialState: {
       pagination: {
         pageSize: 10,

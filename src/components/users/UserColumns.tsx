@@ -1,12 +1,35 @@
+import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
 import type { User } from "@/types"
 import type { ColumnDef } from "@tanstack/react-table"
+import { Button } from "@/components/ui/button"
 import { RoleDropdown } from "./RoleDropdown"
 import { ModifyPermissionsDialog } from "./ModifyPermissionsDialog"
 
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => {
+      const getSortIcon = () => {
+        if (column.getIsSorted() === "asc") {
+          return <ArrowUp className="ml-2 h-4 w-4" />
+        }
+        if (column.getIsSorted() === "desc") {
+          return <ArrowDown className="ml-2 h-4 w-4" />
+        }
+        return <ArrowUpDown className="ml-2 h-4 w-4" />
+      }
+
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-8 px-2 hover:bg-muted"
+        >
+          Name
+          {getSortIcon()}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "status",
