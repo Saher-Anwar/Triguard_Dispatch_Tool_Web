@@ -5,10 +5,40 @@
     "customerAddress": "123 Maple Street, Boston, MA",
     "datetime": "Oct 20, 2025 - 10:00 AM",
     "status": "in-progress",
-    "assignedUser": {
+      "assignedUser": {
       "id": "1",
       "name": "Mike Johnson",
-      "permissions": []
+      "status": "Active",
+      "role": {
+        "name": "Master",
+        "permissions": []
+      },
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.DELETE", "description": "Delete Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.ASSIGN_AGENT", "description": "Assign or Reassign Agents to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "USERS.DELETE", "description": "Delete Users" },
+        { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+        { "code": "ROLES.CREATE", "description": "Create Roles" },
+        { "code": "ROLES.DELETE", "description": "Delete Roles" },
+        { "code": "ROLES.UPDATE", "description": "Add Permissions to Roles" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
+        { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
+      ],
+      "profile": {
+        "email": "mike.johnson@company.com",
+        "age": 35,
+        "address": "123 Main St, New York, NY 10001",
+        "phone": "+1 (555) 123-4567",
+        "department": "Operations",
+        "gender": "Male"
+      }
     }
   },
   {
@@ -20,7 +50,21 @@
     "assignedUser": {
       "id": "2",
       "name": "David Brown",
-      "permissions": []
+      "status": "Active",
+      "role": {
+        "name": "Admin",
+        "permissions": [
+          "Manage Users",
+          "View All Appointments",
+          "View Reports"
+        ]
+      },
+      "permissions": [],
+      "profile": {
+        "email": "david.brown@company.com",
+        "address": "456 Oak Ave, Los Angeles, CA 90210",
+        "phone": "+1 (555) 987-6543"
+      }
     }
   },
   {
@@ -30,9 +74,22 @@
     "datetime": "Oct 19, 2025 - 9:00 AM",
     "status": "complete",
     "assignedUser": {
-      "id": "1",
-      "name": "Mike Johnson",
-      "permissions": []
+      "id": "3",
+      "name": "Sarah Martinez",
+      "status": "On Leave",
+      "role": {
+        "name": "Dispatcher",
+        "permissions": [
+          "Create Appointments",
+          "View Assigned Appointments"
+        ]
+      },
+      "permissions": [],
+      "profile": {
+        "email": "sarah.martinez@company.com",
+        "age": 28,
+        "department": "Dispatch"
+      }
     }
   },
   {
@@ -50,9 +107,25 @@
     "datetime": "Oct 21, 2025 - 3:00 PM",
     "status": "scheduled",
     "assignedUser": {
-      "id": "3",
-      "name": "Sarah Martinez",
-      "permissions": []
+      "id": "5",
+      "name": "Emily Chen",
+      "status": "Active",
+      "role": {
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" }
+      ],
+      "profile": {
+        "email": "emily.chen@company.com",
+        "age": 29,
+        "address": "321 Elm St, San Francisco, CA 94102",
+        "department": "Administration",
+        "startDate": "2022-03-15"
+      }
     }
   }
 ]
