@@ -2,14 +2,16 @@ import { Download, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { TimesheetDataTable } from '@/components/timesheets/TimesheetDataTable'
+import { TimesheetDialog } from '@/components/timesheets/TimesheetDialog'
 import { useQuery } from '@tanstack/react-query'
 import { getTimesheets, getUserTimesheets } from '@/api/timesheet'
-import type { Timesheet } from '@/types'
+import type { Timesheet, TimesheetData } from '@/types'
 import { useState } from 'react'
 
 export function TimesheetPage() {
   const [selectedTimesheet, setSelectedTimesheet] = useState<Timesheet | null>(null)
   const [timesheetFilter, setTimesheetFilter] = useState('all')
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const { data: timesheets = [], isLoading, isError } = useQuery({
     queryKey: ['timesheets', timesheetFilter],
@@ -19,6 +21,15 @@ export function TimesheetPage() {
   const handleTimesheetClick = (timesheet: Timesheet) => {
     setSelectedTimesheet(timesheet)
     console.log('Timesheet clicked:', timesheet)
+  }
+
+  const handleNewTimesheet = () => {
+    setIsDialogOpen(true)
+  }
+
+  const handleSaveTimesheet = (entries: TimesheetData[]) => {
+    console.log('Saving timesheet entries:', entries)
+    // Here you would typically call an API to save the timesheet
   }
 
   return (
@@ -31,7 +42,7 @@ export function TimesheetPage() {
             <Download className="h-4 w-4" />
             Export
           </Button>
-          <Button className="gap-2">
+          <Button onClick={handleNewTimesheet} className="gap-2">
             <Plus className="h-4 w-4" />
             New Timesheet
           </Button>
@@ -71,6 +82,12 @@ export function TimesheetPage() {
           onTimesheetClick={handleTimesheetClick}
         />
       )}
+
+      <TimesheetDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        onSave={handleSaveTimesheet}
+      />
     </div>
   )
 }
