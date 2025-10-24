@@ -3,6 +3,7 @@ import type { Appointment } from "@/types"
 import type { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { AppointmentStatusDropdown } from "./AppointmentStatusDropdown"
 
 const getStatusVariant = (status: string) => {
   switch (status) {
@@ -13,7 +14,7 @@ const getStatusVariant = (status: string) => {
     case 'in-progress':
       return 'destructive'
     case 'complete':
-      return 'success'
+      return 'default'
     case 'cancelled':
       return 'outline'
     case 'rescheduled':
@@ -23,7 +24,7 @@ const getStatusVariant = (status: string) => {
   }
 }
 
-export const appointmentColumns: ColumnDef<Appointment>[] = [
+export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnDef<Appointment>[] => [
   {
     accessorKey: "customerName",
     header: ({ column }) => {
@@ -94,7 +95,13 @@ export const appointmentColumns: ColumnDef<Appointment>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
+      const appointment = row.original
       const status = row.getValue("status") as string
+      
+      if (showStatusDropdown) {
+        return <AppointmentStatusDropdown appointment={appointment} />
+      }
+      
       return (
         <Badge variant={getStatusVariant(status)}>
           {status.charAt(0).toUpperCase() + status.slice(1).replace('-', ' ')}
