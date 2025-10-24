@@ -1,1 +1,119 @@
-[]
+[
+  {
+    "id": "1",
+    "user": {
+      "id": "1",
+      "name": "Mike Johnson",
+      "status": "Active",
+      "role": {
+        "name": "Master",
+        "permissions": []
+      },
+      "permissions": [],
+      "profile": {
+        "email": "mike.johnson@company.com",
+        "department": "Operations"
+      }
+    },
+    "entries": [
+      {
+        "id": "1",
+        "date": "2025-10-24",
+        "start_time": "08:00:00",
+        "end_time": "17:00:00"
+      },
+      {
+        "id": "2", 
+        "date": "2025-10-23",
+        "start_time": "08:30:00",
+        "end_time": "16:30:00"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "user": {
+      "id": "2",
+      "name": "David Brown",
+      "status": "Active",
+      "role": {
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [],
+      "profile": {
+        "email": "david.brown@company.com"
+      }
+    },
+    "entries": [
+      {
+        "id": "3",
+        "date": "2025-10-24",
+        "start_time": "09:00:00", 
+        "end_time": "18:00:00"
+      },
+      {
+        "id": "4",
+        "date": "2025-10-23",
+        "start_time": "08:45:00",
+        "end_time": "17:15:00"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "user": {
+      "id": "3",
+      "name": "Sarah Martinez",
+      "status": "On Leave",
+      "role": {
+        "name": "Dispatcher",
+        "permissions": []
+      },
+      "permissions": [],
+      "profile": {
+        "email": "sarah.martinez@company.com",
+        "department": "Dispatch"
+      }
+    },
+    "entries": [
+      {
+        "id": "5",
+        "date": "2025-10-22",
+        "start_time": "07:30:00",
+        "end_time": "15:30:00"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "user": {
+      "id": "5",
+      "name": "Emily Chen",
+      "status": "Active",
+      "role": {
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [],
+      "profile": {
+        "email": "emily.chen@company.com",
+        "department": "Administration"
+      }
+    },
+    "entries": [
+      {
+        "id": "6",
+        "date": "2025-10-24",
+        "start_time": "09:15:00",
+        "end_time": "17:45:00"
+      },
+      {
+        "id": "7",
+        "date": "2025-10-23",
+        "start_time": "08:00:00",
+        "end_time": "16:00:00"
+      }
+    ]
+  }
+]

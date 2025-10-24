@@ -1,4 +1,4 @@
-import type { User } from "@/types"
+import type { Timesheet } from "@/types"
 
 export async function getTimesheets() {
   // Replace this with `fetch('/api/timesheets').then(res => res.json())` later
@@ -15,7 +15,7 @@ export async function getUserTimesheets() {
   await new Promise((r) => setTimeout(r, 300))
   const data = await response.json()
 
-  return data.filter((user: User) => 
-    user.name === "David Brown"
+  return data.filter((timesheet: Timesheet) => 
+    timesheet.user.name === "David Brown"
   )
 }

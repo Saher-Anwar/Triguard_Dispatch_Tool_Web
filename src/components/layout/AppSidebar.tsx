@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, Users, Settings, Home, Moon, Sun } from 'lucide-react'
+import { Calendar, BarChart3, Users, Clock, Settings, Home, Moon, Sun } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -33,6 +33,11 @@ const navigationItems = [
     id: 'users',
     title: 'Users',
     icon: Users,
+  },
+  {
+    id: 'timesheets',
+    title: 'Timesheets',
+    icon: Clock,
   },
   {
     id: 'configurations',

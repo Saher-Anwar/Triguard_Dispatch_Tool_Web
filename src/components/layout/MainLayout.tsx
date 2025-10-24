@@ -5,6 +5,7 @@ import { AppointmentsPage } from '@/pages/AppointmentsPage'
 import { ReportsPage } from '@/pages/ReportsPage'
 import { UsersPage } from '@/pages/UsersPage'
 import { ConfigurationsPage } from '@/pages/ConfigurationsPage'
+import { TimesheetPage } from '@/pages/TimesheetPage'
 import { TrackingModal } from '@/components/appointments/TrackingModal'
 
 export function MainLayout() {
@@ -18,6 +19,8 @@ export function MainLayout() {
         return <ReportsPage />
       case 'users':
         return <UsersPage />
+      case 'timesheets':
+        return <TimesheetPage />
       case 'configurations':
         return <ConfigurationsPage />
       default:
