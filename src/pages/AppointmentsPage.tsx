@@ -1,19 +1,21 @@
 import { Download, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ButtonGroup } from '@/components/ui/button-group'
 import { AppointmentDataTable } from '@/components/appointments/AppointmentDataTable'
 import { AppointmentDetailsDialog } from '@/components/appointments/AppointmentDetailsDialog'
 import { useQuery } from '@tanstack/react-query'
-import { getAppointments } from '@/api/appointment'
+import { getAppointments, getUserAppointments } from '@/api/appointment'
 import type { Appointment } from '@/types'
 import { useState } from 'react'
 
 export function AppointmentsPage() {
-    const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null)
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [appointmentFilter, setAppointmentFilter] = useState('all')
 
   const { data: appointments = [], isLoading, isError } = useQuery({
-    queryKey: ['appointments'],
-    queryFn: getAppointments,
+    queryKey: ['appointments', appointmentFilter],
+    queryFn: appointmentFilter === 'all' ? getAppointments : getUserAppointments,
   })
 
   const handleAppointmentClick = (appointment: Appointment) => {
@@ -36,6 +38,24 @@ export function AppointmentsPage() {
             New Appointment
           </Button>
         </div>
+      </div>
+
+      {/* Filter Button Group */}
+      <div className="flex items-center space-x-6">
+        <ButtonGroup>
+          <Button 
+            variant={appointmentFilter === 'all' ? 'default' : 'outline'}
+            onClick={() => setAppointmentFilter('all')}
+          >
+            All Appointments
+          </Button>
+          <Button 
+            variant={appointmentFilter === 'self' ? 'default' : 'outline'}
+            onClick={() => setAppointmentFilter('self')}
+          >
+            My Appointments
+          </Button>
+        </ButtonGroup>
       </div>
 
       {/* Appointments Data Table */}
