@@ -18,12 +18,6 @@ export function UsersPage() {
       {/* Top Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-4xl font-bold">User Management</h1>
-        <div className="flex gap-3">
-          <Button variant="outline" className="gap-2">
-            <Settings className="h-4 w-4" />
-            Manage Roles
-          </Button>
-        </div>
       </div>
 
       {/* Users Table */}

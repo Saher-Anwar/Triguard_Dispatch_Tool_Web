@@ -119,7 +119,17 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     header: "Assigned User",
     cell: ({ row }) => {
       const assignedUser = row.getValue("assignedUser") as Appointment["assignedUser"]
-      return assignedUser ? assignedUser.name : "Unassigned"
+      
+      if (!assignedUser) {
+        return "Unassigned"
+      }
+      
+      return (
+        <div className="space-y-1">
+          <div className="font-medium">{assignedUser.name}</div>
+          <div className="text-xs text-muted-foreground">on-site</div>
+        </div>
+      )
     },
     filterFn: (row, _id, value) => {
       const assignedUser = row.original.assignedUser

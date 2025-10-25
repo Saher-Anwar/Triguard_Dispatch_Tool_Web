@@ -34,7 +34,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { UserCard } from "./UserCard"
-import type { User } from "@/types"
+import type { Role, User } from "@/types"
 import { columns } from "./UserColumns"
 import { getRoles } from "@/api/roles"
 import { getUserStatuses } from "@/api/status"
@@ -109,9 +109,9 @@ export function UserDataTable({ users }: UserDataTableProps) {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All statuses</SelectItem>
-            {statuses.map((status: any) => (
-              <SelectItem key={status.name || status} value={status.name || status}>
-                {status.name || status}
+            {statuses.map((status: string) => (
+              <SelectItem key={status} value={status}>
+                {status}
               </SelectItem>
             ))}
           </SelectContent>
@@ -129,7 +129,7 @@ export function UserDataTable({ users }: UserDataTableProps) {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All roles</SelectItem>
-            {roles.map((role: any) => (
+            {roles.map((role: Role) => (
               <SelectItem key={role.name} value={role.name}>
                 {role.name}
               </SelectItem>
