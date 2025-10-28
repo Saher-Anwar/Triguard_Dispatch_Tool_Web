@@ -1,19 +1,34 @@
 export type AppointmentStatus = 
   | 'unassigned' 
   | 'scheduled' 
-  | 'in-progress' 
+  | 'in progress' 
   | 'complete' 
   | 'cancelled' 
   | 'rescheduled';
 
 export interface Appointment {
-  id: string;
-  customerName: string;
-  customerAddress: string;
-  datetime: string;
+  id: number;
+  booking_datetime: string; // iso 8601 format
   status: AppointmentStatus;
-  assignedUser: User | null;
-  disposition?: Disposition;
+  customer: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  } | null;
+  user: User
+  disposition?: Disposition
+  details?: AppointmentDetails;
+  // Legacy fields for backward compatibility
+  customerName?: string;
+  customerAddress?: string;
+  datetime?: string;
+  assignedUser?: User | null;
+}
+
+export interface AppointmentDetails{
+  [key: string]: string | number | boolean | null | undefined;
 }
 
 export interface UserProfile {
@@ -22,7 +37,7 @@ export interface UserProfile {
   address?: string;
   phone?: string;
   department?: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean | null | undefined;
 }
 
 export interface User {
@@ -63,6 +78,7 @@ export interface Role {
 export interface Disposition {
   code: string;
   description: string;
+  notes?: string
 }
 
 export interface TimesheetData {

@@ -7,15 +7,20 @@ import { useQuery } from '@tanstack/react-query'
 import { getAppointments, getUserAppointments } from '@/api/appointment'
 import type { Appointment } from '@/types'
 import { useState } from 'react'
+import { useUserStore } from '@/store/useUserStore'
 
 export function AppointmentsPage() {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [appointmentFilter, setAppointmentFilter] = useState('all')
+  const { currentUser } = useUserStore()
 
   const { data: appointments = [], isLoading, isError } = useQuery({
     queryKey: ['appointments', appointmentFilter],
-    queryFn: appointmentFilter === 'all' ? getAppointments : getUserAppointments,
+    queryFn: appointmentFilter === 'all' 
+      ? getAppointments 
+      : () => getUserAppointments(parseInt(currentUser.id)),
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
   const handleAppointmentClick = (appointment: Appointment) => {

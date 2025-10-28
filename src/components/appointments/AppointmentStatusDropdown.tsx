@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ChevronDownIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,15 +13,12 @@ import type { Appointment, AppointmentStatus } from "@/types"
 export function AppointmentStatusDropdown({ appointment }: { appointment: Appointment }) {
   const queryClient = useQueryClient()
 
-  // --- Fetch all appointment statuses ---
-  const { data: statuses = [], isLoading } = useQuery({
-    queryKey: ['appointmentStatuses'],
-    queryFn: getAppointmentStatuses,
-  })
+  // --- Get appointment statuses from type ---
+  const statuses = getAppointmentStatuses()
 
   // --- Handle status update (optimistic UI) ---
   const { mutate } = useMutation({
-    mutationFn: async ({ appointmentId, status }: { appointmentId: string; status: AppointmentStatus }) => {
+    mutationFn: async ({ appointmentId, status }: { appointmentId: number; status: AppointmentStatus }) => {
       // Simulate API call (you can await a real fetch here later)
       console.log(`Updating appointment ${appointmentId} status to ${status}`)
       await new Promise((r) => setTimeout(r, 300)) // simulate latency
@@ -70,7 +67,6 @@ export function AppointmentStatusDropdown({ appointment }: { appointment: Appoin
     return status.charAt(0).toUpperCase() + status.slice(1).replace('-', ' ')
   }
 
-  if (isLoading) return <span className="text-muted-foreground">Loading...</span>
 
   return (
     <DropdownMenu>
