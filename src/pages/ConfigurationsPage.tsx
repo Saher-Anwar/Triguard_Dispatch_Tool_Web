@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getRoles, deleteRole } from '@/api/roles'
 import { getDispositions, deleteDisposition } from '@/api/disposition'
 import { CreateRoleDialog } from '@/components/roles/CreateRoleDialog'
+import { CreateDispositionDialog } from '@/components/dispositions/CreateDispositionDialog'
 import type { Role, Disposition } from '@/types'
 
 export function ConfigurationsPage() {
@@ -76,9 +77,6 @@ export function ConfigurationsPage() {
     deleteRoleMutation.mutate(role.id)
   }
 
-  const handleAddDisposition = () => {
-    console.log('Add disposition clicked')
-  }
 
   const handleEditDisposition = (disposition: Disposition) => {
     console.log('Edit disposition clicked:', disposition)
@@ -168,10 +166,7 @@ export function ConfigurationsPage() {
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle className="text-2xl">Dispositions</CardTitle>
-            <Button onClick={handleAddDisposition} className="gap-2">
-              <Plus className="h-4 w-4" />
-              Add Disposition
-            </Button>
+            <CreateDispositionDialog />
           </div>
         </CardHeader>
         <CardContent>

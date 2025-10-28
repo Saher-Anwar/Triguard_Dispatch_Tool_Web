@@ -11,6 +11,29 @@ export async function getDispositions() {
   return response.json()
 }
 
+export async function createDisposition(code: string, description: string) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/disposition`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      code,
+      description,
+    }),
+  })
+  
+  const responseData = await response.json()
+  
+  if (!response.ok) {
+    console.error('API Error:', responseData)
+    throw new Error(JSON.stringify(responseData))
+  }
+  
+  return responseData
+}
+
 export async function deleteDisposition(dispositionCode: string) {
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/disposition/${dispositionCode}`, {
