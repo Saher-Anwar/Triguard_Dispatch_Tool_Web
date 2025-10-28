@@ -2,12 +2,14 @@ import { Plus, Edit, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { useQuery } from '@tanstack/react-query'
-import { getRoles } from '@/api/roles'
-import { getDispositions } from '@/api/disposition'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { getRoles, deleteRole } from '@/api/roles'
+import { getDispositions, deleteDisposition } from '@/api/disposition'
 import type { Role, Disposition } from '@/types'
 
 export function ConfigurationsPage() {
+  const queryClient = useQueryClient()
+
   const { data: roles = [], isLoading: rolesLoading, isError: rolesError } = useQuery({
     queryKey: ['roles'],
     queryFn: getRoles,
@@ -16,6 +18,52 @@ export function ConfigurationsPage() {
   const { data: dispositions = [], isLoading: dispositionsLoading, isError: dispositionsError } = useQuery({
     queryKey: ['dispositions'],
     queryFn: getDispositions,
+  })
+
+  // Role delete mutation
+  const deleteRoleMutation = useMutation({
+    mutationFn: deleteRole,
+    onMutate: async (roleId) => {
+      await queryClient.cancelQueries({ queryKey: ['roles'] })
+      const previousRoles = queryClient.getQueryData<Role[]>(['roles'])
+      
+      queryClient.setQueryData<Role[]>(['roles'], (old) =>
+        old?.filter((role) => role.id !== roleId)
+      )
+      
+      return { previousRoles }
+    },
+    onError: (_err, _roleId, context) => {
+      if (context?.previousRoles) {
+        queryClient.setQueryData(['roles'], context.previousRoles)
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['roles'] })
+    },
+  })
+
+  // Disposition delete mutation
+  const deleteDispositionMutation = useMutation({
+    mutationFn: deleteDisposition,
+    onMutate: async (dispositionCode) => {
+      await queryClient.cancelQueries({ queryKey: ['dispositions'] })
+      const previousDispositions = queryClient.getQueryData<Disposition[]>(['dispositions'])
+      
+      queryClient.setQueryData<Disposition[]>(['dispositions'], (old) =>
+        old?.filter((disposition) => disposition.code !== dispositionCode)
+      )
+      
+      return { previousDispositions }
+    },
+    onError: (_err, _dispositionCode, context) => {
+      if (context?.previousDispositions) {
+        queryClient.setQueryData(['dispositions'], context.previousDispositions)
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['dispositions'] })
+    },
   })
 
   const handleAddRole = () => {
@@ -27,7 +75,7 @@ export function ConfigurationsPage() {
   }
 
   const handleDeleteRole = (role: Role) => {
-    console.log('Delete role clicked:', role)
+    deleteRoleMutation.mutate(role.id)
   }
 
   const handleAddDisposition = () => {
@@ -39,7 +87,7 @@ export function ConfigurationsPage() {
   }
 
   const handleDeleteDisposition = (disposition: Disposition) => {
-    console.log('Delete disposition clicked:', disposition)
+    deleteDispositionMutation.mutate(disposition.code)
   }
 
   return (
