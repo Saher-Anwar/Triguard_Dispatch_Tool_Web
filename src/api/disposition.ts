@@ -1,7 +1,12 @@
 export async function getDispositions() {
-  // Replace this with `fetch('/api/dispositions').then(res => res.json())` later
-  const response = await fetch('/mock/dispositions.json') // served from /public/mock/
-  if (!response.ok) throw new Error('Failed to load mock data')
-  await new Promise((r) => setTimeout(r, 300))
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/dispositions`)
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch dispositions from API')
+  }
+  
   return response.json()
 }

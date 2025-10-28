@@ -79,12 +79,12 @@ export function ConfigurationsPage() {
           ) : (
             <div className="grid gap-4">
               {roles.map((role: Role) => (
-                <div key={role.name} className="flex items-center justify-between p-4 border rounded-lg">
+                <div key={role.id} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="space-y-2">
                     <h3 className="font-semibold">{role.name}</h3>
                     <div className="flex flex-wrap gap-1">
                       {role.permissions.map((permission) => (
-                        <Badge key={`${role.name}-${permission.code}`} variant="secondary" className="text-xs">
+                        <Badge key={`${role.id}-${permission.code}`} variant="secondary" className="text-xs">
                           {permission.description}
                         </Badge>
                       ))}
