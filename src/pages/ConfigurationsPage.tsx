@@ -84,7 +84,7 @@ export function ConfigurationsPage() {
                     <h3 className="font-semibold">{role.name}</h3>
                     <div className="flex flex-wrap gap-1">
                       {role.permissions.map((permission) => (
-                        <Badge key={permission.code} variant="secondary" className="text-xs">
+                        <Badge key={`${role.name}-${permission.code}`} variant="secondary" className="text-xs">
                           {permission.description}
                         </Badge>
                       ))}
@@ -147,9 +147,9 @@ export function ConfigurationsPage() {
           ) : (
             <div className="grid gap-4">
               {dispositions.map((disposition: Disposition) => (
-                <div key={disposition.id} className="flex items-center justify-between p-4 border rounded-lg">
+                <div key={disposition.code} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="space-y-1 flex-1">
-                    <h3 className="font-semibold">{disposition.name}</h3>
+                    <h3 className="font-semibold">{disposition.code}</h3>
                     <p className="text-sm text-muted-foreground">{disposition.description}</p>
                   </div>
                   <div className="flex gap-2">

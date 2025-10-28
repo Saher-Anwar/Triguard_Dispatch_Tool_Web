@@ -1,5 +1,3 @@
-import { Settings } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { getUsers } from '@/api/user'
 import { useQuery } from '@tanstack/react-query'
 import { UserDataTable } from '@/components/users/UserDataTable'

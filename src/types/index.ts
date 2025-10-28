@@ -60,10 +60,8 @@ export interface Role {
 }
 
 export interface Disposition {
-  id: string;
-  name: string;
+  code: string;
   description: string;
-  notes?: string;
 }
 
 export interface TimesheetData {
