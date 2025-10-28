@@ -15,11 +15,13 @@ export function ConfigurationsPage() {
   const { data: roles = [], isLoading: rolesLoading, isError: rolesError } = useQuery({
     queryKey: ['roles'],
     queryFn: getRoles,
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
   const { data: dispositions = [], isLoading: dispositionsLoading, isError: dispositionsError } = useQuery({
     queryKey: ['dispositions'],
     queryFn: getDispositions,
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
   // Role delete mutation
