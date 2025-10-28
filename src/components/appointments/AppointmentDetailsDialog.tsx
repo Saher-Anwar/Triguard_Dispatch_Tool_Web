@@ -22,7 +22,7 @@ import type { Appointment } from '@/types'
 const statusStyles = {
   'unassigned': 'status-unassigned',
   'scheduled': 'status-scheduled',
-  'in-progress': 'status-in-progress',
+  'in progress': 'status-in-progress',
   'complete': 'status-complete',
   'cancelled': 'status-cancelled',
   'rescheduled': 'status-rescheduled'
@@ -42,7 +42,7 @@ export function AppointmentDetailsDialog({
   if (!appointment) return null
 
   const showDisposition = appointment.status === 'complete'
-  const showLiveTracking = appointment.status === 'in-progress'
+  const showLiveTracking = appointment.status === 'in progress'
 
   // Format status for display
   const formatStatus = (status: string) => {
@@ -105,7 +105,7 @@ export function AppointmentDetailsDialog({
                       Scheduled Time
                     </div>
                     <div className="text-lg font-medium">
-                      {new Date(appointment.datetime).toLocaleString()}
+                      {new Date(appointment.booking_datetime).toLocaleString()}
                     </div>
                   </div>
 
@@ -136,7 +136,7 @@ export function AppointmentDetailsDialog({
                             Disposition
                           </div>
                           <div className="text-lg font-medium">
-                            {appointment.disposition.name}
+                            {appointment.disposition.code}
                           </div>
                         </div>
                         

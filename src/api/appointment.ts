@@ -1,29 +1,31 @@
-import type { Appointment } from "@/types"
+import type { AppointmentStatus } from "@/types"
 
 export async function getAppointments() {
-  // Replace this with `fetch('/api/appointments').then(res => res.json())` later
-  const response = await fetch('/mock/appointments.json') // served from /public/mock/
-  if (!response.ok) throw new Error('Failed to load mock data')
-  await new Promise((r) => setTimeout(r, 300))
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointments`)
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch appointments from API')
+  }
+  
   return response.json()
 }
 
-export async function getAppointmentStatuses() {
-  // Replace this with `fetch('/api/appointments').then(res => res.json())` later
-  const response = await fetch('/mock/appointment_statuses.json') // served from /public/mock/
-  if (!response.ok) throw new Error('Failed to load mock data')
-  await new Promise((r) => setTimeout(r, 300))
-  return response.json()
+export function getAppointmentStatuses(): AppointmentStatus[] {
+  return ['unassigned', 'scheduled', 'in progress', 'complete', 'cancelled', 'rescheduled']
 }
 
-export async function getUserAppointments() {
-  // Replace this with `fetch('/api/appointments').then(res => res.json())` later
-  const response = await fetch('/mock/appointments.json') // served from /public/mock/
-  if (!response.ok) throw new Error('Failed to load mock data')
-  await new Promise((r) => setTimeout(r, 300))
-  const data = await response.json()
-
-  return data.filter((appointment: Appointment) => 
-    appointment.assignedUser?.name === "David Brown"
-  )
+export async function getUserAppointments(userId: number) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/users/${userId}/appointments`)
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch user appointments from API')
+  }
+  
+  return response.json()
 }

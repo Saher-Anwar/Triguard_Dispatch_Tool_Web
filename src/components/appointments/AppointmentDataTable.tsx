@@ -42,11 +42,8 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
-  // Get appointment statuses from API
-  const { data: statuses = [] } = useQuery({
-    queryKey: ['appointmentStatuses'],
-    queryFn: getAppointmentStatuses,
-  })
+  // Get appointment statuses from type
+  const statuses = getAppointmentStatuses()
 
   const table = useReactTable({
     data: appointments,

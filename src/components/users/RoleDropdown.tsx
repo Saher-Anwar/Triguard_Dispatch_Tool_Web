@@ -23,20 +23,30 @@ export function RoleDropdown({ user }: { user: User}) {
 
   // --- Handle role update (optimistic UI) ---
   const { mutate } = useMutation({
-    mutationFn: async ({ userId, roleId, roleName }: { userId: string; roleId: string; roleName: string }) => {
+    mutationFn: async ({ userId, roleId }: { userId: string; roleId: string }) => {
       return updateUserRole(userId, roleId)
     },
 
     // Optimistic update
-    onMutate: async ({ userId, roleName }) => {
+    onMutate: async ({ userId, roleId }) => {
       await queryClient.cancelQueries({ queryKey: ['users'] })
       const previousUsers = queryClient.getQueryData<User[]>(['users'])
 
       if (previousUsers) {
+        // Find the role by ID to get the full role object
+        const selectedRole = roles.find(r => r.id === roleId)
+        
         queryClient.setQueryData<User[]>(['users'], (old) =>
           old?.map((u) =>
             u.id === userId
-              ? { ...u, role: { ...u.role, name: roleName, id: u.role?.id || '' } }
+              ? { 
+                  ...u, 
+                  role: selectedRole ? {
+                    id: selectedRole.id,
+                    name: selectedRole.name,
+                    permissions: selectedRole.permissions
+                  } : null
+                }
               : u
           )
         )
@@ -61,7 +71,7 @@ export function RoleDropdown({ user }: { user: User}) {
   // --- Handle dropdown selection ---
   const handleRoleSelect = (role: Role, e: React.MouseEvent) => {
     e.stopPropagation()
-    mutate({ userId: user.id, roleId: role.id, roleName: role.name })
+    mutate({ userId: user.id, roleId: role.id })
   }
 
   if (isLoading) return <span className="text-muted-foreground">Loading...</span>
@@ -83,7 +93,7 @@ export function RoleDropdown({ user }: { user: User}) {
         <DropdownMenuItem
           onClick={(e) => {
             e.stopPropagation()
-            mutate({ userId: user.id, roleId: "", roleName: "No role assigned" })
+            mutate({ userId: user.id, roleId: "" })
           }}
         >
           No role assigned

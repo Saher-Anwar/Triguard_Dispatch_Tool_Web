@@ -11,7 +11,7 @@ const getStatusVariant = (status: string) => {
       return 'secondary'
     case 'scheduled':
       return 'default'
-    case 'in-progress':
+    case 'in progress':
       return 'destructive'
     case 'complete':
       return 'default'
@@ -63,7 +63,7 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     },
   },
   {
-    accessorKey: "datetime",
+    accessorKey: "booking_datetime",
     header: ({ column }) => {
       const getSortIcon = () => {
         if (column.getIsSorted() === "asc") {
@@ -87,8 +87,9 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
       )
     },
     cell: ({ row }) => {
-      const datetime = row.getValue("datetime") as string
-      return new Date(datetime).toLocaleString()
+      const appointment = row.original
+      const datetime = appointment.booking_datetime || appointment.datetime
+      return datetime ? new Date(datetime).toLocaleString() : "N/A"
     },
   },
   {
@@ -115,10 +116,11 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     },
   },
   {
-    accessorKey: "assignedUser",
+    accessorKey: "user",
     header: "Assigned User",
     cell: ({ row }) => {
-      const assignedUser = row.getValue("assignedUser") as Appointment["assignedUser"]
+      const appointment = row.original
+      const assignedUser = appointment.user || appointment.assignedUser
       
       if (!assignedUser) {
         return "Unassigned"
@@ -127,12 +129,15 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
       return (
         <div className="space-y-1">
           <div className="font-medium">{assignedUser.name}</div>
-          <div className="text-xs text-muted-foreground">on-site</div>
+          <div className="text-xs text-muted-foreground">
+            {assignedUser.status || "on-site"}
+          </div>
         </div>
       )
     },
     filterFn: (row, _id, value) => {
-      const assignedUser = row.original.assignedUser
+      const appointment = row.original
+      const assignedUser = appointment.user || appointment.assignedUser
       const userName = assignedUser?.name || "Unassigned"
       return userName.includes(value)
     },
