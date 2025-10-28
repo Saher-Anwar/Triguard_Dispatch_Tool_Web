@@ -17,14 +17,9 @@ export interface Appointment {
     phone: string;
     address: string;
   } | null;
-  user: User
-  disposition?: Disposition
+  user: User | null;
+  disposition?: Disposition;
   details?: AppointmentDetails;
-  // Legacy fields for backward compatibility
-  customerName?: string;
-  customerAddress?: string;
-  datetime?: string;
-  assignedUser?: User | null;
 }
 
 export interface AppointmentDetails{

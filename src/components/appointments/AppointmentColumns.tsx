@@ -26,7 +26,8 @@ const getStatusVariant = (status: string) => {
 
 export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnDef<Appointment>[] => [
   {
-    accessorKey: "customerName",
+    id: "customerName",
+    accessorKey: "customer",
     header: ({ column }) => {
       const getSortIcon = () => {
         if (column.getIsSorted() === "asc") {
@@ -49,12 +50,27 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
         </Button>
       )
     },
+    cell: ({ row }) => {
+      const customer = row.original.customer
+      return customer?.name || "N/A"
+    },
+    sortingFn: (rowA, rowB) => {
+      const nameA = rowA.original.customer?.name || ""
+      const nameB = rowB.original.customer?.name || ""
+      return nameA.localeCompare(nameB)
+    },
+    filterFn: (row, _id, value) => {
+      const customerName = row.original.customer?.name || ""
+      return customerName.toLowerCase().includes(value.toLowerCase())
+    },
   },
   {
-    accessorKey: "customerAddress",
-    header: "Address",
+    id: "customerAddress",
+    accessorKey: "customer",
+    header: "Address", 
     cell: ({ row }) => {
-      const address = row.getValue("customerAddress") as string
+      const customer = row.original.customer
+      const address = customer?.address || "N/A"
       return (
         <div className="max-w-[200px] truncate" title={address}>
           {address}
@@ -88,8 +104,7 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     },
     cell: ({ row }) => {
       const appointment = row.original
-      const datetime = appointment.booking_datetime || appointment.datetime
-      return datetime ? new Date(datetime).toLocaleString() : "N/A"
+      return new Date(appointment.booking_datetime).toLocaleString()
     },
   },
   {
@@ -120,7 +135,7 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     header: "Assigned User",
     cell: ({ row }) => {
       const appointment = row.original
-      const assignedUser = appointment.user || appointment.assignedUser
+      const assignedUser = appointment.user
       
       if (!assignedUser) {
         return "Unassigned"
@@ -137,8 +152,7 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     },
     filterFn: (row, _id, value) => {
       const appointment = row.original
-      const assignedUser = appointment.user || appointment.assignedUser
-      const userName = assignedUser?.name || "Unassigned"
+      const userName = appointment.user?.name || "Unassigned"
       return userName.includes(value)
     },
   },

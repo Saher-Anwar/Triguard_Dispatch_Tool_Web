@@ -54,7 +54,7 @@ export function AppointmentDetailsDialog({
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">
-            Appointment Details - {appointment.customerName}
+            Appointment Details - {appointment.customer?.name || 'Unknown Customer'}
           </DialogTitle>
         </DialogHeader>
 
@@ -70,7 +70,7 @@ export function AppointmentDetailsDialog({
                       Customer
                     </div>
                     <div className="text-lg font-medium">
-                      {appointment.customerName}
+                      {appointment.customer?.name || 'Unknown Customer'}
                     </div>
                   </div>
 
@@ -96,7 +96,7 @@ export function AppointmentDetailsDialog({
                       Address
                     </div>
                     <div className="text-lg font-medium">
-                      {appointment.customerAddress}
+                      {appointment.customer?.address || 'No address provided'}
                     </div>
                   </div>
 
@@ -109,13 +109,13 @@ export function AppointmentDetailsDialog({
                     </div>
                   </div>
 
-                  {appointment.assignedUser && (
+                  {appointment.user && (
                     <div className="space-y-1 md:col-span-2">
                       <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
                         Assigned User
                       </div>
                       <div className="text-lg font-medium">
-                        {appointment.assignedUser.name}
+                        {appointment.user.name}
                       </div>
                     </div>
                   )}
@@ -206,7 +206,7 @@ export function AppointmentDetailsDialog({
                             Technician
                           </div>
                           <div className="text-lg font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-                            {appointment.assignedUser?.name || 'Unassigned'}
+                            {appointment.user?.name || 'Unassigned'}
                           </div>
                         </CardContent>
                       </Card>
