@@ -27,7 +27,6 @@ export interface AppointmentDetails{
 }
 
 export interface UserProfile {
-  email?: string;
   age?: number;
   address?: string;
   phone?: string;
@@ -38,6 +37,7 @@ export interface UserProfile {
 export interface User {
   id: string;
   name: string;
+  email: string;
   avatar?: string;
   permissions: Permission[];
   role?: Role;

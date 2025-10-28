@@ -38,10 +38,10 @@ export function UserCard({ user }: UserCardProps) {
             <AccordionTrigger>Profile</AccordionTrigger>
             <AccordionContent>
               <div className="space-y-3">
-                {user.profile?.email && (
+                {user.email && (
                   <div className="flex items-center gap-3">
                     <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                    <span className="text-sm">{user.profile.email}</span>
+                    <span className="text-sm">{user.email}</span>
                   </div>
                 )}
                 {user.profile?.age && (
@@ -70,7 +70,7 @@ export function UserCard({ user }: UserCardProps) {
                 )}
                 {/* Display any other profile fields that aren't handled above */}
                 {user.profile && Object.entries(user.profile)
-                  .filter(([key]) => !['email', 'age', 'address', 'phone', 'department'].includes(key))
+                  .filter(([key]) => !['age', 'address', 'phone', 'department'].includes(key))
                   .map(([key, value]) => (
                     <div key={key} className="flex items-center gap-3">
                       <UserIcon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
