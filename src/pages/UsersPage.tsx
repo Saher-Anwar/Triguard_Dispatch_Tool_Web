@@ -6,6 +6,7 @@ export function UsersPage() {
   const { data: users = [], isLoading, isError } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers,
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
   if (isLoading) return <p>Loading users...</p>

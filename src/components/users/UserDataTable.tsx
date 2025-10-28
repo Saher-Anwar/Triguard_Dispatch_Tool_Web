@@ -53,11 +53,13 @@ export function UserDataTable({ users }: UserDataTableProps) {
   const { data: roles = [] } = useQuery({
     queryKey: ['roles'],
     queryFn: getRoles,
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
   const { data: statuses = [] } = useQuery({
     queryKey: ['statuses'],
     queryFn: getUserStatuses,
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
   const table = useReactTable({

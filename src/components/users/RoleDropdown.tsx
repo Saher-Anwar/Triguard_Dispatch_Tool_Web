@@ -7,7 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { getRoles, updateRole } from "@/api/roles"
+import { getRoles } from "@/api/roles"
+import { updateUserRole } from "@/api/user"
 import type { User, Role } from "@/types"
 
 export function RoleDropdown({ user }: { user: User}) {
@@ -17,15 +18,13 @@ export function RoleDropdown({ user }: { user: User}) {
   const { data: roles = [], isLoading } = useQuery({
     queryKey: ['roles'],
     queryFn: getRoles,
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
   // --- Handle role update (optimistic UI) ---
   const { mutate } = useMutation({
-    mutationFn: async ({ userId, roleName }: { userId: string; roleName: string }) => {
-      // Simulate API call (you can await a real fetch here later)
-      updateRole(userId, roleName)
-      await new Promise((r) => setTimeout(r, 300)) // simulate latency
-      return { userId, roleName }
+    mutationFn: async ({ userId, roleId, roleName }: { userId: string; roleId: string; roleName: string }) => {
+      return updateUserRole(userId, roleId)
     },
 
     // Optimistic update
@@ -37,7 +36,7 @@ export function RoleDropdown({ user }: { user: User}) {
         queryClient.setQueryData<User[]>(['users'], (old) =>
           old?.map((u) =>
             u.id === userId
-              ? { ...u, role: { name: roleName, permissions: [] } }
+              ? { ...u, role: { ...u.role, name: roleName, id: u.role?.id || '' } }
               : u
           )
         )
@@ -62,7 +61,7 @@ export function RoleDropdown({ user }: { user: User}) {
   // --- Handle dropdown selection ---
   const handleRoleSelect = (role: Role, e: React.MouseEvent) => {
     e.stopPropagation()
-    mutate({ userId: user.id, roleName: role.name })
+    mutate({ userId: user.id, roleId: role.id, roleName: role.name })
   }
 
   if (isLoading) return <span className="text-muted-foreground">Loading...</span>
@@ -82,9 +81,10 @@ export function RoleDropdown({ user }: { user: User}) {
 
       <DropdownMenuContent align="start">
         <DropdownMenuItem
-          onClick={(e) =>
-            handleRoleSelect({ name: "", permissions: [] } as Role, e)
-          }
+          onClick={(e) => {
+            e.stopPropagation()
+            mutate({ userId: user.id, roleId: "", roleName: "No role assigned" })
+          }}
         >
           No role assigned
         </DropdownMenuItem>
