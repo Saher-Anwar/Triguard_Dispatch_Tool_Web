@@ -1,10 +1,11 @@
-import { Plus, Edit, Trash2 } from 'lucide-react'
+import { Edit, Trash2, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getRoles, deleteRole } from '@/api/roles'
 import { getDispositions, deleteDisposition } from '@/api/disposition'
+import { CreateRoleDialog } from '@/components/roles/CreateRoleDialog'
 import type { Role, Disposition } from '@/types'
 
 export function ConfigurationsPage() {
@@ -66,9 +67,6 @@ export function ConfigurationsPage() {
     },
   })
 
-  const handleAddRole = () => {
-    console.log('Add role clicked')
-  }
 
   const handleEditRole = (role: Role) => {
     console.log('Edit role clicked:', role)
@@ -105,10 +103,7 @@ export function ConfigurationsPage() {
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle className="text-2xl">Roles</CardTitle>
-            <Button onClick={handleAddRole} className="gap-2">
-              <Plus className="h-4 w-4" />
-              Add Role
-            </Button>
+            <CreateRoleDialog />
           </div>
         </CardHeader>
         <CardContent>
