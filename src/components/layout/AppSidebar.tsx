@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, Users, Clock, Settings, Home, Moon, Sun, LogOut } from 'lucide-react'
+import { Calendar, BarChart3, Users, Clock, Settings, Moon, Sun, LogOut } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -73,11 +73,12 @@ export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
   return (
     <Sidebar variant="sidebar" className="border-r border-border">
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-2">
-          <Home className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-            Triguard
-          </span>
+        <div className="flex items-center justify-center">
+          <img 
+            src={theme === 'dark' ? "/logo_dark_mode.svg" : "/logo.svg"}
+            alt="Triguard Logo" 
+            className="h-32 w-auto"
+          />
         </div>
       </SidebarHeader>
 
