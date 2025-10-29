@@ -76,7 +76,7 @@ export function AppointmentsPage() {
         <AppointmentDataTable 
           appointments={appointments} 
           onAppointmentClick={handleAppointmentClick}
-          showStatusDropdown={appointmentFilter === 'self'}
+          showStatusDropdown={appointmentFilter === 'all' || appointmentFilter === 'self'}
           showUserDropdown={appointmentFilter === 'all'}
         />
       )}

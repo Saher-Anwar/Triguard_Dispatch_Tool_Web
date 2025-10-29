@@ -7,8 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { getAppointmentStatuses } from "@/api/appointment"
+import { getAppointmentStatuses, updateAppointmentStatus } from "@/api/appointment"
 import type { Appointment, AppointmentStatus } from "@/types"
+import { toast } from 'sonner'
 
 export function AppointmentStatusDropdown({ appointment }: { appointment: Appointment }) {
   const queryClient = useQueryClient()
@@ -16,43 +17,16 @@ export function AppointmentStatusDropdown({ appointment }: { appointment: Appoin
   // --- Get appointment statuses from type ---
   const statuses = getAppointmentStatuses()
 
-  // --- Handle status update (optimistic UI) ---
+  // --- Handle status update ---
   const { mutate } = useMutation({
-    mutationFn: async ({ appointmentId, status }: { appointmentId: number; status: AppointmentStatus }) => {
-      // Simulate API call (you can await a real fetch here later)
-      console.log(`Updating appointment ${appointmentId} status to ${status}`)
-      await new Promise((r) => setTimeout(r, 300)) // simulate latency
-      return { appointmentId, status }
-    },
-
-    // Optimistic update
-    onMutate: async ({ appointmentId, status }) => {
-      await queryClient.cancelQueries({ queryKey: ['appointments'] })
-      const previousAppointments = queryClient.getQueryData<Appointment[]>(['appointments', 'self'])
-
-      if (previousAppointments) {
-        queryClient.setQueryData<Appointment[]>(['appointments', 'self'], (old) =>
-          old?.map((appt) =>
-            appt.id === appointmentId
-              ? { ...appt, status }
-              : appt
-          )
-        )
-      }
-
-      return { previousAppointments }
-    },
-
-    // Roll back on error
-    onError: (_err, _vars, context) => {
-      if (context?.previousAppointments) {
-        queryClient.setQueryData(['appointments', 'self'], context.previousAppointments)
-      }
-    },
-
-    // Always refetch to sync with backend
-    onSettled: () => {
+    mutationFn: ({ appointmentId, status }: { appointmentId: number; status: AppointmentStatus }) => 
+      updateAppointmentStatus(appointmentId, status),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] })
+      toast.success('Status updated successfully')
+    },
+    onError: (error) => {
+      toast.error(error instanceof Error ? error.message : 'Failed to update status')
     },
   })
 

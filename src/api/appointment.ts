@@ -59,3 +59,20 @@ export async function assignUserToAppointment(appointmentId: number, userId: num
   
   return response.json()
 }
+
+export async function updateAppointmentStatus(appointmentId: number, status: AppointmentStatus) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  })
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to update appointment status')
+  }
+  
+  return response.json()
+}
