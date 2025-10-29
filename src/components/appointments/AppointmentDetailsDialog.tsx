@@ -149,13 +149,13 @@ export function AppointmentDetailsDialog({
                           </div>
                         </div>
 
-                        {appointment.disposition.notes && (
+                        {(appointment.disposition.notes || appointment.details?.completion_note) && (
                           <div className="space-y-1">
                             <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
                               Notes
                             </div>
                             <div className="text-base bg-muted p-3 rounded-md">
-                              {appointment.disposition.notes}
+                              {appointment.details?.completion_note || appointment.disposition.notes}
                             </div>
                           </div>
                         )}
