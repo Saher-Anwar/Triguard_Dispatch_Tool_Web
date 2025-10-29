@@ -8,8 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { getUsersByAppointmentDistance, assignUserToAppointment } from '@/api/appointment'
-import type { Appointment, User } from '@/types'
+import { getUsersByAppointmentDistance, assignUserToAppointment, updateAppointmentStatus } from '@/api/appointment'
+import type { Appointment, User, AppointmentStatus } from '@/types'
 import { toast } from 'sonner'
 
 interface UserWithDistance extends User {
@@ -32,10 +32,18 @@ export function UserAssignmentDropdown({ appointment }: UserAssignmentDropdownPr
     staleTime: 5 * 60 * 1000, // 5 minutes
   })
 
-  // Mutation for assigning user
+  // Mutation for assigning user and updating appointment status
   const { mutate: assignUser } = useMutation({
-    mutationFn: ({ userId }: { userId: number | null }) => 
-      assignUserToAppointment(appointment.id, userId),
+    mutationFn: async ({ userId }: { userId: number | null }) => {
+      // First assign/unassign the user
+      await assignUserToAppointment(appointment.id, userId)
+      
+      // Then update the appointment status based on user assignment
+      const newStatus: AppointmentStatus = userId === null ? 'unassigned' : 'scheduled'
+      await updateAppointmentStatus(appointment.id, newStatus)
+      
+      return { userId, status: newStatus }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] })
       toast.success('User assigned successfully')
