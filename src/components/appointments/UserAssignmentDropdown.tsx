@@ -34,7 +34,7 @@ export function UserAssignmentDropdown({ appointment }: UserAssignmentDropdownPr
 
   // Mutation for assigning user
   const { mutate: assignUser } = useMutation({
-    mutationFn: ({ userId }: { userId: number }) => 
+    mutationFn: ({ userId }: { userId: number | null }) => 
       assignUserToAppointment(appointment.id, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] })
@@ -46,7 +46,7 @@ export function UserAssignmentDropdown({ appointment }: UserAssignmentDropdownPr
     },
   })
 
-  const handleUserSelect = (userId: number, e: React.MouseEvent) => {
+  const handleUserSelect = (userId: number | null, e: React.MouseEvent) => {
     e.stopPropagation()
     assignUser({ userId })
   }
@@ -82,7 +82,7 @@ export function UserAssignmentDropdown({ appointment }: UserAssignmentDropdownPr
         ) : (
           <>
             <DropdownMenuItem
-              onClick={(e) => handleUserSelect(0, e)}
+              onClick={(e) => handleUserSelect(null, e)}
               className="text-muted-foreground"
             >
               Unassign user

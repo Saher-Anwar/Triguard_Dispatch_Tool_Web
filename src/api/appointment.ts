@@ -43,7 +43,7 @@ export async function getUsersByAppointmentDistance(appointmentId: number) {
   return response.json()
 }
 
-export async function assignUserToAppointment(appointmentId: number, userId: number) {
+export async function assignUserToAppointment(appointmentId: number, userId: number | null) {
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}`, {
     method: 'PUT',
