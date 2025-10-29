@@ -96,7 +96,7 @@ export function AppointmentDetailsDialog({
                       Address
                     </div>
                     <div className="text-lg font-medium">
-                      {appointment.customer?.address || 'No address provided'}
+                      {appointment.customer?.location?.address || 'No address provided'}
                     </div>
                   </div>
 

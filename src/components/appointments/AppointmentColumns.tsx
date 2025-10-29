@@ -70,7 +70,7 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     header: "Address", 
     cell: ({ row }) => {
       const customer = row.original.customer
-      const address = customer?.address || "N/A"
+      const address = customer?.location?.address || "N/A"
       return (
         <div className="max-w-[200px] truncate" title={address}>
           {address}

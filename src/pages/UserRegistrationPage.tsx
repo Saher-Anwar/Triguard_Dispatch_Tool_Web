@@ -80,13 +80,14 @@ export function UserRegistrationPage() {
       const userData = {
         name: cognitoData.name || cognitoData.email.split('@')[0],
         email: cognitoData.email,
-        avatar: cognitoData.picture,
         profile: {
           phone: formData.phone,
+          avatar: cognitoData.picture,
+        },
+        location: {
           address: formData.address,
           city: formData.city,
-          state: formData.state,
-          postalCode: formData.postalCode,
+          zip_code: formData.postalCode,
           latitude: formData.latitude,
           longitude: formData.longitude,
         }

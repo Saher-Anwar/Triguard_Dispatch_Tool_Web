@@ -38,7 +38,7 @@ export function TrackingModal() {
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-border">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">
-            Live Tracking - {selectedAppointment.customerName}
+            Live Tracking - {selectedAppointment.customer?.name}
           </DialogTitle>
         </DialogHeader>
 
@@ -53,7 +53,7 @@ export function TrackingModal() {
                     Customer
                   </div>
                   <div className="text-lg font-medium">
-                    {selectedAppointment.customerName}
+                    {selectedAppointment.customer?.name}
                   </div>
                 </div>
 
@@ -79,7 +79,7 @@ export function TrackingModal() {
                     Address
                   </div>
                   <div className="text-lg font-medium">
-                    {selectedAppointment.customerAddress}
+                    {selectedAppointment.customer?.location.address}
                   </div>
                 </div>
 
@@ -88,7 +88,7 @@ export function TrackingModal() {
                     Scheduled Time
                   </div>
                   <div className="text-lg font-medium">
-                    {selectedAppointment.datetime}
+                    {selectedAppointment.booking_datetime}
                   </div>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export function TrackingModal() {
                   Technician
                 </div>
                 <div className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-                  {selectedAppointment.assignedUser?.name || 'Unassigned'}
+                  {selectedAppointment.user?.name || 'Unassigned'}
                 </div>
               </CardContent>
             </Card>

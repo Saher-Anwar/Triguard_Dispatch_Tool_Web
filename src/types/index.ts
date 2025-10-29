@@ -1,7 +1,16 @@
+export interface LocationDetails {
+  address: string;
+  city?: string;
+  country?: string;
+  zip_code?: string;
+  latitude: number;
+  longitude: number;
+}
+
 export type AppointmentStatus = 
   | 'unassigned' 
   | 'scheduled' 
-  | 'in progress' 
+  | 'in progress'
   | 'complete' 
   | 'cancelled' 
   | 'rescheduled';
@@ -15,7 +24,7 @@ export interface Appointment {
     name: string;
     email: string;
     phone: string;
-    address: string;
+    location: LocationDetails;
   } | null;
   user: User | null;
   disposition?: Disposition;
@@ -28,8 +37,8 @@ export interface AppointmentDetails{
 
 export interface UserProfile {
   age?: number;
-  address?: string;
   phone?: string;
+  avatar?: string;
   [key: string]: string | number | boolean | null | undefined;
 }
 
@@ -37,11 +46,11 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  avatar?: string;
   permissions?: Permission[];
   role?: Role;
   status?: string;
   profile?: UserProfile;
+  location: LocationDetails;
 }
 
 export interface StatData {

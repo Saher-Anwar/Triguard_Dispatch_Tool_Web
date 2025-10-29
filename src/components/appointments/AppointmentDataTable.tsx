@@ -27,7 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useQuery } from "@tanstack/react-query"
 import type { Appointment } from "@/types"
 import { appointmentColumns } from "./AppointmentColumns"
 import { getAppointmentStatuses } from "@/api/appointment"
