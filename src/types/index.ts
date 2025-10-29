@@ -30,7 +30,6 @@ export interface UserProfile {
   age?: number;
   address?: string;
   phone?: string;
-  department?: string;
   [key: string]: string | number | boolean | null | undefined;
 }
 

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useUserStore } from '@/store/useUserStore'
-import { getUserByEmail, createUser } from '@/api/user'
+import { useRegistrationStore } from '@/store/useRegistrationStore'
+import { getUserByEmail } from '@/api/user'
 import { jwtDecode } from 'jwt-decode'
 
 const COGNITO_DOMAIN = import.meta.env.VITE_COGNITO_DOMAIN
@@ -19,7 +21,9 @@ interface CognitoTokenPayload {
 }
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate()
   const { currentUser, setCurrentUser, clearUser } = useUserStore()
+  const { setCognitoData } = useRegistrationStore()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -51,16 +55,19 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
         }
 
         // Try to get user from backend
-        let user = await getUserByEmail(decoded.email)
+        const user = await getUserByEmail(decoded.email)
         
         if (!user) {
-          // User doesn't exist in backend, create them
-          console.log('User not found in database, creating new user')
-          user = await createUser({
-            name: decoded.name || decoded.email.split('@')[0],
+          // User doesn't exist in backend, redirect to registration
+          console.log('User not found in database, redirecting to registration')
+          setCognitoData({
+            sub: decoded.sub,
             email: decoded.email,
-            avatar: decoded.picture,
+            name: decoded.name,
+            picture: decoded.picture,
           })
+          navigate('/register')
+          return
         }
 
         setCurrentUser(user)
@@ -86,7 +93,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     } else {
       setIsLoading(false)
     }
-  }, [currentUser, setCurrentUser, clearUser])
+  }, [currentUser, setCurrentUser, clearUser, setCognitoData, navigate])
 
   if (error) {
     return (

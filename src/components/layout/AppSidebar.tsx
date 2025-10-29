@@ -128,7 +128,7 @@ export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
           variant="ghost"
           size="sm"
           onClick={handleLogout}
-          className="w-full justify-start gap-3 h-9 text-muted-foreground hover:text-foreground hover:bg-destructive/10 hover:text-destructive"
+          className="w-full justify-start gap-3 h-9 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
         >
           <LogOut className="h-4 w-4" />
           Sign out

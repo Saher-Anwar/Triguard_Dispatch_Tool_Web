@@ -7,6 +7,7 @@ import { useThemeStore } from './store/useThemeStore'
 import './App.css'
 import { AuthGate } from './components/auth/AuthGate'
 import { CallbackPage } from './pages/CallbackPage'
+import { UserRegistrationPage } from './pages/UserRegistrationPage'
 
 function App() {
   const { applyTheme } = useThemeStore()
@@ -20,6 +21,7 @@ function App() {
     <>
       <Routes>
         <Route path="/callback" element={<CallbackPage />} />
+        <Route path="/register" element={<UserRegistrationPage />} />
         <Route path="/*" element={
           <AuthGate>
             <MainLayout />
