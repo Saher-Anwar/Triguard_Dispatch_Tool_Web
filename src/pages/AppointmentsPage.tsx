@@ -29,6 +29,10 @@ export function AppointmentsPage() {
     setDialogOpen(true)
   }
 
+  const handleNewAppointment = () => {
+    window.open('https://appointment-form.thspros.com/', '_blank')
+  }
+
   return (
     <div className="space-y-6">
       {/* Top Bar */}
@@ -39,7 +43,7 @@ export function AppointmentsPage() {
             <Download className="h-4 w-4" />
             Export
           </Button>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={handleNewAppointment}>
             <Plus className="h-4 w-4" />
             New Appointment
           </Button>
