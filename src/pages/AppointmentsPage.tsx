@@ -77,6 +77,7 @@ export function AppointmentsPage() {
           appointments={appointments} 
           onAppointmentClick={handleAppointmentClick}
           showStatusDropdown={appointmentFilter === 'self'}
+          showUserDropdown={appointmentFilter === 'all'}
         />
       )}
 

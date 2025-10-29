@@ -29,3 +29,33 @@ export async function getUserAppointments(userId: number) {
   
   return response.json()
 }
+
+export async function getUsersByAppointmentDistance(appointmentId: number) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}/users`)
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch users by distance from API')
+  }
+  
+  return response.json()
+}
+
+export async function assignUserToAppointment(appointmentId: number, userId: number) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: userId }),
+  })
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to assign user to appointment')
+  }
+  
+  return response.json()
+}

@@ -35,9 +35,10 @@ interface AppointmentDataTableProps {
   appointments: Appointment[]
   onAppointmentClick?: (appointment: Appointment) => void
   showStatusDropdown?: boolean
+  showUserDropdown?: boolean
 }
 
-export function AppointmentDataTable({ appointments, onAppointmentClick, showStatusDropdown = false }: AppointmentDataTableProps) {
+export function AppointmentDataTable({ appointments, onAppointmentClick, showStatusDropdown = false, showUserDropdown = false }: AppointmentDataTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
@@ -46,7 +47,7 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
 
   const table = useReactTable({
     data: appointments,
-    columns: appointmentColumns(showStatusDropdown),
+    columns: appointmentColumns(showStatusDropdown, showUserDropdown),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -144,7 +145,7 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={appointmentColumns(showStatusDropdown).length}
+                  colSpan={appointmentColumns(showStatusDropdown, showUserDropdown).length}
                   className="h-24 text-center"
                 >
                   No appointments found.

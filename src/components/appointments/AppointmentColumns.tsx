@@ -4,6 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { AppointmentStatusDropdown } from "./AppointmentStatusDropdown"
+import { UserAssignmentDropdown } from "./UserAssignmentDropdown"
 
 const getStatusVariant = (status: string) => {
   switch (status) {
@@ -24,7 +25,7 @@ const getStatusVariant = (status: string) => {
   }
 }
 
-export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnDef<Appointment>[] => [
+export const appointmentColumns = (showStatusDropdown: boolean = false, showUserDropdown: boolean = false): ColumnDef<Appointment>[] => [
   {
     id: "customerName",
     accessorKey: "customer",
@@ -135,6 +136,11 @@ export const appointmentColumns = (showStatusDropdown: boolean = false): ColumnD
     header: "Assigned User",
     cell: ({ row }) => {
       const appointment = row.original
+      
+      if (showUserDropdown) {
+        return <UserAssignmentDropdown appointment={appointment} />
+      }
+      
       const assignedUser = appointment.user
       
       if (!assignedUser) {
