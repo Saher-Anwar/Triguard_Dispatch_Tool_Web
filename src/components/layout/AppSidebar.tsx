@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, Users, Clock, Settings, Home, Moon, Sun } from 'lucide-react'
+import { Calendar, BarChart3, Users, Clock, Settings, Home, Moon, Sun, LogOut } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -48,10 +48,26 @@ const navigationItems = [
 
 export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
   const { theme, setTheme } = useThemeStore()
-  const { currentUser } = useUserStore()
+  const { currentUser, clearUser } = useUserStore()
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  const handleLogout = () => {
+    // Clear tokens from localStorage
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    
+    // Clear user from store
+    clearUser()
+    
+    // Redirect to Cognito logout (optional - clears Cognito session)
+    const COGNITO_DOMAIN = import.meta.env.VITE_COGNITO_DOMAIN
+    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
+    const logoutUrl = `${COGNITO_DOMAIN}/logout?client_id=${CLIENT_ID}&logout_uri=${encodeURIComponent(window.location.origin)}`
+    window.location.href = logoutUrl
   }
 
   return (
@@ -101,10 +117,22 @@ export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500" />
             <div className="flex-1 min-w-0">
-              <div className="font-semibold text-sm">{currentUser.name}</div>
+              <div className="font-semibold text-sm">{currentUser?.name}</div>
+              <div className="text-xs text-muted-foreground">{currentUser?.email}</div>
             </div>
           </div>
         </div>
+
+        {/* Logout Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleLogout}
+          className="w-full justify-start gap-3 h-9 text-muted-foreground hover:text-foreground hover:bg-destructive/10 hover:text-destructive"
+        >
+          <LogOut className="h-4 w-4" />
+          Sign out
+        </Button>
       </SidebarFooter>
     </Sidebar>
   )

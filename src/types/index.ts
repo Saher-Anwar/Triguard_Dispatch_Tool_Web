@@ -39,7 +39,7 @@ export interface User {
   name: string;
   email: string;
   avatar?: string;
-  permissions: Permission[];
+  permissions?: Permission[];
   role?: Role;
   status?: string;
   profile?: UserProfile;
