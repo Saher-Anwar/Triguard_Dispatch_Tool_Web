@@ -38,7 +38,7 @@ export function ModifyPermissionsDialog({ user }: ModifyPermissionsDialogProps) 
   // Initialize selected permissions when user changes
   useEffect(() => {
     if (user) {
-      setSelectedPermissions(user.permissions.map(p => p.code))
+      setSelectedPermissions(user.permissions?.map(p => p.code) || [])
     }
   }, [user])
 

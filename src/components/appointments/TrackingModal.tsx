@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils'
 const statusStyles = {
   'unassigned': 'status-unassigned',
   'scheduled': 'status-scheduled',
-  'in-progress': 'status-in-progress',
+  'in progress': 'status-in-progress',
   'complete': 'status-complete',
   'cancelled': 'status-cancelled',
   'rescheduled': 'status-rescheduled'
@@ -22,7 +22,7 @@ const statusStyles = {
 const statusLabels = {
   'unassigned': 'Unassigned',
   'scheduled': 'Scheduled',
-  'in-progress': 'In Progress',
+  'in progress': 'In Progress',
   'complete': 'Complete',
   'cancelled': 'Cancelled',
   'rescheduled': 'Rescheduled'

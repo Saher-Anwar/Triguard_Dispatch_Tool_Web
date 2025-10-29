@@ -9,7 +9,7 @@ import type { Timesheet, TimesheetData } from '@/types'
 import { useState } from 'react'
 
 export function TimesheetPage() {
-  const [selectedTimesheet, setSelectedTimesheet] = useState<Timesheet | null>(null)
+  const [_selectedTimesheet, setSelectedTimesheet] = useState<Timesheet | null>(null)
   const [timesheetFilter, setTimesheetFilter] = useState('all')
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 

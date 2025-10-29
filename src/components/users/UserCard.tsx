@@ -93,7 +93,7 @@ export function UserCard({ user }: UserCardProps) {
             <AccordionTrigger>Permissions</AccordionTrigger>
             <AccordionContent>
               <div className="space-y-3">
-                {user.permissions.length > 0 ? (
+                {user.permissions && user.permissions.length > 0 ? (
                   user.permissions.map((permission, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <Check className="h-4 w-4 text-emerald-500 flex-shrink-0" />

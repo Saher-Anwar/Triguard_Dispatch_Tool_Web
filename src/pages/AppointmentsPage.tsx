@@ -19,8 +19,9 @@ export function AppointmentsPage() {
     queryKey: ['appointments', appointmentFilter],
     queryFn: appointmentFilter === 'all' 
       ? getAppointments 
-      : () => getUserAppointments(parseInt(currentUser.id)),
-    staleTime: 5 * 60 * 1000 // 5 mins
+      : () => getUserAppointments(parseInt(currentUser?.id || '0')),
+    staleTime: 5 * 60 * 1000, // 5 mins
+    enabled: appointmentFilter === 'all' || !!currentUser
   })
 
   const handleAppointmentClick = (appointment: Appointment) => {

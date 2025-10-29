@@ -34,18 +34,14 @@ export function RoleDropdown({ user }: { user: User}) {
 
       if (previousUsers) {
         // Find the role by ID to get the full role object
-        const selectedRole = roles.find(r => r.id === roleId)
+        const selectedRole = roles.find((r: Role) => r.id === roleId)
         
         queryClient.setQueryData<User[]>(['users'], (old) =>
           old?.map((u) =>
             u.id === userId
               ? { 
                   ...u, 
-                  role: selectedRole ? {
-                    id: selectedRole.id,
-                    name: selectedRole.name,
-                    permissions: selectedRole.permissions
-                  } : null
+                  role: selectedRole || undefined
                 }
               : u
           )
