@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ChevronDownIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -8,10 +9,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { getAppointmentStatuses, updateAppointmentStatus } from "@/api/appointment"
+import { AppointmentCompletionDialog } from "./AppointmentCompletionDialog"
 import type { Appointment, AppointmentStatus } from "@/types"
 import { toast } from 'sonner'
 
 export function AppointmentStatusDropdown({ appointment }: { appointment: Appointment }) {
+  const [completionDialogOpen, setCompletionDialogOpen] = useState(false)
   const queryClient = useQueryClient()
 
   // --- Get appointment statuses from type ---
@@ -33,6 +36,13 @@ export function AppointmentStatusDropdown({ appointment }: { appointment: Appoin
   // --- Handle dropdown selection ---
   const handleStatusSelect = (status: AppointmentStatus, e: React.MouseEvent) => {
     e.stopPropagation()
+    
+    // If status is "complete", show completion dialog instead of directly updating
+    if (status === 'complete') {
+      setCompletionDialogOpen(true)
+      return
+    }
+    
     mutate({ appointmentId: appointment.id, status })
   }
 
@@ -43,28 +53,41 @@ export function AppointmentStatusDropdown({ appointment }: { appointment: Appoin
 
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="h-8 px-2 justify-start gap-1"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <span>{formatStatus(appointment.status)}</span>
-          <ChevronDownIcon className="h-3 w-3" />
-        </Button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent align="start">
-        {statuses.map((status: AppointmentStatus) => (
-          <DropdownMenuItem
-            key={status}
-            onClick={(e) => handleStatusSelect(status, e)}
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="h-8 px-2 justify-start gap-1"
+            onClick={(e) => e.stopPropagation()}
           >
-            {formatStatus(status)}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            <span>{formatStatus(appointment.status)}</span>
+            <ChevronDownIcon className="h-3 w-3" />
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="start">
+          {statuses.map((status: AppointmentStatus) => (
+            <DropdownMenuItem
+              key={status}
+              onClick={(e) => handleStatusSelect(status, e)}
+            >
+              {formatStatus(status)}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Completion Dialog */}
+      <AppointmentCompletionDialog
+        appointment={appointment}
+        open={completionDialogOpen}
+        onOpenChange={setCompletionDialogOpen}
+        onComplete={() => {
+          // Refresh data after completion
+          queryClient.invalidateQueries({ queryKey: ['appointments'] })
+        }}
+      />
+    </>
   )
 }
