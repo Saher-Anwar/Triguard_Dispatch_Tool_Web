@@ -51,9 +51,9 @@ export function AppointmentDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-[95vw] md:max-w-3xl lg:max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">
+          <DialogTitle className="text-base md:text-xl font-bold">
             Appointment Details - {appointment.customer?.name || 'Unknown Customer'}
           </DialogTitle>
         </DialogHeader>

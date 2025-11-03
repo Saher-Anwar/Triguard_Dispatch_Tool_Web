@@ -87,10 +87,10 @@ export function AppointmentCompletionDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px]" onClick={(e) => e.stopPropagation()}>
+      <DialogContent className="max-w-[95vw] sm:max-w-[500px]" onClick={(e) => e.stopPropagation()}>
         <DialogHeader>
-          <DialogTitle>Complete Appointment</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-base md:text-lg">Complete Appointment</DialogTitle>
+          <DialogDescription className="text-sm">
             Please select a disposition and add any completion notes for this appointment.
           </DialogDescription>
         </DialogHeader>

@@ -130,13 +130,13 @@ export function ModifyPermissionsDialog({ user, open, onOpenChange }: ModifyPerm
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-2xl max-h-[80vh] overflow-y-auto"
+        className="max-w-[95vw] md:max-w-2xl max-h-[85vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSave}>
           <DialogHeader>
-            <DialogTitle>Modify Permissions - {user.name}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-base md:text-lg">Modify Permissions - {user.name}</DialogTitle>
+            <DialogDescription className="text-sm">
               Select the permissions you want to assign to this user.
             </DialogDescription>
           </DialogHeader>

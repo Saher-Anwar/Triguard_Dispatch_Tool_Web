@@ -97,9 +97,9 @@ export function ConfigurationsPage() {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Page Header */}
-      <div>
+    <div className="space-y-4 md:space-y-8">
+      {/* Page Header - Hidden on mobile (shown in header) */}
+      <div className="hidden md:block">
         <h1 className="text-4xl font-bold">Configurations</h1>
         <p className="text-muted-foreground mt-2">
           Manage roles and dispositions for your organization
@@ -110,12 +110,12 @@ export function ConfigurationsPage() {
       <Collapsible open={rolesOpen} onOpenChange={setRolesOpen}>
         <Card>
           <CardHeader>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-2">
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" className="p-0 hover:bg-transparent">
                   <div className="flex items-center gap-2">
-                    <CardTitle className="text-2xl">Roles</CardTitle>
-                    <ChevronDown className={`h-5 w-5 transition-transform ${rolesOpen ? 'rotate-180' : ''}`} />
+                    <CardTitle className="text-xl md:text-2xl">Roles</CardTitle>
+                    <ChevronDown className={`h-4 w-4 md:h-5 md:w-5 transition-transform ${rolesOpen ? 'rotate-180' : ''}`} />
                   </div>
                 </Button>
               </CollapsibleTrigger>
@@ -137,11 +137,11 @@ export function ConfigurationsPage() {
                   <p className="text-muted-foreground">No roles found</p>
                 </div>
               ) : (
-                <div className="grid gap-4">
+                <div className="grid gap-3 md:gap-4">
                   {roles.map((role: Role) => (
-                    <div key={role.id} className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="space-y-2">
-                        <h3 className="font-semibold">{role.name}</h3>
+                    <div key={role.id} className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 p-3 md:p-4 border rounded-lg">
+                      <div className="space-y-2 flex-1 min-w-0">
+                        <h3 className="font-semibold text-sm md:text-base">{role.name}</h3>
                         <div className="flex flex-wrap gap-1">
                           {role.permissions.map((permission) => (
                             <Badge key={`${role.id}-${permission.code}`} variant="secondary" className="text-xs">
@@ -153,24 +153,24 @@ export function ConfigurationsPage() {
                           )}
                         </div>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 md:flex-shrink-0">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => handleEditRole(role)}
-                          className="gap-1"
+                          className="gap-1 flex-1 md:flex-none"
                         >
                           <Edit className="h-3 w-3" />
-                          Edit
+                          <span className="hidden sm:inline">Edit</span>
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => handleDeleteRole(role)}
-                          className="gap-1 text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="gap-1 text-red-600 hover:text-red-700 hover:bg-red-50 flex-1 md:flex-none"
                         >
                           <Trash2 className="h-3 w-3" />
-                          Delete
+                          <span className="hidden sm:inline">Delete</span>
                         </Button>
                       </div>
                     </div>
@@ -186,12 +186,12 @@ export function ConfigurationsPage() {
       <Collapsible open={dispositionsOpen} onOpenChange={setDispositionsOpen}>
         <Card>
           <CardHeader>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-2">
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" className="p-0 hover:bg-transparent">
                   <div className="flex items-center gap-2">
-                    <CardTitle className="text-2xl">Dispositions</CardTitle>
-                    <ChevronDown className={`h-5 w-5 transition-transform ${dispositionsOpen ? 'rotate-180' : ''}`} />
+                    <CardTitle className="text-xl md:text-2xl">Dispositions</CardTitle>
+                    <ChevronDown className={`h-4 w-4 md:h-5 md:w-5 transition-transform ${dispositionsOpen ? 'rotate-180' : ''}`} />
                   </div>
                 </Button>
               </CollapsibleTrigger>
@@ -213,31 +213,31 @@ export function ConfigurationsPage() {
                   <p className="text-muted-foreground">No dispositions found</p>
                 </div>
               ) : (
-                <div className="grid gap-4">
+                <div className="grid gap-3 md:gap-4">
                   {dispositions.map((disposition: Disposition) => (
-                    <div key={disposition.code} className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="space-y-1 flex-1">
-                        <h3 className="font-semibold">{disposition.code}</h3>
+                    <div key={disposition.code} className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 p-3 md:p-4 border rounded-lg">
+                      <div className="space-y-1 flex-1 min-w-0">
+                        <h3 className="font-semibold text-sm md:text-base">{disposition.code}</h3>
                         <p className="text-sm text-muted-foreground">{disposition.description}</p>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 md:flex-shrink-0">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => handleEditDisposition(disposition)}
-                          className="gap-1"
+                          className="gap-1 flex-1 md:flex-none"
                         >
                           <Edit className="h-3 w-3" />
-                          Edit
+                          <span className="hidden sm:inline">Edit</span>
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => handleDeleteDisposition(disposition)}
-                          className="gap-1 text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="gap-1 text-red-600 hover:text-red-700 hover:bg-red-50 flex-1 md:flex-none"
                         >
                           <Trash2 className="h-3 w-3" />
-                          Delete
+                          <span className="hidden sm:inline">Delete</span>
                         </Button>
                       </div>
                     </div>

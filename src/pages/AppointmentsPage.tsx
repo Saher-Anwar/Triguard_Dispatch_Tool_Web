@@ -36,39 +36,55 @@ export function AppointmentsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Top Bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="space-y-4 md:space-y-6">
+      {/* Top Bar - Desktop only (title shown in mobile header) */}
+      <div className="hidden md:flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-4xl font-bold">Appointments</h1>
         <div className="flex gap-3">
           <Button variant="outline" className="gap-2">
             <Download className="h-4 w-4" />
-            Export
+            <span className="hidden sm:inline">Export</span>
           </Button>
           {hasPermission('APPOINTMENTS.CREATE') && (
             <Button className="gap-2" onClick={handleNewAppointment}>
               <Plus className="h-4 w-4" />
-              New Appointment
+              <span className="hidden sm:inline">New Appointment</span>
             </Button>
           )}
         </div>
       </div>
 
+      {/* Mobile Action Buttons */}
+      <div className="md:hidden flex gap-2">
+        <Button variant="outline" size="sm" className="flex-1 gap-2">
+          <Download className="h-4 w-4" />
+          Export
+        </Button>
+        {hasPermission('APPOINTMENTS.CREATE') && (
+          <Button size="sm" className="flex-1 gap-2" onClick={handleNewAppointment}>
+            <Plus className="h-4 w-4" />
+            New
+          </Button>
+        )}
+      </div>
+
       {/* Filter Button Group */}
-      <div className="flex items-center space-x-6">
-        <ButtonGroup>
+      <div className="flex items-center w-full">
+        <ButtonGroup className="w-full md:w-auto">
           {hasPermission('APPOINTMENTS.VIEW.ALL') && (
             <Button
               variant={appointmentFilter === 'all' ? 'default' : 'outline'}
               onClick={() => setAppointmentFilter('all')}
+              className="flex-1 md:flex-none"
             >
-              All Appointments
+              All
             </Button>
           )}
           {hasPermission('APPOINTMENTS.VIEW.SELF') && (
             <Button
               variant={appointmentFilter === 'self' ? 'default' : 'outline'}
               onClick={() => setAppointmentFilter('self')}
+              className="flex-1 md:flex-none"
             >
               My Appointments
             </Button>

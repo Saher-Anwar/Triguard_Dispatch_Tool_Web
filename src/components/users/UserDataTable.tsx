@@ -9,7 +9,7 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from "@tanstack/react-table"
-import { ChevronLeftIcon, ChevronRightIcon, Search } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, Search, Mail, Shield } from "lucide-react"
 import {
   Table,
   TableBody,
@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   Select,
   SelectContent,
@@ -34,6 +36,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { UserCard } from "./UserCard"
+import { RoleDropdown } from "./RoleDropdown"
+import { UserActionsCell } from "./UserActionsCell"
 import type { Role, User } from "@/types"
 import { columns } from "./UserColumns"
 import { getRoles } from "@/api/roles"
@@ -85,9 +89,9 @@ export function UserDataTable({ users }: UserDataTableProps) {
   return (
     <>
       {/* Search and Filter Controls */}
-      <div className="flex items-center gap-4 py-4">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-4 py-4">
         {/* Search Input */}
-        <div className="relative max-w-sm">
+        <div className="relative w-full md:max-w-sm">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search users by name..."
@@ -106,7 +110,7 @@ export function UserDataTable({ users }: UserDataTableProps) {
             table.getColumn("status")?.setFilterValue(value === "all" ? "" : value)
           }
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
           <SelectContent>
@@ -126,7 +130,7 @@ export function UserDataTable({ users }: UserDataTableProps) {
             table.getColumn("role")?.setFilterValue(value === "all" ? "" : value)
           }
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Filter by role" />
           </SelectTrigger>
           <SelectContent>
@@ -140,7 +144,8 @@ export function UserDataTable({ users }: UserDataTableProps) {
         </Select>
       </div>
 
-      <div className="rounded-md border">
+      {/* Desktop Table View - Hidden on mobile */}
+      <div className="hidden md:block rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -193,9 +198,60 @@ export function UserDataTable({ users }: UserDataTableProps) {
         </Table>
       </div>
 
+      {/* Mobile Card View - Hidden on desktop */}
+      <div className="md:hidden space-y-3">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => {
+            const user = row.original
+            return (
+              <Card
+                key={row.id}
+                className="p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => setSelectedUser(user)}
+              >
+                <div className="space-y-3">
+                  {/* User Name & Status */}
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-base line-clamp-1">
+                      {user.name}
+                    </h3>
+                    <Badge variant="outline" className="text-xs whitespace-nowrap">
+                      {user.status}
+                    </Badge>
+                  </div>
+
+                  {/* Email */}
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Mail className="h-4 w-4 flex-shrink-0" />
+                    <span className="line-clamp-1">{user.email}</span>
+                  </div>
+
+                  {/* Role */}
+                  <div className="flex items-center gap-2 text-sm">
+                    <Shield className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <RoleDropdown user={user} roles={roles} />
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex justify-end pt-2" onClick={(e) => e.stopPropagation()}>
+                    <UserActionsCell user={user} />
+                  </div>
+                </div>
+              </Card>
+            )
+          })
+        ) : (
+          <Card className="p-8">
+            <p className="text-center text-muted-foreground">No users found.</p>
+          </Card>
+        )}
+      </div>
+
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="text-sm text-muted-foreground">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4 py-4">
+        <div className="text-xs md:text-sm text-muted-foreground">
           Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{" "}
           {Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)} of{" "}
           {table.getFilteredRowModel().rows.length} entries
@@ -206,12 +262,13 @@ export function UserDataTable({ users }: UserDataTableProps) {
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            className="h-9"
           >
             <ChevronLeftIcon className="h-4 w-4" />
-            Previous
+            <span className="hidden sm:inline ml-1">Previous</span>
           </Button>
           <div className="flex items-center space-x-1">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
           </div>
@@ -220,17 +277,18 @@ export function UserDataTable({ users }: UserDataTableProps) {
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            className="h-9"
           >
-            Next
+            <span className="hidden sm:inline mr-1">Next</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
         </div>
       </div>
 
       <Dialog open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-[95vw] sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>User Details</DialogTitle>
+            <DialogTitle className="text-base md:text-lg">User Details</DialogTitle>
           </DialogHeader>
           {selectedUser && <UserCard user={selectedUser} />}
         </DialogContent>

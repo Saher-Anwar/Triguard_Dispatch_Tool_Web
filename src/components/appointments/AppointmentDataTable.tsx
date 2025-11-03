@@ -9,7 +9,7 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from "@tanstack/react-table"
-import { ChevronLeftIcon, ChevronRightIcon, Search } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, Search, MapPin, Calendar as CalendarIcon } from "lucide-react"
 import {
   Table,
   TableBody,
@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   Select,
   SelectContent,
@@ -30,6 +32,8 @@ import {
 import type { Appointment } from "@/types"
 import { appointmentColumns } from "./AppointmentColumns"
 import { getAppointmentStatuses } from "@/api/appointment"
+import { AppointmentStatusDropdown } from "./AppointmentStatusDropdown"
+import { UserAssignmentDropdown } from "./UserAssignmentDropdown"
 
 interface AppointmentDataTableProps {
   appointments: Appointment[]
@@ -65,12 +69,24 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
     },
   })
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'unassigned': return 'bg-gray-500/20 text-gray-700 dark:text-gray-300'
+      case 'scheduled': return 'bg-blue-500/20 text-blue-700 dark:text-blue-300'
+      case 'in progress': return 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300'
+      case 'complete': return 'bg-green-500/20 text-green-700 dark:text-green-300'
+      case 'cancelled': return 'bg-red-500/20 text-red-700 dark:text-red-300'
+      case 'rescheduled': return 'bg-purple-500/20 text-purple-700 dark:text-purple-300'
+      default: return 'bg-gray-500/20 text-gray-700 dark:text-gray-300'
+    }
+  }
+
   return (
     <>
       {/* Search and Filter Controls */}
-      <div className="flex items-center gap-4 py-4">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-4 py-4">
         {/* Search Input */}
-        <div className="relative max-w-sm">
+        <div className="relative w-full md:max-w-sm">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search by customer name..."
@@ -89,7 +105,7 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
             table.getColumn("status")?.setFilterValue(value === "all" ? "" : value)
           }
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
           <SelectContent>
@@ -103,7 +119,8 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
         </Select>
       </div>
 
-      <div className="rounded-md border">
+      {/* Desktop Table View - Hidden on mobile */}
+      <div className="hidden md:block rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -156,9 +173,73 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
         </Table>
       </div>
 
+      {/* Mobile Card View - Hidden on desktop */}
+      <div className="md:hidden space-y-3">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => {
+            const appointment = row.original
+            return (
+              <Card
+                key={row.id}
+                className="p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => onAppointmentClick?.(appointment)}
+              >
+                <div className="space-y-3">
+                  {/* Customer Name & Status */}
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-base line-clamp-1">
+                      {appointment.customer?.name || 'N/A'}
+                    </h3>
+                    {showStatusDropdown ? (
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <AppointmentStatusDropdown appointment={appointment} />
+                      </div>
+                    ) : (
+                      <Badge className={`${getStatusColor(appointment.status)} text-xs whitespace-nowrap`}>
+                        {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                      </Badge>
+                    )}
+                  </div>
+
+                  {/* Address */}
+                  <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                    <span className="line-clamp-2">{appointment.customer?.location?.address || 'No address'}</span>
+                  </div>
+
+                  {/* DateTime */}
+                  <div className="flex items-center gap-2 text-sm">
+                    <CalendarIcon className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                    <span>{new Date(appointment.booking_datetime).toLocaleString()}</span>
+                  </div>
+
+                  {/* Assigned User */}
+                  {showUserDropdown ? (
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <UserAssignmentDropdown appointment={appointment} />
+                    </div>
+                  ) : appointment.user ? (
+                    <div className="text-sm">
+                      <span className="text-muted-foreground">Assigned to: </span>
+                      <span className="font-medium">{appointment.user.name}</span>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-muted-foreground">Unassigned</div>
+                  )}
+                </div>
+              </Card>
+            )
+          })
+        ) : (
+          <Card className="p-8">
+            <p className="text-center text-muted-foreground">No appointments found.</p>
+          </Card>
+        )}
+      </div>
+
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="text-sm text-muted-foreground">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4 py-4">
+        <div className="text-xs md:text-sm text-muted-foreground">
           Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{" "}
           {Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)} of{" "}
           {table.getFilteredRowModel().rows.length} entries
@@ -169,12 +250,13 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            className="h-9"
           >
             <ChevronLeftIcon className="h-4 w-4" />
-            Previous
+            <span className="hidden sm:inline ml-1">Previous</span>
           </Button>
           <div className="flex items-center space-x-1">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
           </div>
@@ -183,8 +265,9 @@ export function AppointmentDataTable({ appointments, onAppointmentClick, showSta
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            className="h-9"
           >
-            Next
+            <span className="hidden sm:inline mr-1">Next</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
         </div>

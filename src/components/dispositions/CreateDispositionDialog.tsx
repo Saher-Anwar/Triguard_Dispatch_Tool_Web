@@ -90,19 +90,20 @@ export function CreateDispositionDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="gap-2">
+        <Button className="gap-2 text-sm md:text-base">
           <Plus className="h-4 w-4" />
-          Add Disposition
+          <span className="hidden sm:inline">Add Disposition</span>
+          <span className="sm:hidden">Add</span>
         </Button>
       </DialogTrigger>
-      <DialogContent 
-        className="max-w-md"
+      <DialogContent
+        className="max-w-[95vw] sm:max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Create New Disposition</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-base md:text-lg">Create New Disposition</DialogTitle>
+            <DialogDescription className="text-sm">
               Enter a code and description for the new disposition.
             </DialogDescription>
           </DialogHeader>

@@ -35,9 +35,9 @@ export function TrackingModal() {
 
   return (
     <Dialog open={isTrackingModalOpen} onOpenChange={closeTrackingModal}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-border">
+      <DialogContent className="max-w-[95vw] md:max-w-3xl lg:max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-border">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">
+          <DialogTitle className="text-base md:text-xl font-bold">
             Live Tracking - {selectedAppointment.customer?.name}
           </DialogTitle>
         </DialogHeader>
@@ -96,35 +96,35 @@ export function TrackingModal() {
           </Card>
           
           {/* Tracking Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
             <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 md:mb-3">
                   ETA
                 </div>
-                <div className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
                   12 mins
                 </div>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 md:mb-3">
                   Distance
                 </div>
-                <div className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
                   3.2 mi
                 </div>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 md:mb-3">
                   Technician
                 </div>
-                <div className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+                <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
                   {selectedAppointment.user?.name || 'Unassigned'}
                 </div>
               </CardContent>

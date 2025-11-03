@@ -152,19 +152,20 @@ export function CreateRoleDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="gap-2">
+        <Button className="gap-2 text-sm md:text-base">
           <Plus className="h-4 w-4" />
-          Add Role
+          <span className="hidden sm:inline">Add Role</span>
+          <span className="sm:hidden">Add</span>
         </Button>
       </DialogTrigger>
-      <DialogContent 
-        className="max-w-2xl max-h-[80vh] overflow-y-auto"
+      <DialogContent
+        className="max-w-[95vw] md:max-w-2xl max-h-[85vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Create New Role</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-base md:text-lg">Create New Role</DialogTitle>
+            <DialogDescription className="text-sm">
               Enter a role name and select the permissions you want to assign to this role.
             </DialogDescription>
           </DialogHeader>
