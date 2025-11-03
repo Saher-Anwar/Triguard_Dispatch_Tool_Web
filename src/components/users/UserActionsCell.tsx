@@ -19,6 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { usePermissions } from "@/hooks/usePermissions"
 import { deleteUser } from "@/api/user"
 import { ModifyPermissionsDialog } from "./ModifyPermissionsDialog"
 import type { User } from "@/types"
@@ -31,8 +32,9 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const [permissionsDialogOpen, setPermissionsDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const queryClient = useQueryClient()
+  const { hasPermission } = usePermissions()
 
-  // Mutation for deleting user
+  // Mutation for deleting user (must be called before any conditional returns)
   const deleteUserMutation = useMutation({
     mutationFn: async () => {
       return deleteUser(user.id)
@@ -54,6 +56,15 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
     },
   })
 
+  // Check permissions
+  const canModifyPermissions = hasPermission('USERS.UPDATE.PERMISSIONS')
+  const canDeleteUser = hasPermission('USERS.DELETE')
+
+  // If user has no permissions, don't show the dropdown
+  if (!canModifyPermissions && !canDeleteUser) {
+    return null
+  }
+
   const handleDeleteConfirm = () => {
     deleteUserMutation.mutate()
   }
@@ -73,55 +84,63 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-          <DropdownMenuItem
-            onClick={(e) => {
-              e.stopPropagation()
-              setPermissionsDialogOpen(true)
-            }}
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            Modify Permissions
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={(e) => {
-              e.stopPropagation()
-              setDeleteDialogOpen(true)
-            }}
-            className="text-destructive focus:text-destructive"
-          >
-            <Trash className="mr-2 h-4 w-4" />
-            Delete User
-          </DropdownMenuItem>
+          {canModifyPermissions && (
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation()
+                setPermissionsDialogOpen(true)
+              }}
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              Modify Permissions
+            </DropdownMenuItem>
+          )}
+          {canDeleteUser && (
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation()
+                setDeleteDialogOpen(true)
+              }}
+              className="text-destructive focus:text-destructive"
+            >
+              <Trash className="mr-2 h-4 w-4" />
+              Delete User
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <ModifyPermissionsDialog
-        user={user}
-        open={permissionsDialogOpen}
-        onOpenChange={setPermissionsDialogOpen}
-      />
+      {canModifyPermissions && (
+        <ModifyPermissionsDialog
+          user={user}
+          open={permissionsDialogOpen}
+          onOpenChange={setPermissionsDialogOpen}
+        />
+      )}
 
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent onClick={(e) => e.stopPropagation()}>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete <strong>{user.name}</strong> ({user.email}).
-              This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteConfirm}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              disabled={deleteUserMutation.isPending}
-            >
-              {deleteUserMutation.isPending ? 'Deleting...' : 'Delete'}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {canDeleteUser && (
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+          <AlertDialogContent onClick={(e) => e.stopPropagation()}>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently delete <strong>{user.name}</strong> ({user.email}).
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteConfirm}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                disabled={deleteUserMutation.isPending}
+              >
+                {deleteUserMutation.isPending ? 'Deleting...' : 'Delete'}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </>
   )
 }

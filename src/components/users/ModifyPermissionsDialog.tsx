@@ -14,6 +14,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { getPermissions } from "@/api/permission"
 import { updateUserPermissions } from "@/api/user"
+import { useUserStore } from "@/store/useUserStore"
 import type { User, Permission } from "@/types"
 
 interface ModifyPermissionsDialogProps {
@@ -32,6 +33,7 @@ interface PermissionsBySection {
 export function ModifyPermissionsDialog({ user, open, onOpenChange }: ModifyPermissionsDialogProps) {
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([])
   const queryClient = useQueryClient()
+  const { currentUser, setCurrentUser } = useUserStore()
 
   const { data: allPermissions = [], isLoading } = useQuery({
     queryKey: ['permissions'],
@@ -51,9 +53,14 @@ export function ModifyPermissionsDialog({ user, open, onOpenChange }: ModifyPerm
       if (!user) throw new Error('No user selected')
       return updateUserPermissions(user.id, permissionCodes)
     },
-    onSuccess: () => {
+    onSuccess: (updatedUser) => {
       // Invalidate users query to refetch data
       queryClient.invalidateQueries({ queryKey: ['users'] })
+
+      // Update user store if current user was modified
+      if (currentUser && user && user.id === currentUser.id) {
+        setCurrentUser(updatedUser)
+      }
 
       toast.success("Permissions updated", {
         description: `Successfully updated permissions for ${user?.name}`,

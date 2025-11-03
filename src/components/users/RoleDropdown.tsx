@@ -9,10 +9,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { getRoles } from "@/api/roles"
 import { updateUserRole } from "@/api/user"
+import { useUserStore } from "@/store/useUserStore"
 import type { User, Role } from "@/types"
 
 export function RoleDropdown({ user }: { user: User}) {
   const queryClient = useQueryClient()
+  const { currentUser, setCurrentUser } = useUserStore()
 
   // --- Fetch all roles ---
   const { data: roles = [], isLoading } = useQuery({
@@ -35,12 +37,12 @@ export function RoleDropdown({ user }: { user: User}) {
       if (previousUsers) {
         // Find the role by ID to get the full role object
         const selectedRole = roles.find((r: Role) => r.id === roleId)
-        
+
         queryClient.setQueryData<User[]>(['users'], (old) =>
           old?.map((u) =>
             u.id === userId
-              ? { 
-                  ...u, 
+              ? {
+                  ...u,
                   role: selectedRole || undefined
                 }
               : u
@@ -49,6 +51,13 @@ export function RoleDropdown({ user }: { user: User}) {
       }
 
       return { previousUsers }
+    },
+
+    // Update user store if current user was modified
+    onSuccess: (updatedUser, { userId }) => {
+      if (currentUser && userId === currentUser.id) {
+        setCurrentUser(updatedUser)
+      }
     },
 
     // Roll back on error

@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/store/useThemeStore'
 import { useUserStore } from '@/store/useUserStore'
+import { usePermissions } from '@/hooks/usePermissions'
 
 interface AppSidebarProps {
   activePage: string
@@ -23,32 +24,38 @@ const navigationItems = [
     id: 'appointments',
     title: 'Appointments',
     icon: Calendar,
+    requiredPermissions: ['APPOINTMENTS.VIEW.ALL', 'APPOINTMENTS.VIEW.SELF'],
   },
   {
     id: 'reports',
     title: 'Reports',
     icon: BarChart3,
+    requiredPermissions: [], // No specific permission requirement yet
   },
   {
     id: 'users',
     title: 'Users',
     icon: Users,
+    requiredPermissions: ['USERS.VIEW'],
   },
   {
     id: 'timesheets',
     title: 'Timesheets',
     icon: Clock,
+    requiredPermissions: [], // No specific permission requirement yet
   },
   {
     id: 'configurations',
     title: 'Configurations',
     icon: Settings,
+    requiredPermissions: ['ROLES.CREATE', 'ROLES.UPDATE', 'ROLES.DELETE', 'DISPOSITIONS.CREATE', 'DISPOSITIONS.DELETE'],
   },
 ]
 
 export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
   const { theme, setTheme } = useThemeStore()
   const { currentUser, clearUser } = useUserStore()
+  const { hasAnyPermission, hasPermission } = usePermissions()
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
@@ -59,16 +66,32 @@ export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
     localStorage.removeItem('id_token')
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
-    
+
     // Clear user from store
     clearUser()
-    
+
     // Redirect to Cognito logout (optional - clears Cognito session)
     const COGNITO_DOMAIN = import.meta.env.VITE_COGNITO_DOMAIN
     const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
     const logoutUrl = `${COGNITO_DOMAIN}/logout?client_id=${CLIENT_ID}&logout_uri=${encodeURIComponent(window.location.origin)}`
     window.location.href = logoutUrl
   }
+
+  // Filter navigation items based on permissions
+  const visibleNavigationItems = navigationItems.filter(item => {
+    // If no permissions required, show the item
+    if (item.requiredPermissions.length === 0) {
+      return true
+    }
+
+    // If multiple permissions, user needs at least one (OR logic)
+    if (item.requiredPermissions.length > 1) {
+      return hasAnyPermission(item.requiredPermissions)
+    }
+
+    // Single permission check
+    return hasPermission(item.requiredPermissions[0])
+  })
 
   return (
     <Sidebar variant="sidebar" className="border-r border-border">
@@ -85,7 +108,7 @@ export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
       <SidebarContent className="px-4">
         <SidebarGroup>
           <SidebarMenu>
-            {navigationItems.map((item) => (
+            {visibleNavigationItems.map((item) => (
               <SidebarMenuItem key={item.id}>
                 <SidebarMenuButton
                   onClick={() => onPageChange(item.id)}

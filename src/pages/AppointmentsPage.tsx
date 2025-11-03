@@ -8,12 +8,14 @@ import { getAppointments, getUserAppointments } from '@/api/appointment'
 import type { Appointment } from '@/types'
 import { useState } from 'react'
 import { useUserStore } from '@/store/useUserStore'
+import { usePermissions } from '@/hooks/usePermissions'
 
 export function AppointmentsPage() {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [appointmentFilter, setAppointmentFilter] = useState('all')
   const { currentUser } = useUserStore()
+  const { hasPermission } = usePermissions()
 
   const { data: appointments = [], isLoading, isError } = useQuery({
     queryKey: ['appointments', appointmentFilter],
@@ -43,28 +45,34 @@ export function AppointmentsPage() {
             <Download className="h-4 w-4" />
             Export
           </Button>
-          <Button className="gap-2" onClick={handleNewAppointment}>
-            <Plus className="h-4 w-4" />
-            New Appointment
-          </Button>
+          {hasPermission('APPOINTMENTS.CREATE') && (
+            <Button className="gap-2" onClick={handleNewAppointment}>
+              <Plus className="h-4 w-4" />
+              New Appointment
+            </Button>
+          )}
         </div>
       </div>
 
       {/* Filter Button Group */}
       <div className="flex items-center space-x-6">
         <ButtonGroup>
-          <Button 
-            variant={appointmentFilter === 'all' ? 'default' : 'outline'}
-            onClick={() => setAppointmentFilter('all')}
-          >
-            All Appointments
-          </Button>
-          <Button 
-            variant={appointmentFilter === 'self' ? 'default' : 'outline'}
-            onClick={() => setAppointmentFilter('self')}
-          >
-            My Appointments
-          </Button>
+          {hasPermission('APPOINTMENTS.VIEW.ALL') && (
+            <Button
+              variant={appointmentFilter === 'all' ? 'default' : 'outline'}
+              onClick={() => setAppointmentFilter('all')}
+            >
+              All Appointments
+            </Button>
+          )}
+          {hasPermission('APPOINTMENTS.VIEW.SELF') && (
+            <Button
+              variant={appointmentFilter === 'self' ? 'default' : 'outline'}
+              onClick={() => setAppointmentFilter('self')}
+            >
+              My Appointments
+            </Button>
+          )}
         </ButtonGroup>
       </div>
 
@@ -78,11 +86,11 @@ export function AppointmentsPage() {
           <p className="text-red-500">Failed to load appointments</p>
         </div>
       ) : (
-        <AppointmentDataTable 
-          appointments={appointments} 
+        <AppointmentDataTable
+          appointments={appointments}
           onAppointmentClick={handleAppointmentClick}
-          showStatusDropdown={appointmentFilter === 'all' || appointmentFilter === 'self'}
-          showUserDropdown={appointmentFilter === 'all'}
+          showStatusDropdown={(appointmentFilter === 'all' || appointmentFilter === 'self') && hasPermission('APPOINTMENTS.UPDATE.STATUS')}
+          showUserDropdown={appointmentFilter === 'all' && hasPermission('APPOINTMENTS.UPDATE.ASSIGN_AGENT')}
         />
       )}
 
