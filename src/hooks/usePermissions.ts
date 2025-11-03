@@ -41,7 +41,7 @@ export function usePermissions() {
     if (!currentUser) {
       return false
     }
-    return currentUser.role_id === roleId
+    return currentUser.role?.id === roleId
   }
 
   return {

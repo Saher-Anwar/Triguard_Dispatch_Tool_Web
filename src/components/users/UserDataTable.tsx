@@ -230,7 +230,7 @@ export function UserDataTable({ users }: UserDataTableProps) {
                   <div className="flex items-center gap-2 text-sm">
                     <Shield className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
                     <div onClick={(e) => e.stopPropagation()}>
-                      <RoleDropdown user={user} roles={roles} />
+                      <RoleDropdown user={user} />
                     </div>
                   </div>
 
