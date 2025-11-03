@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, Users, Clock, Settings, Moon, Sun, LogOut } from 'lucide-react'
+import { Calendar, BarChart3, Users, Settings, Moon, Sun, LogOut } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
