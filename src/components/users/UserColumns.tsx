@@ -3,7 +3,7 @@ import type { User } from "@/types"
 import type { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { RoleDropdown } from "./RoleDropdown"
-import { ModifyPermissionsDialog } from "./ModifyPermissionsDialog"
+import { UserActionsCell } from "./UserActionsCell"
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -51,9 +51,10 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
-    id: "permissions",
+    id: "actions",
+    header: "Actions",
     cell: ({ row }) => {
-      return <ModifyPermissionsDialog user={row.original} />
+      return <UserActionsCell user={row.original} />
     }
   }
 ]

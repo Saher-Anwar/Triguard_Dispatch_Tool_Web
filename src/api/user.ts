@@ -59,14 +59,48 @@ export async function updateUserRole(userId: string, roleId: string) {
       role_id: roleId,
     }),
   })
-  
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
     console.error('API Error:', errorData)
     throw new Error(errorData.error || 'Failed to update user role')
   }
-  
+
   return response.json()
 }
 
+export async function updateUserPermissions(userId: string, permissionCodes: string[]) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/user/${userId}/permissions`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      permission_codes: permissionCodes,
+    }),
+  })
 
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to update user permissions')
+  }
+
+  return response.json()
+}
+
+export async function deleteUser(userId: string) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/user/${userId}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to delete user')
+  }
+
+  return response.json()
+}

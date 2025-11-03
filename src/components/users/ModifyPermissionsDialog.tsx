@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { Settings } from "lucide-react"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -10,14 +10,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Checkbox } from "@/components/ui/checkbox"
 import { getPermissions } from "@/api/permission"
+import { updateUserPermissions } from "@/api/user"
 import type { User, Permission } from "@/types"
 
 interface ModifyPermissionsDialogProps {
-  user: User
+  user: User | null
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 interface PermissionsBySection {
@@ -27,8 +29,9 @@ interface PermissionsBySection {
   DISPOSITIONS: Permission[]
 }
 
-export function ModifyPermissionsDialog({ user }: ModifyPermissionsDialogProps) {
+export function ModifyPermissionsDialog({ user, open, onOpenChange }: ModifyPermissionsDialogProps) {
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([])
+  const queryClient = useQueryClient()
 
   const { data: allPermissions = [], isLoading } = useQuery({
     queryKey: ['permissions'],
@@ -41,6 +44,29 @@ export function ModifyPermissionsDialog({ user }: ModifyPermissionsDialogProps) 
       setSelectedPermissions(user.permissions?.map(p => p.code) || [])
     }
   }, [user])
+
+  // Mutation for updating user permissions
+  const updatePermissionsMutation = useMutation({
+    mutationFn: async (permissionCodes: string[]) => {
+      if (!user) throw new Error('No user selected')
+      return updateUserPermissions(user.id, permissionCodes)
+    },
+    onSuccess: () => {
+      // Invalidate users query to refetch data
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+
+      toast.success("Permissions updated", {
+        description: `Successfully updated permissions for ${user?.name}`,
+      })
+
+      onOpenChange(false)
+    },
+    onError: (error: Error) => {
+      toast.error("Failed to update permissions", {
+        description: error.message,
+      })
+    },
+  })
 
   // Group permissions by section
   const permissionsBySection: PermissionsBySection = allPermissions.reduce(
@@ -64,9 +90,10 @@ export function ModifyPermissionsDialog({ user }: ModifyPermissionsDialogProps) 
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault()
-    // For now, just console log the permissions update
-    console.log(`Updating permissions for user ${user?.id} (${user?.name}):`, selectedPermissions)
+    updatePermissionsMutation.mutate(selectedPermissions)
   }
+
+  if (!user) return null
 
   const renderSection = (title: string, permissions: Permission[]) => (
     <div key={title} className="space-y-3">
@@ -94,23 +121,12 @@ export function ModifyPermissionsDialog({ user }: ModifyPermissionsDialogProps) 
   )
 
   return (
-    <Dialog>
-      <form onSubmit={handleSave}>
-        <DialogTrigger asChild>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="gap-2"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Settings className="h-3 w-3" />
-            Modify Permissions
-          </Button>
-        </DialogTrigger>
-        <DialogContent 
-          className="max-w-2xl max-h-[80vh] overflow-y-auto"
-          onClick={(e) => e.stopPropagation()}
-        >
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className="max-w-2xl max-h-[80vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <form onSubmit={handleSave}>
           <DialogHeader>
             <DialogTitle>Modify Permissions - {user.name}</DialogTitle>
             <DialogDescription>
@@ -133,14 +149,17 @@ export function ModifyPermissionsDialog({ user }: ModifyPermissionsDialogProps) 
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button type="button" variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit" disabled={isLoading}>
-              Save Changes
+            <Button
+              type="submit"
+              disabled={isLoading || updatePermissionsMutation.isPending}
+            >
+              {updatePermissionsMutation.isPending ? 'Saving...' : 'Save Changes'}
             </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }
