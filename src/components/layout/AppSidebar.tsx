@@ -38,15 +38,15 @@ const navigationItems = [
     icon: Users,
     requiredPermissions: ['USERS.VIEW'],
   },
-  {
-    id: 'timesheets',
-    title: 'Timesheets',
-    icon: Clock,
-    requiredPermissions: [], // No specific permission requirement yet
-  },
+  // {
+  //   id: 'timesheets',
+  //   title: 'Timesheets',
+  //   icon: Clock,
+  //   requiredPermissions: [], // No specific permission requirement yet
+  // },
   {
     id: 'configurations',
-    title: 'Configurations',
+    title: 'Settings',
     icon: Settings,
     requiredPermissions: ['ROLES.CREATE', 'ROLES.UPDATE', 'ROLES.DELETE', 'DISPOSITIONS.CREATE', 'DISPOSITIONS.DELETE'],
   },
