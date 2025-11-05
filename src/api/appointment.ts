@@ -1,15 +1,32 @@
-import type { AppointmentStatus, Disposition } from "@/types"
+import type { AppointmentStatus, Disposition, NewAppointmentData } from "@/types"
 
 export async function getAppointments() {
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/appointments`)
-  
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
     console.error('API Error:', errorData)
     throw new Error(errorData.error || 'Failed to fetch appointments from API')
   }
-  
+
+  return response.json()
+}
+
+export async function createAppointment(appointmentData: NewAppointmentData) {
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(appointmentData),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to create appointment')
+  }
+
   return response.json()
 }
 
