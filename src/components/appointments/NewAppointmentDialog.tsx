@@ -307,6 +307,7 @@ export function NewAppointmentDialog({ open, onOpenChange }: NewAppointmentDialo
               <AddressAutofill
                 accessToken={MAPBOX_TOKEN}
                 onRetrieve={handleAddressRetrieve}
+                options={{ appendTo: document.querySelector('[data-radix-dialog-content]') }}
               >
                 <Input
                   type="text"

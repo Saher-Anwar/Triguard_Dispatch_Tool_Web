@@ -1,21 +1,33 @@
-import type { Timesheet } from "@/types"
+import type { Timesheet } from '@/types'
+import { getMockTimesheets } from '@/mock/mockData'
+
+const IS_MOCK = import.meta.env.VITE_MOCK === 'true'
+
+// The name of the mock user whose timesheets are shown in the "My Timesheets" view.
+// In a real app this would be resolved from the auth token.
+const MOCK_SELF_USER_NAME = 'David Brown'
 
 export async function getTimesheets() {
-  // Replace this with `fetch('/api/timesheets').then(res => res.json())` later
-  const response = await fetch('/mock/timesheets.json') // served from /public/mock/
-  if (!response.ok) throw new Error('Failed to load mock data')
-  await new Promise((r) => setTimeout(r, 300))
+  if (IS_MOCK) {
+    await new Promise((r) => setTimeout(r, 250))
+    return getMockTimesheets()
+  }
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/timesheets`)
+  if (!response.ok) throw new Error('Failed to load timesheets')
   return response.json()
 }
 
 export async function getUserTimesheets() {
-  // Replace this with `fetch('/api/timesheets').then(res => res.json())` later
-  const response = await fetch('/mock/timesheets.json') // served from /public/mock/
-  if (!response.ok) throw new Error('Failed to load mock data')
-  await new Promise((r) => setTimeout(r, 300))
-  const data = await response.json()
+  if (IS_MOCK) {
+    await new Promise((r) => setTimeout(r, 250))
+    const data = await getMockTimesheets()
+    return data.filter((timesheet: Timesheet) => timesheet.user.name === MOCK_SELF_USER_NAME)
+  }
 
-  return data.filter((timesheet: Timesheet) => 
-    timesheet.user.name === "David Brown"
-  )
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/timesheets/me`)
+  if (!response.ok) throw new Error('Failed to load user timesheets')
+  return response.json()
 }
