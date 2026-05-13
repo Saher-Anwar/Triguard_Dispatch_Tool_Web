@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, Users, Home, Moon, Sun } from 'lucide-react'
+import { Calendar, BarChart3, Users, Settings, Moon, Sun, LogOut } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/store/useThemeStore'
 import { useUserStore } from '@/store/useUserStore'
+import { usePermissions } from '@/hooks/usePermissions'
 
 interface AppSidebarProps {
   activePage: string
@@ -23,42 +24,91 @@ const navigationItems = [
     id: 'appointments',
     title: 'Appointments',
     icon: Calendar,
+    requiredPermissions: ['APPOINTMENTS.VIEW.ALL', 'APPOINTMENTS.VIEW.SELF'],
   },
   {
     id: 'reports',
     title: 'Reports',
     icon: BarChart3,
+    requiredPermissions: [], // No specific permission requirement yet
   },
   {
     id: 'users',
     title: 'Users',
     icon: Users,
+    requiredPermissions: ['USERS.VIEW'],
+  },
+  // {
+  //   id: 'timesheets',
+  //   title: 'Timesheets',
+  //   icon: Clock,
+  //   requiredPermissions: [], // No specific permission requirement yet
+  // },
+  {
+    id: 'configurations',
+    title: 'Settings',
+    icon: Settings,
+    requiredPermissions: ['ROLES.CREATE', 'ROLES.UPDATE', 'ROLES.DELETE', 'DISPOSITIONS.CREATE', 'DISPOSITIONS.DELETE'],
   },
 ]
 
 export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
   const { theme, setTheme } = useThemeStore()
-  const { currentUser } = useUserStore()
+  const { currentUser, clearUser } = useUserStore()
+  const { hasAnyPermission, hasPermission } = usePermissions()
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
+  const handleLogout = () => {
+    // Clear tokens from localStorage
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+
+    // Clear user from store
+    clearUser()
+
+    // Redirect to Cognito logout (optional - clears Cognito session)
+    const COGNITO_DOMAIN = import.meta.env.VITE_COGNITO_DOMAIN
+    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
+    const logoutUrl = `${COGNITO_DOMAIN}/logout?client_id=${CLIENT_ID}&logout_uri=${encodeURIComponent(window.location.origin)}`
+    window.location.href = logoutUrl
+  }
+
+  // Filter navigation items based on permissions
+  const visibleNavigationItems = navigationItems.filter(item => {
+    // If no permissions required, show the item
+    if (item.requiredPermissions.length === 0) {
+      return true
+    }
+
+    // If multiple permissions, user needs at least one (OR logic)
+    if (item.requiredPermissions.length > 1) {
+      return hasAnyPermission(item.requiredPermissions)
+    }
+
+    // Single permission check
+    return hasPermission(item.requiredPermissions[0])
+  })
+
   return (
     <Sidebar variant="sidebar" className="border-r border-border">
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-2">
-          <Home className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-            Triguard
-          </span>
+        <div className="flex items-center justify-center">
+          <img 
+            src={theme === 'dark' ? "/logo_dark_mode.svg" : "/logo.svg"}
+            alt="Triguard Logo" 
+            className="h-32 w-auto"
+          />
         </div>
       </SidebarHeader>
 
       <SidebarContent className="px-4">
         <SidebarGroup>
           <SidebarMenu>
-            {navigationItems.map((item) => (
+            {visibleNavigationItems.map((item) => (
               <SidebarMenuItem key={item.id}>
                 <SidebarMenuButton
                   onClick={() => onPageChange(item.id)}
@@ -91,11 +141,22 @@ export function AppSidebar({ activePage, onPageChange }: AppSidebarProps) {
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500" />
             <div className="flex-1 min-w-0">
-              <div className="font-semibold text-sm">{currentUser.name}</div>
-              <div className="text-xs text-muted-foreground">{currentUser.role}</div>
+              <div className="font-semibold text-sm">{currentUser?.name}</div>
+              <div className="text-xs text-muted-foreground">{currentUser?.email}</div>
             </div>
           </div>
         </div>
+
+        {/* Logout Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleLogout}
+          className="w-full justify-start gap-3 h-9 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+        >
+          <LogOut className="h-4 w-4" />
+          Sign out
+        </Button>
       </SidebarFooter>
     </Sidebar>
   )

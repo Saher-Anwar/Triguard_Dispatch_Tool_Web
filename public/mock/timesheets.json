@@ -1,0 +1,198 @@
+[
+  {
+    "id": "ts-1",
+    "user": {
+      "id": "1",
+      "name": "Mike Johnson",
+      "email": "mike.johnson@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-1",
+        "name": "Master",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "123 Main St, New York, NY 10001",
+        "city": "New York",
+        "state": "NY",
+        "country": "US",
+        "zip_code": "10001",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      }
+    },
+    "entries": [
+      {
+        "id": "e-1",
+        "date": "2026-05-13",
+        "start_time": "08:00:00",
+        "end_time": "17:00:00"
+      },
+      {
+        "id": "e-2",
+        "date": "2026-05-12",
+        "start_time": "08:30:00",
+        "end_time": "16:30:00"
+      },
+      {
+        "id": "e-3",
+        "date": "2026-05-11",
+        "start_time": "07:45:00",
+        "end_time": "16:45:00"
+      }
+    ]
+  },
+  {
+    "id": "ts-2",
+    "user": {
+      "id": "2",
+      "name": "David Brown",
+      "email": "david.brown@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-2",
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "456 Oak Ave, Los Angeles, CA 90210",
+        "city": "Los Angeles",
+        "state": "CA",
+        "country": "US",
+        "zip_code": "90210",
+        "latitude": 34.0522,
+        "longitude": -118.2437
+      }
+    },
+    "entries": [
+      {
+        "id": "e-4",
+        "date": "2026-05-13",
+        "start_time": "09:00:00",
+        "end_time": "18:00:00"
+      },
+      {
+        "id": "e-5",
+        "date": "2026-05-12",
+        "start_time": "08:45:00",
+        "end_time": "17:15:00"
+      }
+    ]
+  },
+  {
+    "id": "ts-3",
+    "user": {
+      "id": "3",
+      "name": "Sarah Martinez",
+      "email": "sarah.martinez@company.com",
+      "status": "On Leave",
+      "role": {
+        "id": "role-3",
+        "name": "Dispatcher",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "789 Dispatch Ave, Chicago, IL 60601",
+        "city": "Chicago",
+        "state": "IL",
+        "country": "US",
+        "zip_code": "60601",
+        "latitude": 41.8781,
+        "longitude": -87.6298
+      }
+    },
+    "entries": [
+      {
+        "id": "e-6",
+        "date": "2026-05-09",
+        "start_time": "07:30:00",
+        "end_time": "15:30:00"
+      }
+    ]
+  },
+  {
+    "id": "ts-4",
+    "user": {
+      "id": "5",
+      "name": "Emily Chen",
+      "email": "emily.chen@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-2",
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "321 Elm St, San Francisco, CA 94102",
+        "city": "San Francisco",
+        "state": "CA",
+        "country": "US",
+        "zip_code": "94102",
+        "latitude": 37.7749,
+        "longitude": -122.4194
+      }
+    },
+    "entries": [
+      {
+        "id": "e-7",
+        "date": "2026-05-13",
+        "start_time": "09:15:00",
+        "end_time": "17:45:00"
+      },
+      {
+        "id": "e-8",
+        "date": "2026-05-12",
+        "start_time": "08:00:00",
+        "end_time": "16:00:00"
+      }
+    ]
+  },
+  {
+    "id": "ts-5",
+    "user": {
+      "id": "4",
+      "name": "James Wilson",
+      "email": "james.wilson@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-4",
+        "name": "Agent",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "789 Pine St, Chicago, IL 60601",
+        "city": "Chicago",
+        "state": "IL",
+        "country": "US",
+        "zip_code": "60601",
+        "latitude": 41.8781,
+        "longitude": -87.6298
+      }
+    },
+    "entries": [
+      {
+        "id": "e-9",
+        "date": "2026-05-13",
+        "start_time": "06:00:00",
+        "end_time": "14:30:00"
+      },
+      {
+        "id": "e-10",
+        "date": "2026-05-12",
+        "start_time": "06:00:00",
+        "end_time": "15:00:00"
+      },
+      {
+        "id": "e-11",
+        "date": "2026-05-11",
+        "start_time": "06:30:00",
+        "end_time": "14:00:00"
+      }
+    ]
+  }
+]

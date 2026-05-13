@@ -1,74 +1,147 @@
-import type { Appointment } from '@/types'
+import type { AppointmentStatus, Disposition, NewAppointmentData } from '@/types'
+import {
+  mockGetAppointments,
+  mockGetUserAppointments,
+  mockGetUsersByAppointmentDistance,
+  mockCreateAppointment,
+  mockAssignUserToAppointment,
+  mockUpdateAppointmentStatus,
+  mockCompleteAppointment,
+} from '@/mock/mockData'
 
-export async function getAppointments(): Promise<Appointment[]> {
-  const mockAppointments: Appointment[] = [
-    {
-      id: '1',
-      customerName: 'John Smith',
-      customerAddress: '123 Maple Street, Boston, MA',
-      datetime: 'Oct 20, 2025 - 10:00 AM',
-      status: 'in-progress',
-      assignedUser: {
-        id: '1',
-        name: 'Mike Johnson',
-        role: 'Field Technician',
-        permissions: ['View Appointments', 'Update Status', 'Access Maps'],
-      },
-    },
-    {
-      id: '2',
-      customerName: 'Sarah Williams',
-      customerAddress: '456 Oak Avenue, Cambridge, MA',
-      datetime: 'Oct 20, 2025 - 2:00 PM',
-      status: 'scheduled',
-      assignedUser: {
-        id: '2',
-        name: 'David Brown',
-        role: 'Field Technician',
-        permissions: ['View Appointments', 'Update Status', 'Access Maps'],
-      },
-    },
-    {
-      id: '3',
-      customerName: 'Robert Davis',
-      customerAddress: '789 Pine Road, Somerville, MA',
-      datetime: 'Oct 19, 2025 - 9:00 AM',
+const IS_MOCK = import.meta.env.VITE_MOCK === 'true'
+
+export async function getAppointments() {
+  if (IS_MOCK) return mockGetAppointments()
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointments`)
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch appointments from API')
+  }
+
+  return response.json()
+}
+
+export async function createAppointment(appointmentData: NewAppointmentData) {
+  if (IS_MOCK) return mockCreateAppointment(appointmentData)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(appointmentData),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to create appointment')
+  }
+
+  return response.json()
+}
+
+export function getAppointmentStatuses(): AppointmentStatus[] {
+  return ['unassigned', 'scheduled', 'in progress', 'complete', 'cancelled', 'rescheduled']
+}
+
+export async function getUserAppointments(userId: number) {
+  if (IS_MOCK) return mockGetUserAppointments(userId)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/users/${userId}/appointments`)
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch user appointments from API')
+  }
+
+  return response.json()
+}
+
+export async function getUsersByAppointmentDistance(appointmentId: number) {
+  if (IS_MOCK) return mockGetUsersByAppointmentDistance(appointmentId)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}/users`)
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch users by distance from API')
+  }
+
+  return response.json()
+}
+
+export async function assignUserToAppointment(appointmentId: number, userId: number | null) {
+  if (IS_MOCK) return mockAssignUserToAppointment(appointmentId, userId)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: userId }),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to assign user to appointment')
+  }
+
+  return response.json()
+}
+
+export async function updateAppointmentStatus(appointmentId: number, status: AppointmentStatus) {
+  if (IS_MOCK) return mockUpdateAppointmentStatus(appointmentId, status)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to update appointment status')
+  }
+
+  return response.json()
+}
+
+export async function completeAppointment(
+  appointmentId: number,
+  disposition: Disposition,
+  note: string,
+) {
+  if (IS_MOCK) return mockCompleteAppointment(appointmentId, disposition, note)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/appointment/${appointmentId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
       status: 'complete',
-      assignedUser: {
-        id: '1',
-        name: 'Mike Johnson',
-        role: 'Field Technician',
-        permissions: ['View Appointments', 'Update Status', 'Access Maps'],
+      disposition_id: disposition.code,
+      details: {
+        completion_note: note,
       },
-    },
-    {
-      id: '4',
-      customerName: 'Emily Wilson',
-      customerAddress: '321 Elm Street, Brookline, MA',
-      datetime: 'Oct 21, 2025 - 11:00 AM',
-      status: 'unassigned',
-      assignedUser: null,
-    },
-    {
-      id: '5',
-      customerName: 'Michael Chen',
-      customerAddress: '654 Birch Lane, Newton, MA',
-      datetime: 'Oct 21, 2025 - 3:00 PM',
-      status: 'scheduled',
-      assignedUser: {
-        id: '3',
-        name: 'Sarah Martinez',
-        role: 'Dispatcher',
-        permissions: [
-          'View All Appointments',
-          'Assign Appointments',
-          'Live Tracking',
-          'View Reports',
-        ],
-      },
-    },
-  ]
+    }),
+  })
 
-  await new Promise((r) => setTimeout(r, 300)) // simulate network latency
-  return mockAppointments
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to complete appointment')
+  }
+
+  return response.json()
 }

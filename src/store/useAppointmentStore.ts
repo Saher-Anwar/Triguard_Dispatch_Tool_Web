@@ -36,12 +36,12 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
     const { appointments, searchTerm, statusFilter, userFilter } = get()
     return appointments.filter((a) => {
       const matchesSearch =
-        a.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        a.customerAddress.toLowerCase().includes(searchTerm.toLowerCase())
+        a.customer?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        a.customer?.location.address.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesStatus = statusFilter === 'all' || a.status === statusFilter
       const matchesUser =
         userFilter === 'all' ||
-        (a.assignedUser && a.assignedUser.name === userFilter)
+        (a.user && a.user.name === userFilter)
       return matchesSearch && matchesStatus && matchesUser
     })
   },

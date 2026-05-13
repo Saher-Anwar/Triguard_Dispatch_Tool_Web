@@ -1,26 +1,57 @@
+export interface LocationDetails {
+  address: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zip_code?: string;
+  latitude: number;
+  longitude: number;
+}
+
 export type AppointmentStatus = 
   | 'unassigned' 
   | 'scheduled' 
-  | 'in-progress' 
+  | 'in progress'
   | 'complete' 
   | 'cancelled' 
   | 'rescheduled';
 
 export interface Appointment {
-  id: string;
-  customerName: string;
-  customerAddress: string;
-  datetime: string;
+  id: number;
+  booking_datetime: string; // iso 8601 format
   status: AppointmentStatus;
-  assignedUser: User | null;
+  customer: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    location: LocationDetails;
+  } | null;
+  user: User | null;
+  disposition?: Disposition;
+  details?: AppointmentDetails;
+}
+
+export interface AppointmentDetails{
+  [key: string]: string | number | boolean | null | undefined;
+}
+
+export interface UserProfile {
+  age?: number;
+  phone?: string;
+  avatar?: string;
+  [key: string]: string | number | boolean | null | undefined;
 }
 
 export interface User {
   id: string;
   name: string;
-  role: 'Master' | 'Dispatcher' | 'Field Technician';
-  avatar?: string;
-  permissions: string[];
+  email: string;
+  permissions?: Permission[];
+  role?: Role;
+  status?: string;
+  profile?: UserProfile;
+  location: LocationDetails;
 }
 
 export interface StatData {
@@ -43,6 +74,50 @@ export interface Permission {
 }
 
 export interface Role {
-  name: string;
+  id: string,
+  name: string,
   permissions: Permission[];
+}
+
+export interface Disposition {
+  code: string;
+  description: string;
+  notes?: string
+}
+
+export interface TimesheetData {
+  id: string;
+  date: string;       // ISO date string: "2025-10-24"
+  start_time: string; // ISO datetime or time: "14:30:00"
+  end_time: string;   // ISO datetime or time: "17:45:00"
+}
+
+export interface Timesheet {
+  id: string;
+  user: User;
+  entries: TimesheetData[];
+}
+
+export interface NewAppointmentData {
+  booking_datetime: string;
+  appointment_type: 'physical' | 'virtual';
+  customer: {
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+    location: LocationDetails;
+  };
+  details?: {
+    roof_age?: number;
+    main_concern?: string;
+    spouse?: {
+      first_name?: string;
+      last_name?: string;
+      phone?: string;
+      email?: string;
+    };
+    credit_score?: number;
+    call_center_notes?: string;
+  };
 }

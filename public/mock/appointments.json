@@ -1,0 +1,388 @@
+[
+  {
+    "id": 1,
+    "booking_datetime": "2026-05-15T10:00:00",
+    "status": "scheduled",
+    "customer": {
+      "id": 101,
+      "name": "John Smith",
+      "email": "john.smith@email.com",
+      "phone": "(617) 555-1001",
+      "location": {
+        "address": "123 Maple Street, Boston, MA 02101",
+        "city": "Boston",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02101",
+        "latitude": 42.3601,
+        "longitude": -71.0589
+      }
+    },
+    "user": {
+      "id": "2",
+      "name": "David Brown",
+      "email": "david.brown@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-2",
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "456 Oak Ave, Los Angeles, CA 90210",
+        "city": "Los Angeles",
+        "state": "CA",
+        "country": "US",
+        "zip_code": "90210",
+        "latitude": 34.0522,
+        "longitude": -118.2437
+      }
+    },
+    "details": {
+      "appointment_type": "physical",
+      "roof_age": 12,
+      "main_concern": "Possible leak near chimney"
+    }
+  },
+  {
+    "id": 2,
+    "booking_datetime": "2026-05-15T14:00:00",
+    "status": "in progress",
+    "customer": {
+      "id": 102,
+      "name": "Sarah Williams",
+      "email": "sarah.williams@email.com",
+      "phone": "(617) 555-1002",
+      "location": {
+        "address": "456 Oak Avenue, Cambridge, MA 02139",
+        "city": "Cambridge",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02139",
+        "latitude": 42.3736,
+        "longitude": -71.1097
+      }
+    },
+    "user": {
+      "id": "4",
+      "name": "James Wilson",
+      "email": "james.wilson@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-4",
+        "name": "Agent",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "789 Pine St, Chicago, IL 60601",
+        "city": "Chicago",
+        "state": "IL",
+        "country": "US",
+        "zip_code": "60601",
+        "latitude": 41.8781,
+        "longitude": -87.6298
+      }
+    },
+    "details": {
+      "appointment_type": "physical",
+      "roof_age": 7,
+      "main_concern": "Missing shingles after storm"
+    }
+  },
+  {
+    "id": 3,
+    "booking_datetime": "2026-05-13T09:00:00",
+    "status": "complete",
+    "customer": {
+      "id": 103,
+      "name": "Robert Davis",
+      "email": "robert.davis@email.com",
+      "phone": "(617) 555-1003",
+      "location": {
+        "address": "789 Pine Road, Somerville, MA 02143",
+        "city": "Somerville",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02143",
+        "latitude": 42.3876,
+        "longitude": -71.0995
+      }
+    },
+    "user": {
+      "id": "3",
+      "name": "Sarah Martinez",
+      "email": "sarah.martinez@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-3",
+        "name": "Dispatcher",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "789 Dispatch Ave, Chicago, IL 60601",
+        "city": "Chicago",
+        "state": "IL",
+        "country": "US",
+        "zip_code": "60601",
+        "latitude": 41.8781,
+        "longitude": -87.6298
+      }
+    },
+    "disposition": {
+      "code": "COMPLETED",
+      "description": "Job Completed Successfully",
+      "notes": "Customer was very pleased with the installation. No issues encountered."
+    },
+    "details": {
+      "appointment_type": "physical",
+      "completion_note": "All work completed per spec"
+    }
+  },
+  {
+    "id": 4,
+    "booking_datetime": "2026-05-16T11:00:00",
+    "status": "unassigned",
+    "customer": {
+      "id": 104,
+      "name": "Emily Wilson",
+      "email": "emily.wilson@email.com",
+      "phone": "(617) 555-1004",
+      "location": {
+        "address": "321 Elm Street, Brookline, MA 02445",
+        "city": "Brookline",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02445",
+        "latitude": 42.3318,
+        "longitude": -71.1212
+      }
+    },
+    "user": null,
+    "details": {
+      "appointment_type": "physical",
+      "roof_age": 3,
+      "credit_score": 720,
+      "main_concern": "Annual inspection"
+    }
+  },
+  {
+    "id": 5,
+    "booking_datetime": "2026-05-16T15:00:00",
+    "status": "scheduled",
+    "customer": {
+      "id": 105,
+      "name": "Michael Chen",
+      "email": "michael.chen@email.com",
+      "phone": "(617) 555-1005",
+      "location": {
+        "address": "654 Birch Lane, Newton, MA 02458",
+        "city": "Newton",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02458",
+        "latitude": 42.3370,
+        "longitude": -71.2092
+      }
+    },
+    "user": {
+      "id": "7",
+      "name": "Lisa Anderson",
+      "email": "lisa.anderson@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-3",
+        "name": "Dispatcher",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "654 Broadway, Boston, MA 02101",
+        "city": "Boston",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02101",
+        "latitude": 42.3601,
+        "longitude": -71.0589
+      }
+    },
+    "details": {
+      "appointment_type": "virtual",
+      "main_concern": "Insurance claim documentation"
+    }
+  },
+  {
+    "id": 6,
+    "booking_datetime": "2026-05-12T14:30:00",
+    "status": "complete",
+    "customer": {
+      "id": 106,
+      "name": "David Thompson",
+      "email": "david.thompson@email.com",
+      "phone": "(617) 555-1006",
+      "location": {
+        "address": "987 Cedar Drive, Medford, MA 02155",
+        "city": "Medford",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02155",
+        "latitude": 42.4184,
+        "longitude": -71.1062
+      }
+    },
+    "user": {
+      "id": "2",
+      "name": "David Brown",
+      "email": "david.brown@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-2",
+        "name": "Admin",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "456 Oak Ave, Los Angeles, CA 90210",
+        "city": "Los Angeles",
+        "state": "CA",
+        "country": "US",
+        "zip_code": "90210",
+        "latitude": 34.0522,
+        "longitude": -118.2437
+      }
+    },
+    "disposition": {
+      "code": "PARTIAL",
+      "description": "Partial Completion",
+      "notes": "Main unit installed. Secondary component requires special part — ordered, rescheduled."
+    },
+    "details": {
+      "appointment_type": "physical",
+      "completion_note": "Partial install, part ordered"
+    }
+  },
+  {
+    "id": 7,
+    "booking_datetime": "2026-05-11T08:00:00",
+    "status": "cancelled",
+    "customer": {
+      "id": 107,
+      "name": "Lisa Rodriguez",
+      "email": "lisa.rodriguez@email.com",
+      "phone": "(617) 555-1007",
+      "location": {
+        "address": "555 Walnut Street, Arlington, MA 02476",
+        "city": "Arlington",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02476",
+        "latitude": 42.4154,
+        "longitude": -71.1565
+      }
+    },
+    "user": {
+      "id": "4",
+      "name": "James Wilson",
+      "email": "james.wilson@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-4",
+        "name": "Agent",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "789 Pine St, Chicago, IL 60601",
+        "city": "Chicago",
+        "state": "IL",
+        "country": "US",
+        "zip_code": "60601",
+        "latitude": 41.8781,
+        "longitude": -87.6298
+      }
+    },
+    "disposition": {
+      "code": "NO_ACCESS",
+      "description": "No Access - Customer Unavailable",
+      "notes": "Arrived on time but customer did not answer. Left notice. Rescheduling."
+    },
+    "details": {
+      "appointment_type": "physical"
+    }
+  },
+  {
+    "id": 8,
+    "booking_datetime": "2026-05-17T09:30:00",
+    "status": "unassigned",
+    "customer": {
+      "id": 108,
+      "name": "Patricia Moore",
+      "email": "patricia.moore@email.com",
+      "phone": "(617) 555-1008",
+      "location": {
+        "address": "222 Spruce Street, Waltham, MA 02451",
+        "city": "Waltham",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02451",
+        "latitude": 42.3765,
+        "longitude": -71.2356
+      }
+    },
+    "user": null,
+    "details": {
+      "appointment_type": "physical",
+      "roof_age": 15,
+      "credit_score": 680,
+      "main_concern": "Full roof replacement quote"
+    }
+  },
+  {
+    "id": 9,
+    "booking_datetime": "2026-05-18T13:00:00",
+    "status": "rescheduled",
+    "customer": {
+      "id": 109,
+      "name": "Thomas Anderson",
+      "email": "thomas.anderson@email.com",
+      "phone": "(617) 555-1009",
+      "location": {
+        "address": "444 Ash Lane, Watertown, MA 02472",
+        "city": "Watertown",
+        "state": "MA",
+        "country": "US",
+        "zip_code": "02472",
+        "latitude": 42.3668,
+        "longitude": -71.1826
+      }
+    },
+    "user": {
+      "id": "3",
+      "name": "Sarah Martinez",
+      "email": "sarah.martinez@company.com",
+      "status": "Active",
+      "role": {
+        "id": "role-3",
+        "name": "Dispatcher",
+        "permissions": []
+      },
+      "permissions": [],
+      "location": {
+        "address": "789 Dispatch Ave, Chicago, IL 60601",
+        "city": "Chicago",
+        "state": "IL",
+        "country": "US",
+        "zip_code": "60601",
+        "latitude": 41.8781,
+        "longitude": -87.6298
+      }
+    },
+    "details": {
+      "appointment_type": "physical",
+      "roof_age": 22,
+      "main_concern": "Emergency leak repair"
+    }
+  }
+]

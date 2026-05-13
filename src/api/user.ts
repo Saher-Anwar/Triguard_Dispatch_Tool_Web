@@ -1,61 +1,117 @@
-import type { User } from '@/types'
-import type { Permission } from '@/types'
+import {
+  mockGetUsers,
+  mockGetUserByEmail,
+  mockCreateUser,
+  mockUpdateUserRole,
+  mockUpdateUserPermissions,
+  mockDeleteUser,
+} from '@/mock/mockData'
 
-export async function getUsers(): Promise<User[]> {
-  // Replace this with `fetch('/api/users').then(res => res.json())` later
-  const mockUsers: User[] = [
-    {
-      id: '1',
-      name: 'Mike Johnson',
-      role: 'Field Technician',
-      permissions: ['View Appointments', 'Update Status', 'Access Maps']
-    },
-    {
-      id: '2',
-      name: 'David Brown',
-      role: 'Field Technician',
-      permissions: ['View Appointments', 'Update Status', 'Access Maps']
-    },
-    {
-      id: '3',
-      name: 'Sarah Martinez',
-      role: 'Dispatcher',
-      permissions: [
-        'View All Appointments',
-        'Assign Appointments',
-        'Live Tracking',
-        'View Reports'
-      ]
-    }
-  ]
+const IS_MOCK = import.meta.env.VITE_MOCK === 'true'
 
-  await new Promise((r) => setTimeout(r, 300)) // simulate network delay
-  return mockUsers
+export async function getUsers() {
+  if (IS_MOCK) return mockGetUsers()
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/users`)
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch users from API')
+  }
+
+  return response.json()
 }
 
-export async function getPermissions(): Promise<Permission[]> {
-  const mockPermissions: Permission[] = [
-    { code: 'APPOINTMENTS.VIEW.ALL', description: 'View Appointments' },
-    { code: 'APPOINTMENTS.VIEW.SELF', description: 'View Your Appointments' },
-    { code: 'APPOINTMENTS.CREATE', description: 'Create Appointments' },
-    { code: 'APPOINTMENTS.DELETE', description: 'Delete Appointments' },
-    { code: 'APPOINTMENTS.UPDATE.ASSIGN_AGENT', description: 'Assign or Reassign Agents to Appointment' },
-    { code: 'APPOINTMENTS.UPDATE.SELF_ASSIGN', description: 'Assign Yourself to Appointment' },
-    { code: 'APPOINTMENTS.UPDATE.STATUS', description: 'Update Appointment Status' },
+export async function getUserByEmail(email: string) {
+  if (IS_MOCK) return mockGetUserByEmail(email)
 
-    { code: 'USERS.VIEW', description: 'View All Users' },
-    { code: 'USERS.CREATE', description: 'Create Users' },
-    { code: 'USERS.DELETE', description: 'Delete Users' },
-    { code: 'USERS.UPDATE.PERMISSIONS', description: 'Update User Permissions' },
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/user/email/${encodeURIComponent(email)}`)
 
-    { code: 'ROLES.CREATE', description: 'Create Roles' },
-    { code: 'ROLES.DELETE', description: 'Delete Roles' },
-    { code: 'ROLES.UPDATE', description: 'Add Permissions to Roles' },
+  if (!response.ok) {
+    if (response.status === 404) {
+      return null // User not found
+    }
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to fetch user from API')
+  }
 
-    { code: 'DISPOSITIONS.CREATE', description: 'Create Dispositions' },
-    { code: 'DISPOSITIONS.DELETE', description: 'Delete Dispositions' },
-  ]
+  return response.json()
+}
 
-  await new Promise((r) => setTimeout(r, 300)) // simulate network delay
-  return mockPermissions
+export async function createUser(userData: { name: string; email: string; avatar?: string }) {
+  if (IS_MOCK) return mockCreateUser(userData)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/user`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to create user')
+  }
+
+  return response.json()
+}
+
+export async function updateUserRole(userId: string, roleId: string) {
+  if (IS_MOCK) return mockUpdateUserRole(userId, roleId)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/user/${userId}/role`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ role_id: roleId }),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to update user role')
+  }
+
+  return response.json()
+}
+
+export async function updateUserPermissions(userId: string, permissionCodes: string[]) {
+  if (IS_MOCK) return mockUpdateUserPermissions(userId, permissionCodes)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/user/${userId}/permissions`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ permission_codes: permissionCodes }),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to update user permissions')
+  }
+
+  return response.json()
+}
+
+export async function deleteUser(userId: string) {
+  if (IS_MOCK) return mockDeleteUser(userId)
+
+  const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+  const response = await fetch(`${API_ENDPOINT}/user/${userId}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+    console.error('API Error:', errorData)
+    throw new Error(errorData.error || 'Failed to delete user')
+  }
+
+  return response.json()
 }

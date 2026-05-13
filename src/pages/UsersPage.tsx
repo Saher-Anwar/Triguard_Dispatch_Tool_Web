@@ -1,41 +1,26 @@
-import { Settings, Plus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { UserCard } from '@/components/users/UserCard'
 import { getUsers } from '@/api/user'
 import { useQuery } from '@tanstack/react-query'
+import { UserDataTable } from '@/components/users/UserDataTable'
 
 export function UsersPage() {
   const { data: users = [], isLoading, isError } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers,
+    staleTime: 5 * 60 * 1000 // 5 mins
   })
 
-  if (isLoading) return <p>Loading users...</p>
-  if (isError) return <p>Failed to load users.</p>
+  if (isLoading) return <div className="text-center py-12"><p className="text-muted-foreground">Loading users...</p></div>
+  if (isError) return <div className="text-center py-12"><p className="text-red-500">Failed to load users.</p></div>
 
   return (
-    <div className="space-y-6">
-      {/* Top Bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="space-y-4 md:space-y-6">
+      {/* Top Bar - Desktop only (title shown in mobile header) */}
+      <div className="hidden md:flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-4xl font-bold">User Management</h1>
-        <div className="flex gap-3">
-          <Button variant="outline" className="gap-2">
-            <Settings className="h-4 w-4" />
-            Manage Roles
-          </Button>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Add User
-          </Button>
-        </div>
       </div>
 
-      {/* Users Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </div>
+      {/* Users Table */}
+      <UserDataTable users={users} />
     </div>
   )
 }

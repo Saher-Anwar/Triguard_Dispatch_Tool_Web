@@ -1,0 +1,261 @@
+[
+  {
+    "id": "1",
+    "name": "Mike Johnson",
+    "email": "mike.johnson@company.com",
+    "status": "Active",
+    "role": {
+      "id": "role-1",
+      "name": "Master",
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.DELETE", "description": "Delete Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.ASSIGN_AGENT", "description": "Assign or Reassign Agents to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "USERS.DELETE", "description": "Delete Users" },
+        { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+        { "code": "ROLES.CREATE", "description": "Create Roles" },
+        { "code": "ROLES.DELETE", "description": "Delete Roles" },
+        { "code": "ROLES.UPDATE", "description": "Add Permissions to Roles" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
+        { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
+      ]
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+      { "code": "APPOINTMENTS.DELETE", "description": "Delete Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.ASSIGN_AGENT", "description": "Assign or Reassign Agents to Appointment" },
+      { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+      { "code": "USERS.VIEW", "description": "View All Users" },
+      { "code": "USERS.CREATE", "description": "Create Users" },
+      { "code": "USERS.DELETE", "description": "Delete Users" },
+      { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+      { "code": "ROLES.CREATE", "description": "Create Roles" },
+      { "code": "ROLES.DELETE", "description": "Delete Roles" },
+      { "code": "ROLES.UPDATE", "description": "Add Permissions to Roles" },
+      { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
+      { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
+    ],
+    "profile": {
+      "age": 35,
+      "phone": "+1 (555) 123-4567"
+    },
+    "location": {
+      "address": "123 Main St, New York, NY 10001",
+      "city": "New York",
+      "state": "NY",
+      "country": "US",
+      "zip_code": "10001",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    }
+  },
+  {
+    "id": "2",
+    "name": "David Brown",
+    "email": "david.brown@company.com",
+    "status": "Active",
+    "role": {
+      "id": "role-2",
+      "name": "Admin",
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+        { "code": "ROLES.CREATE", "description": "Create Roles" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
+      ]
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "USERS.VIEW", "description": "View All Users" },
+      { "code": "USERS.CREATE", "description": "Create Users" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+    ],
+    "profile": {
+      "phone": "+1 (555) 987-6543"
+    },
+    "location": {
+      "address": "456 Oak Ave, Los Angeles, CA 90210",
+      "city": "Los Angeles",
+      "state": "CA",
+      "country": "US",
+      "zip_code": "90210",
+      "latitude": 34.0522,
+      "longitude": -118.2437
+    }
+  },
+  {
+    "id": "3",
+    "name": "Sarah Martinez",
+    "email": "sarah.martinez@company.com",
+    "status": "On Leave",
+    "role": {
+      "id": "role-3",
+      "name": "Dispatcher",
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.ASSIGN_AGENT", "description": "Assign or Reassign Agents to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
+      ]
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+    ],
+    "profile": {
+      "age": 28,
+      "phone": "+1 (555) 111-2222"
+    },
+    "location": {
+      "address": "789 Dispatch Ave, Chicago, IL 60601",
+      "city": "Chicago",
+      "state": "IL",
+      "country": "US",
+      "zip_code": "60601",
+      "latitude": 41.8781,
+      "longitude": -87.6298
+    }
+  },
+  {
+    "id": "4",
+    "name": "James Wilson",
+    "email": "james.wilson@company.com",
+    "status": "Active",
+    "role": {
+      "id": "role-4",
+      "name": "Agent",
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
+      ]
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" },
+      { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
+    ],
+    "profile": {
+      "age": 32,
+      "phone": "+1 (555) 234-5678"
+    },
+    "location": {
+      "address": "789 Pine St, Chicago, IL 60601",
+      "city": "Chicago",
+      "state": "IL",
+      "country": "US",
+      "zip_code": "60601",
+      "latitude": 41.8781,
+      "longitude": -87.6298
+    }
+  },
+  {
+    "id": "5",
+    "name": "Emily Chen",
+    "email": "emily.chen@company.com",
+    "status": "Active",
+    "role": {
+      "id": "role-2",
+      "name": "Admin",
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+        { "code": "ROLES.CREATE", "description": "Create Roles" }
+      ]
+    },
+    "permissions": [
+      { "code": "USERS.VIEW", "description": "View All Users" },
+      { "code": "USERS.CREATE", "description": "Create Users" },
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" }
+    ],
+    "profile": {
+      "age": 29
+    },
+    "location": {
+      "address": "321 Elm St, San Francisco, CA 94102",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "US",
+      "zip_code": "94102",
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    }
+  },
+  {
+    "id": "6",
+    "name": "Robert Taylor",
+    "email": "robert.taylor@company.com",
+    "status": "Inactive",
+    "role": {
+      "id": "role-4",
+      "name": "Agent",
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" }
+      ]
+    },
+    "permissions": [],
+    "profile": {
+      "age": 45,
+      "phone": "+1 (555) 345-6789"
+    },
+    "location": {
+      "address": "555 Harbor Blvd, Miami, FL 33101",
+      "city": "Miami",
+      "state": "FL",
+      "country": "US",
+      "zip_code": "33101",
+      "latitude": 25.7617,
+      "longitude": -80.1918
+    }
+  },
+  {
+    "id": "7",
+    "name": "Lisa Anderson",
+    "email": "lisa.anderson@company.com",
+    "status": "Active",
+    "role": {
+      "id": "role-3",
+      "name": "Dispatcher",
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+      ]
+    },
+    "permissions": [
+      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+    ],
+    "profile": {
+      "age": 26,
+      "phone": "+1 (555) 456-7890"
+    },
+    "location": {
+      "address": "654 Broadway, Boston, MA 02101",
+      "city": "Boston",
+      "state": "MA",
+      "country": "US",
+      "zip_code": "02101",
+      "latitude": 42.3601,
+      "longitude": -71.0589
+    }
+  }
+]

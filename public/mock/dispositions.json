@@ -1,0 +1,37 @@
+[
+  {
+    "code": "COMPLETED",
+    "description": "Job Completed Successfully",
+    "notes": "All requested services were completed according to specifications. Customer satisfied."
+  },
+  {
+    "code": "PARTIAL",
+    "description": "Partial Completion",
+    "notes": "Equipment issue prevented full completion. Customer rescheduled for remaining work."
+  },
+  {
+    "code": "NO_ACCESS",
+    "description": "No Access - Customer Unavailable",
+    "notes": "Customer was not available at scheduled time despite confirmation."
+  },
+  {
+    "code": "EQUIP_FAIL",
+    "description": "Equipment Malfunction",
+    "notes": "Technical equipment failure prevented service completion."
+  },
+  {
+    "code": "CUST_CANCEL",
+    "description": "Customer Cancelled",
+    "notes": "Customer requested cancellation of scheduled service."
+  },
+  {
+    "code": "SOLD",
+    "description": "Sale Closed",
+    "notes": "Customer agreed to purchase. Contract signed."
+  },
+  {
+    "code": "NOT_INTERESTED",
+    "description": "Not Interested",
+    "notes": "Customer is not interested at this time."
+  }
+]

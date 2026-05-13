@@ -1,19 +1,20 @@
 import { create } from 'zustand'
 import type { User } from '@/types'
+import { persist } from 'zustand/middleware'
 
 interface UserStore {
-  currentUser: User
+  currentUser: User | null
   setCurrentUser: (user: User) => void
+  clearUser: () => void
 }
 
-const currentUser: User = {
-  id: 'admin',
-  name: 'Admin User',
-  role: 'Master',
-  permissions: ['All Permissions']
-}
-
-export const useUserStore = create<UserStore>((set) => ({
-  currentUser,
-  setCurrentUser: (user) => set({ currentUser: user }),
-}))
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set) => ({
+      currentUser: null,
+      setCurrentUser: (user) => set({ currentUser: user }),
+      clearUser: () => set({ currentUser: null }),
+    }),
+    { name: 'user-store' } // persists in localStorage
+  )
+)
