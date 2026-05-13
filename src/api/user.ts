@@ -1,20 +1,35 @@
+import {
+  mockGetUsers,
+  mockGetUserByEmail,
+  mockCreateUser,
+  mockUpdateUserRole,
+  mockUpdateUserPermissions,
+  mockDeleteUser,
+} from '@/mock/mockData'
+
+const IS_MOCK = import.meta.env.VITE_MOCK === 'true'
+
 export async function getUsers() {
+  if (IS_MOCK) return mockGetUsers()
+
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/users`)
-  
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
     console.error('API Error:', errorData)
     throw new Error(errorData.error || 'Failed to fetch users from API')
   }
-  
+
   return response.json()
 }
 
 export async function getUserByEmail(email: string) {
+  if (IS_MOCK) return mockGetUserByEmail(email)
+
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/user/email/${encodeURIComponent(email)}`)
-  
+
   if (!response.ok) {
     if (response.status === 404) {
       return null // User not found
@@ -23,41 +38,37 @@ export async function getUserByEmail(email: string) {
     console.error('API Error:', errorData)
     throw new Error(errorData.error || 'Failed to fetch user from API')
   }
-  
+
   return response.json()
 }
 
-export async function createUser(userData: {
-  name: string
-  email: string
-  avatar?: string
-}) {
+export async function createUser(userData: { name: string; email: string; avatar?: string }) {
+  if (IS_MOCK) return mockCreateUser(userData)
+
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData),
   })
-  
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
     console.error('API Error:', errorData)
     throw new Error(errorData.error || 'Failed to create user')
   }
-  
+
   return response.json()
 }
 
 export async function updateUserRole(userId: string, roleId: string) {
+  if (IS_MOCK) return mockUpdateUserRole(userId, roleId)
+
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/user/${userId}/role`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      role_id: roleId,
-    }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ role_id: roleId }),
   })
 
   if (!response.ok) {
@@ -70,15 +81,13 @@ export async function updateUserRole(userId: string, roleId: string) {
 }
 
 export async function updateUserPermissions(userId: string, permissionCodes: string[]) {
+  if (IS_MOCK) return mockUpdateUserPermissions(userId, permissionCodes)
+
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/user/${userId}/permissions`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      permission_codes: permissionCodes,
-    }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ permission_codes: permissionCodes }),
   })
 
   if (!response.ok) {
@@ -91,6 +100,8 @@ export async function updateUserPermissions(userId: string, permissionCodes: str
 }
 
 export async function deleteUser(userId: string) {
+  if (IS_MOCK) return mockDeleteUser(userId)
+
   const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
   const response = await fetch(`${API_ENDPOINT}/user/${userId}`, {
     method: 'DELETE',

@@ -1,6 +1,7 @@
 export interface LocationDetails {
   address: string;
   city?: string;
+  state?: string;
   country?: string;
   zip_code?: string;
   latitude: number;
@@ -95,4 +96,28 @@ export interface Timesheet {
   id: string;
   user: User;
   entries: TimesheetData[];
+}
+
+export interface NewAppointmentData {
+  booking_datetime: string;
+  appointment_type: 'physical' | 'virtual';
+  customer: {
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+    location: LocationDetails;
+  };
+  details?: {
+    roof_age?: number;
+    main_concern?: string;
+    spouse?: {
+      first_name?: string;
+      last_name?: string;
+      phone?: string;
+      email?: string;
+    };
+    credit_score?: number;
+    call_center_notes?: string;
+  };
 }

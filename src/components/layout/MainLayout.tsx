@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Calendar, BarChart3, Users, Settings } from 'lucide-react'
+import { Calendar, BarChart3, Users, Settings, FlaskConical } from 'lucide-react'
+
+const IS_MOCK = import.meta.env.VITE_MOCK === 'true'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from './AppSidebar'
 import { AppointmentsPage } from '@/pages/AppointmentsPage'
@@ -71,12 +73,23 @@ export function MainLayout() {
   return (
     <SidebarProvider>
       <div className="flex h-screen bg-background">
+        {/* Mock mode banner */}
+        {IS_MOCK && (
+          <div
+            className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-center gap-2 bg-amber-500 text-amber-950 text-xs font-semibold py-1"
+            role="status"
+            aria-label="Mock mode active"
+          >
+            <FlaskConical className="h-3 w-3" aria-hidden="true" />
+            MOCK MODE — No real backend connected. Data resets on page refresh.
+          </div>
+        )}
         {/* Desktop Sidebar - Hidden on mobile */}
-        <div className="hidden md:block">
+        <div className={`hidden md:block ${IS_MOCK ? 'mt-6' : ''}`}>
           <AppSidebar activePage={activePage} onPageChange={setActivePage} />
         </div>
 
-        <main className="flex-1 overflow-hidden flex flex-col">
+        <main className={`flex-1 overflow-hidden flex flex-col ${IS_MOCK ? 'mt-6' : ''}`}>
           <div className="flex-1 overflow-y-auto pb-16 md:pb-0">
             {/* Header with sidebar trigger */}
             <div className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">

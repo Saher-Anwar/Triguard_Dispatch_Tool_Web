@@ -2,10 +2,29 @@
   {
     "id": "1",
     "name": "Mike Johnson",
+    "email": "mike.johnson@company.com",
     "status": "Active",
     "role": {
+      "id": "role-1",
       "name": "Master",
-      "permissions": []
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.DELETE", "description": "Delete Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.ASSIGN_AGENT", "description": "Assign or Reassign Agents to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "USERS.DELETE", "description": "Delete Users" },
+        { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+        { "code": "ROLES.CREATE", "description": "Create Roles" },
+        { "code": "ROLES.DELETE", "description": "Delete Roles" },
+        { "code": "ROLES.UPDATE", "description": "Add Permissions to Roles" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
+        { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
+      ]
     },
     "permissions": [
       { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
@@ -26,79 +45,140 @@
       { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
     ],
     "profile": {
-      "email": "mike.johnson@company.com",
       "age": 35,
+      "phone": "+1 (555) 123-4567"
+    },
+    "location": {
       "address": "123 Main St, New York, NY 10001",
-      "phone": "+1 (555) 123-4567",
-      "department": "Operations",
-      "gender": "Male"
+      "city": "New York",
+      "state": "NY",
+      "country": "US",
+      "zip_code": "10001",
+      "latitude": 40.7128,
+      "longitude": -74.006
     }
   },
   {
     "id": "2",
     "name": "David Brown",
+    "email": "david.brown@company.com",
     "status": "Active",
     "role": {
+      "id": "role-2",
       "name": "Admin",
       "permissions": [
-        "Manage Users",
-        "View All Appointments",
-        "View Reports"
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+        { "code": "ROLES.CREATE", "description": "Create Roles" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
       ]
     },
-    "permissions": [],
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "USERS.VIEW", "description": "View All Users" },
+      { "code": "USERS.CREATE", "description": "Create Users" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+    ],
     "profile": {
-      "email": "david.brown@company.com",
-      "address": "456 Oak Ave, Los Angeles, CA 90210",
       "phone": "+1 (555) 987-6543"
+    },
+    "location": {
+      "address": "456 Oak Ave, Los Angeles, CA 90210",
+      "city": "Los Angeles",
+      "state": "CA",
+      "country": "US",
+      "zip_code": "90210",
+      "latitude": 34.0522,
+      "longitude": -118.2437
     }
   },
   {
     "id": "3",
     "name": "Sarah Martinez",
+    "email": "sarah.martinez@company.com",
     "status": "On Leave",
     "role": {
+      "id": "role-3",
       "name": "Dispatcher",
       "permissions": [
-        "Create Appointments",
-        "View Assigned Appointments"
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.ASSIGN_AGENT", "description": "Assign or Reassign Agents to Appointment" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
       ]
     },
-    "permissions": [],
+    "permissions": [
+      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+    ],
     "profile": {
-      "email": "sarah.martinez@company.com",
       "age": 28,
-      "department": "Dispatch"
+      "phone": "+1 (555) 111-2222"
+    },
+    "location": {
+      "address": "789 Dispatch Ave, Chicago, IL 60601",
+      "city": "Chicago",
+      "state": "IL",
+      "country": "US",
+      "zip_code": "60601",
+      "latitude": 41.8781,
+      "longitude": -87.6298
     }
   },
   {
     "id": "4",
     "name": "James Wilson",
+    "email": "james.wilson@company.com",
     "status": "Active",
     "role": {
+      "id": "role-4",
       "name": "Agent",
-      "permissions": []
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+        { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
+      ]
     },
     "permissions": [
       { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
+      { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" },
       { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" }
     ],
     "profile": {
-      "email": "james.wilson@company.com",
       "age": 32,
+      "phone": "+1 (555) 234-5678"
+    },
+    "location": {
       "address": "789 Pine St, Chicago, IL 60601",
-      "phone": "+1 (555) 234-5678",
-      "department": "Field Operations",
-      "gender": "Male"
+      "city": "Chicago",
+      "state": "IL",
+      "country": "US",
+      "zip_code": "60601",
+      "latitude": 41.8781,
+      "longitude": -87.6298
     }
   },
   {
     "id": "5",
     "name": "Emily Chen",
+    "email": "emily.chen@company.com",
     "status": "Active",
     "role": {
+      "id": "role-2",
       "name": "Admin",
-      "permissions": []
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "USERS.VIEW", "description": "View All Users" },
+        { "code": "USERS.CREATE", "description": "Create Users" },
+        { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
+        { "code": "ROLES.CREATE", "description": "Create Roles" }
+      ]
     },
     "permissions": [
       { "code": "USERS.VIEW", "description": "View All Users" },
@@ -106,37 +186,58 @@
       { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" }
     ],
     "profile": {
-      "email": "emily.chen@company.com",
-      "age": 29,
+      "age": 29
+    },
+    "location": {
       "address": "321 Elm St, San Francisco, CA 94102",
-      "department": "Administration",
-      "startDate": "2022-03-15"
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "US",
+      "zip_code": "94102",
+      "latitude": 37.7749,
+      "longitude": -122.4194
     }
   },
   {
     "id": "6",
     "name": "Robert Taylor",
+    "email": "robert.taylor@company.com",
     "status": "Inactive",
     "role": {
+      "id": "role-4",
       "name": "Agent",
-      "permissions": []
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" }
+      ]
     },
     "permissions": [],
     "profile": {
-      "email": "robert.taylor@company.com",
       "age": 45,
-      "phone": "+1 (555) 345-6789",
-      "department": "Field Operations",
-      "employeeId": "EMP006"
+      "phone": "+1 (555) 345-6789"
+    },
+    "location": {
+      "address": "555 Harbor Blvd, Miami, FL 33101",
+      "city": "Miami",
+      "state": "FL",
+      "country": "US",
+      "zip_code": "33101",
+      "latitude": 25.7617,
+      "longitude": -80.1918
     }
   },
   {
     "id": "7",
     "name": "Lisa Anderson",
+    "email": "lisa.anderson@company.com",
     "status": "Active",
     "role": {
+      "id": "role-3",
       "name": "Dispatcher",
-      "permissions": []
+      "permissions": [
+        { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
+        { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
+        { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
+      ]
     },
     "permissions": [
       { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
@@ -144,132 +245,17 @@
       { "code": "APPOINTMENTS.UPDATE.STATUS", "description": "Update Appointment Status" }
     ],
     "profile": {
-      "email": "lisa.anderson@company.com",
       "age": 26,
+      "phone": "+1 (555) 456-7890"
+    },
+    "location": {
       "address": "654 Broadway, Boston, MA 02101",
-      "phone": "+1 (555) 456-7890",
-      "department": "Dispatch",
-      "gender": "Female",
-      "shift": "Night"
-    }
-  },
-  {
-    "id": "8",
-    "name": "Michael Rodriguez",
-    "status": "Active",
-    "permissions": [
-      { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
-      { "code": "APPOINTMENTS.UPDATE.SELF_ASSIGN", "description": "Assign Yourself to Appointment" }
-    ],
-    "profile": {
-      "email": "michael.rodriguez@company.com",
-      "age": 38,
-      "address": "987 Oak Ave, Miami, FL 33101",
-      "phone": "+1 (555) 567-8901",
-      "department": "Field Operations",
-      "vehicleAssigned": "VAN-003"
-    }
-  },
-  {
-    "id": "9",
-    "name": "Jennifer Kim",
-    "status": "Active",
-    "role": {
-      "name": "Admin",
-      "permissions": []
-    },
-    "permissions": [
-      { "code": "USERS.VIEW", "description": "View All Users" },
-      { "code": "ROLES.CREATE", "description": "Create Roles" },
-      { "code": "ROLES.UPDATE", "description": "Add Permissions to Roles" }
-    ],
-    "profile": {
-      "email": "jennifer.kim@company.com",
-      "age": 31,
-      "address": "147 Main St, Seattle, WA 98101",
-      "department": "Human Resources",
-      "certifications": "HR Certified, Leadership Training"
-    }
-  },
-  {
-    "id": "10",
-    "name": "Daniel Thompson",
-    "status": "On Leave",
-    "role": {
-      "name": "Agent",
-      "permissions": []
-    },
-    "permissions": [],
-    "profile": {
-      "email": "daniel.thompson@company.com",
-      "age": 27,
-      "phone": "+1 (555) 678-9012",
-      "department": "Field Operations",
-      "hireDate": "2023-01-10",
-      "emergencyContact": "Jane Thompson - (555) 123-4567"
-    }
-  },
-  {
-    "id": "11",
-    "name": "Amanda Davis",
-    "status": "Active",
-    "role": {
-      "name": "Dispatcher",
-      "permissions": []
-    },
-    "permissions": [
-      { "code": "APPOINTMENTS.CREATE", "description": "Create Appointments" },
-      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
-      { "code": "USERS.VIEW", "description": "View All Users" }
-    ],
-    "profile": {
-      "email": "amanda.davis@company.com",
-      "age": 33,
-      "address": "258 Cedar St, Portland, OR 97201",
-      "phone": "+1 (555) 789-0123",
-      "department": "Dispatch",
-      "languages": "English, Spanish"
-    }
-  },
-  {
-    "id": "12",
-    "name": "Christopher Lee",
-    "status": "Active",
-    "permissions": [
-      { "code": "APPOINTMENTS.VIEW.SELF", "description": "View Your Appointments" },
-      { "code": "DISPOSITIONS.CREATE", "description": "Create Dispositions" },
-      { "code": "DISPOSITIONS.DELETE", "description": "Delete Dispositions" }
-    ],
-    "profile": {
-      "email": "christopher.lee@company.com",
-      "age": 41,
-      "address": "369 Maple Ave, Denver, CO 80201",
-      "phone": "+1 (555) 890-1234",
-      "department": "Field Operations",
-      "specialization": "Commercial Properties"
-    }
-  },
-  {
-    "id": "13",
-    "name": "Nicole White",
-    "status": "Active",
-    "role": {
-      "name": "Admin",
-      "permissions": []
-    },
-    "permissions": [
-      { "code": "USERS.VIEW", "description": "View All Users" },
-      { "code": "USERS.UPDATE.PERMISSIONS", "description": "Update User Permissions" },
-      { "code": "APPOINTMENTS.VIEW.ALL", "description": "View Appointments" },
-      { "code": "ROLES.CREATE", "description": "Create Roles" }
-    ],
-    "profile": {
-      "email": "nicole.white@company.com",
-      "age": 36,
-      "address": "741 River Rd, Austin, TX 78701",
-      "phone": "+1 (555) 901-2345",
-      "department": "Administration",
-      "education": "MBA in Business Administration"
+      "city": "Boston",
+      "state": "MA",
+      "country": "US",
+      "zip_code": "02101",
+      "latitude": 42.3601,
+      "longitude": -71.0589
     }
   }
 ]

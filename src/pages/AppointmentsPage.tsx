@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { AppointmentDataTable } from '@/components/appointments/AppointmentDataTable'
 import { AppointmentDetailsDialog } from '@/components/appointments/AppointmentDetailsDialog'
+import { NewAppointmentDialog } from '@/components/appointments/NewAppointmentDialog'
 import { useQuery } from '@tanstack/react-query'
 import { getAppointments, getUserAppointments } from '@/api/appointment'
 import type { Appointment } from '@/types'
@@ -13,6 +14,7 @@ import { usePermissions } from '@/hooks/usePermissions'
 export function AppointmentsPage() {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [newAppointmentDialogOpen, setNewAppointmentDialogOpen] = useState(false)
   const [appointmentFilter, setAppointmentFilter] = useState('all')
   const { currentUser } = useUserStore()
   const { hasPermission } = usePermissions()
@@ -32,7 +34,7 @@ export function AppointmentsPage() {
   }
 
   const handleNewAppointment = () => {
-    window.open('https://appointment-form.thspros.com/', '_blank')
+    setNewAppointmentDialogOpen(true)
   }
 
   return (
@@ -115,6 +117,11 @@ export function AppointmentsPage() {
         open={dialogOpen}
         // important: allow the dialog to control its own close state
         onOpenChange={setDialogOpen}
+      />
+
+      <NewAppointmentDialog
+        open={newAppointmentDialogOpen}
+        onOpenChange={setNewAppointmentDialogOpen}
       />
     </div>
   )

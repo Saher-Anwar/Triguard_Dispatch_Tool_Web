@@ -4,6 +4,9 @@ import { useUserStore } from '@/store/useUserStore'
 import { useRegistrationStore } from '@/store/useRegistrationStore'
 import { getUserByEmail } from '@/api/user'
 import { jwtDecode } from 'jwt-decode'
+import { MOCK_USER } from '@/mock/mockUser'
+
+const IS_MOCK = import.meta.env.VITE_MOCK === 'true'
 
 const COGNITO_DOMAIN = import.meta.env.VITE_COGNITO_DOMAIN
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
@@ -28,21 +31,28 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    // ── Mock mode: skip Cognito entirely and inject a pre-built user ──────────
+    if (IS_MOCK) {
+      if (!currentUser) {
+        setCurrentUser(MOCK_USER)
+      }
+      setIsLoading(false)
+      return
+    }
+
+    // ── Normal auth flow ──────────────────────────────────────────────────────
     async function initializeAuth() {
       try {
         const idToken = localStorage.getItem('id_token')
 
         if (!idToken) {
-          // Not logged in, redirect to Cognito hosted login
           const loginUrl = `${COGNITO_DOMAIN}/login?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}&redirect_uri=${REDIRECT_URI}`
           window.location.href = loginUrl
           return
         }
 
-        // Decode and validate token
         const decoded = jwtDecode<CognitoTokenPayload>(idToken)
-        
-        // Check if token is expired
+
         if (decoded.exp * 1000 < Date.now()) {
           console.log('Token expired, redirecting to login')
           localStorage.removeItem('id_token')
@@ -54,11 +64,9 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
           return
         }
 
-        // Try to get user from backend
         const user = await getUserByEmail(decoded.email)
-        
+
         if (!user) {
-          // User doesn't exist in backend, redirect to registration
           console.log('User not found in database, redirecting to registration')
           setCognitoData({
             sub: decoded.sub,
@@ -76,7 +84,6 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
         console.error('Authentication error:', err)
         setError(err instanceof Error ? err.message : 'Authentication failed')
         setIsLoading(false)
-        // Clear tokens and redirect to login
         localStorage.removeItem('id_token')
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
@@ -112,7 +119,9 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading user data...</p>
+          <p className="text-gray-600">
+            {IS_MOCK ? 'Loading mock user...' : 'Loading user data...'}
+          </p>
         </div>
       </div>
     )
