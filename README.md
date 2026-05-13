@@ -10,6 +10,28 @@ A modern, role-based field service dispatch and scheduling web application built
 
 ---
 
+## Tech Stack
+
+| Category | Technology |
+|---|---|
+| Framework | React 19 |
+| Language | TypeScript 5.9 |
+| Build tool | Vite 7 with SWC plugin |
+| Styling | Tailwind CSS v4 |
+| UI components | Radix UI primitives, shadcn/ui patterns |
+| Icons | Lucide React |
+| Routing | React Router v7 |
+| Server state | TanStack Query v5 |
+| Client state | Zustand v5 |
+| Forms | React Hook Form |
+| Address search | Mapbox Search JS React (AddressAutofill) |
+| Date handling | date-fns, React Day Picker |
+| Auth | AWS Cognito (OAuth 2.0 Authorization Code), jwt-decode |
+| Notifications | Sonner, react-hot-toast |
+| Linting | ESLint 9, typescript-eslint |
+
+---
+
 ## Features
 
 ### Permission System
@@ -159,27 +181,5 @@ Runs the TypeScript compiler and then Vite's production build. Output lands in `
 ```bash
 npm run preview   # preview the production build locally
 ```
-
----
-
-## Tech Stack
-
-| Category | Technology |
-|---|---|
-| Framework | React 19 |
-| Language | TypeScript 5.9 |
-| Build tool | Vite 7 with SWC plugin |
-| Styling | Tailwind CSS v4 |
-| UI components | Radix UI primitives, shadcn/ui patterns |
-| Icons | Lucide React |
-| Routing | React Router v7 |
-| Server state | TanStack Query v5 |
-| Client state | Zustand v5 |
-| Forms | React Hook Form |
-| Address search | Mapbox Search JS React (AddressAutofill) |
-| Date handling | date-fns, React Day Picker |
-| Auth | AWS Cognito (OAuth 2.0 Authorization Code), jwt-decode |
-| Notifications | Sonner, react-hot-toast |
-| Linting | ESLint 9, typescript-eslint |
 
 ---
