@@ -4,9 +4,13 @@ A modern, role-based field service dispatch and scheduling web application built
 
 ---
 
-<!-- Demo placeholder -->
-<!-- ![Demo](demo.gif) -->
-> **Demo:** Add a screen recording or animated GIF here once the app is deployed.
+# Demo
+
+
+https://github.com/user-attachments/assets/e468ee73-ff14-4af5-92f0-7dd2153eb5f1
+
+
+
 
 ---
 
